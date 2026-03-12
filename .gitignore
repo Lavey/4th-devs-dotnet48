@@ -77,3 +77,20 @@ desktop.ini
 # Sensitive / local config – never commit real keys
 App.config
 # App.example.config is committed (template only)
+
+# Lesson workspace generated outputs – keep sources, ignore generated files
+src/Lesson03_McpTranslator/workspace/translated/*
+!src/Lesson03_McpTranslator/workspace/translated/.gitkeep
+src/Lesson04_Audio/workspace/output/*
+!src/Lesson04_Audio/workspace/output/.gitkeep
+src/Lesson04_ImageRecognition/images/organized/
+src/Lesson04_ImageEditing/workspace/output/*
+!src/Lesson04_ImageEditing/workspace/output/.gitkeep
+src/Lesson04_ImageGuidance/workspace/output/*
+!src/Lesson04_ImageGuidance/workspace/output/.gitkeep
+src/Lesson04_JsonImage/workspace/prompts/*
+!src/Lesson04_JsonImage/workspace/prompts/.gitkeep
+src/Lesson04_JsonImage/workspace/output/*
+!src/Lesson04_JsonImage/workspace/output/.gitkeep
+src/Lesson04_Reports/workspace/output/*
+!src/Lesson04_Reports/workspace/output/.gitkeep

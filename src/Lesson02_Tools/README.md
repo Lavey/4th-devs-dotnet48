@@ -21,7 +21,7 @@ je wywołać. My wykonujemy narzędzia lokalnie i odsyłamy wyniki do modelu.
 
 ### Konfiguracja
 ```
-copy ..\..\App.example.config App.config
+copy App.config.example App.config
 # uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY w App.config
 ```
 

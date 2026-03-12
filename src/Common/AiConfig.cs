@@ -5,7 +5,7 @@ namespace FourthDevs.Common
 {
     /// <summary>
     /// Reads AI provider configuration from the application's App.config.
-    /// Copy App.example.config to App.config in each project and fill in your API keys.
+    /// Copy App.config.example to App.config in each project and fill in your API keys.
     /// </summary>
     public static class AiConfig
     {
@@ -30,7 +30,7 @@ namespace FourthDevs.Common
 
             if (!hasOpenAi && !hasOpenRouter)
                 throw new InvalidOperationException(
-                    "No API key configured. Copy App.example.config to App.config " +
+                    "No API key configured. Copy App.config.example to App.config " +
                     "and set either OPENAI_API_KEY or OPENROUTER_API_KEY.");
 
             if (!string.IsNullOrWhiteSpace(requested) &&

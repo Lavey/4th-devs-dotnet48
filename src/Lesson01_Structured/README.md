@@ -18,7 +18,7 @@ Model otrzymuje schemat JSON i musi odpowiedzieć dokładnie zgodnie z jego kszt
 
 ### Konfiguracja
 ```
-copy ..\..\App.example.config App.config
+copy App.config.example App.config
 # uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY w App.config
 ```
 
