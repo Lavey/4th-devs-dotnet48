@@ -1,0 +1,79 @@
+## Visual Studio / MSBuild / .NET Framework 4.8
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache / options directory
+.vs/
+
+# NuGet packages directory
+packages/
+
+# NuGet package lock files
+*.lock.json
+project.lock.json
+project.assets.json
+
+# MSBuild binary / text logs
+*.binlog
+*.tlog
+
+# Publish output
+publish/
+PublishProfiles/
+
+# Generated code
+*.generated.cs
+*.g.cs
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# ReSharper
+_ReSharper*/
+*.ReSharper
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# StyleCop
+StyleCopReport.xml
+
+# Roslyn cache
+*.cache
+
+# Node / npm (if any JS tools are mixed in)
+node_modules/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Sensitive / local config – never commit real keys
+App.config
+# App.example.config is committed (template only)
