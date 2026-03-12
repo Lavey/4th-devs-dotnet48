@@ -255,7 +255,6 @@ namespace FourthDevs.Lesson04_Reports
         static void EnsureSampleDocs(string docsDir)
         {
             string[] files = Directory.GetFiles(docsDir);
-            if (files.Length > 0) return;
 
             File.WriteAllText(Path.Combine(docsDir, "q1_sales.md"),
                 "# Q1 Sales Report\n\n" +
