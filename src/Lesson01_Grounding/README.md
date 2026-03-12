@@ -17,7 +17,7 @@ raport HTML z adnotacjami weryfikacyjnymi przy każdym twierdzeniu, które możn
 
 ### Konfiguracja
 ```
-copy ..\..\App.example.config App.config
+copy App.config.example App.config
 # uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY w App.config
 ```
 

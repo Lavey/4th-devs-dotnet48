@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in your API keys.
+  App.config is listed in .gitignore so your real keys are never committed.
+
+  To get keys:
+    OpenAI:      https://platform.openai.com/api-keys
+    OpenRouter:  https://openrouter.ai/settings/keys
+    Gemini:      https://aistudio.google.com/app/apikey
+-->
+<configuration>
+  <appSettings>
+    <!-- ======================================================
+         AI Provider selection
+         Set to "openai" or "openrouter".
+         If both keys are present, defaults to "openai".
+         ====================================================== -->
+    <add key="AI_PROVIDER" value="" />
+
+    <!-- OpenAI API key (sk-...) -->
+    <add key="OPENAI_API_KEY" value="" />
+
+    <!-- OpenRouter API key (sk-or-v1-...) -->
+    <add key="OPENROUTER_API_KEY" value="" />
+
+    <!-- Optional: sent as HTTP-Referer when using OpenRouter -->
+    <add key="OPENROUTER_HTTP_REFERER" value="" />
+
+    <!-- Optional: sent as X-Title when using OpenRouter -->
+    <add key="OPENROUTER_APP_NAME" value="" />
+
+    <!-- Gemini API key - required for Lesson 04 audio/video examples -->
+    <add key="GEMINI_API_KEY" value="" />
+  </appSettings>
+</configuration>

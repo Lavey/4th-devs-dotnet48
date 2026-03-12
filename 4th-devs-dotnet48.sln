@@ -15,6 +15,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson02_Tools", "src\Lesso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson02_ToolUse", "src\Lesson02_ToolUse\Lesson02_ToolUse.csproj", "{A1B2C3D4-0000-0000-ABCD-666666666666}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_McpCore", "src\Lesson03_McpCore\Lesson03_McpCore.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777701}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_McpNative", "src\Lesson03_McpNative\Lesson03_McpNative.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_McpTranslator", "src\Lesson03_McpTranslator\Lesson03_McpTranslator.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_UploadMcp", "src\Lesson03_UploadMcp\Lesson03_UploadMcp.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_Audio", "src\Lesson04_Audio\Lesson04_Audio.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_ImageRecognition", "src\Lesson04_ImageRecognition\Lesson04_ImageRecognition.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888802}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_ImageEditing", "src\Lesson04_ImageEditing\Lesson04_ImageEditing.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_ImageGuidance", "src\Lesson04_ImageGuidance\Lesson04_ImageGuidance.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888804}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_JsonImage", "src\Lesson04_JsonImage\Lesson04_JsonImage.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888805}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_Reports", "src\Lesson04_Reports\Lesson04_Reports.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888806}"
+EndProject
 Global
 GlobalSection(SolutionConfigurationPlatforms) = preSolution
 Debug|Any CPU = Debug|Any CPU
@@ -45,6 +65,46 @@ GlobalSection(ProjectConfigurationPlatforms) = postSolution
 {A1B2C3D4-0000-0000-ABCD-666666666666}.Debug|Any CPU.Build.0 = Debug|Any CPU
 {A1B2C3D4-0000-0000-ABCD-666666666666}.Release|Any CPU.ActiveCfg = Release|Any CPU
 {A1B2C3D4-0000-0000-ABCD-666666666666}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777701}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777702}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777703}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-777777777704}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888801}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888802}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888803}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888804}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888805}.Release|Any CPU.Build.0 = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+{A1B2C3D4-0000-0000-ABCD-888888888806}.Release|Any CPU.Build.0 = Release|Any CPU
 EndGlobalSection
 GlobalSection(SolutionProperties) = preSolution
 HideSolutionNode = FALSE

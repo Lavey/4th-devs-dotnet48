@@ -23,7 +23,7 @@ historii wiadomości i przekazywanie jej z każdym kolejnym wywołaniem API.
 ### Konfiguracja
 ```
 # w katalogu src/Lesson01_Interaction/
-copy ..\..\App.example.config App.config
+copy App.config.example App.config
 # następnie otwórz App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
 
