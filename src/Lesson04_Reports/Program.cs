@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -255,6 +256,8 @@ namespace FourthDevs.Lesson04_Reports
         static void EnsureSampleDocs(string docsDir)
         {
             string[] files = Directory.GetFiles(docsDir);
+            if (files.Any())
+                return;
 
             File.WriteAllText(Path.Combine(docsDir, "q1_sales.md"),
                 "# Q1 Sales Report\n\n" +
