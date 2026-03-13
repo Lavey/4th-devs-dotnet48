@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in your API keys.
+  App.config is listed in .gitignore so your real keys are never committed.
+
+  To get keys:
+    OpenAI:      https://platform.openai.com/api-keys
+    OpenRouter:  https://openrouter.ai/settings/keys
+-->
+<configuration>
+  <appSettings>
+    <!-- ======================================================
+         AI Provider selection
+         Set to "openai" or "openrouter".
+         If both keys are present, defaults to "openai".
+         ====================================================== -->
+    <add key="AI_PROVIDER" value="" />
+
+    <!-- OpenAI API key (sk-…) -->
+    <add key="OPENAI_API_KEY" value="" />
+
+    <!-- OpenRouter API key (sk-or-v1-…) -->
+    <add key="OPENROUTER_API_KEY" value="" />
+
+    <!-- Optional: sent as HTTP-Referer when using OpenRouter -->
+    <add key="OPENROUTER_HTTP_REFERER" value="" />
+
+    <!-- Optional: sent as X-Title when using OpenRouter -->
+    <add key="OPENROUTER_APP_NAME" value="" />
+
+    <!-- Bearer token for API authentication (any secret string) -->
+    <add key="AUTH_TOKEN" value="0f47acce-3aa7-4b58-9389-21b2940ecc70" />
+
+    <!-- Server bind address (default: 127.0.0.1) -->
+    <add key="HOST" value="127.0.0.1" />
+
+    <!-- Server port (default: 3000) -->
+    <add key="PORT" value="3000" />
+
+    <!-- Workspace path for agent templates (default: workspace next to exe) -->
+    <add key="WORKSPACE_PATH" value="" />
+
+    <!-- Max turns per agent loop (default: 10) -->
+    <add key="AGENT_MAX_TURNS" value="10" />
+  </appSettings>
+</configuration>

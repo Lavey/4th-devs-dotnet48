@@ -34,6 +34,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_JsonImage", "src\L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_Reports", "src\Lesson04_Reports\Lesson04_Reports.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888806}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson05_Confirmation", "src\Lesson05_Confirmation\Lesson05_Confirmation.csproj", "{A1B2C3D4-0000-0000-ABCD-999999999901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson05_Agent", "src\Lesson05_Agent\Lesson05_Agent.csproj", "{A1B2C3D4-0000-0000-ABCD-999999999902}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +108,14 @@ Global
 		{A1B2C3D4-0000-0000-ABCD-888888888806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-888888888806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-888888888806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-999999999902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
