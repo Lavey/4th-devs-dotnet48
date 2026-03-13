@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>Lesson05_Agent</AssemblyName>
+    <RootNamespace>FourthDevs.Lesson05_Agent</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- App.config is not committed – copy App.config.example to App.config and fill in your keys -->
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App.config.example" />
+    <None Update="workspace\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
