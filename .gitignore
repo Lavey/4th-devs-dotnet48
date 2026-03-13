@@ -94,3 +94,5 @@ src/Lesson04_JsonImage/workspace/output/*
 !src/Lesson04_JsonImage/workspace/output/.gitkeep
 src/Lesson04_Reports/workspace/output/*
 !src/Lesson04_Reports/workspace/output/.gitkeep
+src/Lesson05_Confirmation/workspace/output/*
+!src/Lesson05_Confirmation/workspace/output/.gitkeep
