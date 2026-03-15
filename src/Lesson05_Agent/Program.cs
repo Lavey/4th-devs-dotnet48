@@ -167,6 +167,14 @@ namespace FourthDevs.Lesson05_Agent
                     return;
                 }
 
+                // POST /api/chat/agents/:agentId/deliver
+                var deliverMatch = Regex.Match(path, @"^/api/chat/agents/([^/]+)/deliver$");
+                if (method == "POST" && deliverMatch.Success)
+                {
+                    await HandleDeliverAsync(deliverMatch.Groups[1].Value, req, resp);
+                    return;
+                }
+
                 await WriteJsonAsync(resp, 404,
                     new { data = (object)null, error = new { message = "Not found" } });
             }
@@ -268,38 +276,75 @@ namespace FourthDevs.Lesson05_Agent
 
                 conversation.Add(new { type = "message", role = "user", content = input });
 
-                var result = await RunAgentLoopAsync(conversation, resolvedModel);
-
-                // Persist history (without system prompt)
-                var historyItems = conversation
-                    .Where(o =>
-                    {
-                        var j = JObject.FromObject(o);
-                        string t = j["type"]?.ToString() ?? string.Empty;
-                        string r = j["role"]?.ToString() ?? string.Empty;
-                        return t != "message" || r != "system";
-                    })
-                    .ToList();
-
-                lock (_lock)
+                try
                 {
-                    session.History = historyItems;
-                    runData.Status  = "completed";
+                    var result = await RunAgentLoopAsync(conversation, resolvedModel);
+
+                    // Persist history (without system prompt)
+                    var historyItems = conversation
+                        .Where(o =>
+                        {
+                            var j = JObject.FromObject(o);
+                            string t = j["type"]?.ToString() ?? string.Empty;
+                            string r = j["role"]?.ToString() ?? string.Empty;
+                            return t != "message" || r != "system";
+                        })
+                        .ToList();
+
+                    lock (_lock)
+                    {
+                        session.History = historyItems;
+                        runData.Status  = "completed";
+                    }
+
+                    await WriteJsonAsync(resp, 200, new
+                    {
+                        data = new
+                        {
+                            id        = agentId,
+                            sessionId,
+                            status    = "completed",
+                            model     = resolvedModel,
+                            output    = new[] { new { type = "text", text = result } },
+                            waitingFor = new object[0]
+                        },
+                        error = (object)null
+                    });
                 }
-
-                await WriteJsonAsync(resp, 200, new
+                catch (WaitingForHumanException waitEx)
                 {
-                    data = new
+                    var waitEntry = new WaitingForEntry
                     {
-                        id        = agentId,
-                        sessionId,
-                        status    = "completed",
-                        model     = resolvedModel,
-                        output    = new[] { new { type = "text", text = result } },
-                        waitingFor = new object[0]
-                    },
-                    error = (object)null
-                });
+                        CallId   = waitEx.CallId,
+                        Type     = "human",
+                        Question = waitEx.Question
+                    };
+
+                    lock (_lock)
+                    {
+                        runData.Status       = "waiting";
+                        runData.Model        = resolvedModel;
+                        runData.Conversation = conversation;
+                        runData.WaitingFor   = new List<WaitingForEntry> { waitEntry };
+                    }
+
+                    await WriteJsonAsync(resp, 202, new
+                    {
+                        data = new
+                        {
+                            id         = agentId,
+                            sessionId,
+                            status     = "waiting",
+                            model      = resolvedModel,
+                            output     = new object[0],
+                            waitingFor = new[]
+                            {
+                                new { callId = waitEx.CallId, type = "human", question = waitEx.Question }
+                            }
+                        },
+                        error = (object)null
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -323,6 +368,10 @@ namespace FourthDevs.Lesson05_Agent
                     new { data = (object)null, error = new { message = "Agent not found" } });
             }
 
+            var waitingFor = run.WaitingFor != null
+                ? run.WaitingFor.Select(w => (object)new { callId = w.CallId, type = w.Type, question = w.Question }).ToArray()
+                : new object[0];
+
             return WriteJsonAsync(resp, 200, new
             {
                 data = new
@@ -330,10 +379,156 @@ namespace FourthDevs.Lesson05_Agent
                     id        = run.Id,
                     sessionId = run.SessionId,
                     status    = run.Status,
-                    waitingFor = new object[0]
+                    waitingFor
                 },
                 error = (object)null
             });
+        }
+
+        static async Task HandleDeliverAsync(string agentId, HttpListenerRequest req, HttpListenerResponse resp)
+        {
+            string body;
+            using (var sr = new StreamReader(req.InputStream, Encoding.UTF8))
+                body = await sr.ReadToEndAsync();
+
+            JObject request;
+            try { request = JObject.Parse(body); }
+            catch
+            {
+                await WriteJsonAsync(resp, 400,
+                    new { data = (object)null, error = new { message = "Invalid JSON body" } });
+                return;
+            }
+
+            string callId  = request["callId"]?.ToString();
+            string output  = request["output"]?.ToString() ?? string.Empty;
+
+            AgentRunData run;
+            lock (_lock) AgentRuns.TryGetValue(agentId, out run);
+
+            if (run == null)
+            {
+                await WriteJsonAsync(resp, 404,
+                    new { data = (object)null, error = new { message = "Agent not found" } });
+                return;
+            }
+
+            if (run.Status != "waiting")
+            {
+                await WriteJsonAsync(resp, 400,
+                    new { data = (object)null, error = new { message = "Agent is not waiting" } });
+                return;
+            }
+
+            WaitingForEntry entry;
+            lock (_lock)
+            {
+                entry = run.WaitingFor?.FirstOrDefault(w => w.CallId == callId)
+                     ?? run.WaitingFor?.FirstOrDefault();
+            }
+
+            if (entry == null)
+            {
+                await WriteJsonAsync(resp, 400,
+                    new { data = (object)null, error = new { message = "No matching pending call" } });
+                return;
+            }
+
+            List<object> conversation;
+            string model;
+            lock (_lock)
+            {
+                conversation = run.Conversation;
+                model        = run.Model;
+            }
+
+            // Inject the human answer as the function call output
+            conversation.Add(new
+            {
+                type    = "function_call_output",
+                call_id = entry.CallId,
+                output
+            });
+
+            try
+            {
+                string result = await RunAgentLoopAsync(conversation, model);
+
+                // Persist history to the session (skip system messages)
+                SessionData session;
+                lock (_lock) Sessions.TryGetValue(run.SessionId, out session);
+                if (session != null)
+                {
+                    var historyItems = conversation
+                        .Where(o =>
+                        {
+                            var j = JObject.FromObject(o);
+                            string t = j["type"]?.ToString() ?? string.Empty;
+                            string r = j["role"]?.ToString() ?? string.Empty;
+                            return t != "message" || r != "system";
+                        })
+                        .ToList();
+
+                    lock (_lock)
+                    {
+                        session.History      = historyItems;
+                        run.Status           = "completed";
+                        run.WaitingFor       = null;
+                        run.Conversation     = null;
+                    }
+                }
+
+                await WriteJsonAsync(resp, 200, new
+                {
+                    data = new
+                    {
+                        id         = agentId,
+                        sessionId  = run.SessionId,
+                        status     = "completed",
+                        model,
+                        output     = new[] { new { type = "text", text = result } },
+                        waitingFor = new object[0]
+                    },
+                    error = (object)null
+                });
+            }
+            catch (WaitingForHumanException waitEx)
+            {
+                var newEntry = new WaitingForEntry
+                {
+                    CallId   = waitEx.CallId,
+                    Type     = "human",
+                    Question = waitEx.Question
+                };
+
+                lock (_lock)
+                {
+                    run.WaitingFor = new List<WaitingForEntry> { newEntry };
+                }
+
+                await WriteJsonAsync(resp, 202, new
+                {
+                    data = new
+                    {
+                        id         = agentId,
+                        sessionId  = run.SessionId,
+                        status     = "waiting",
+                        model,
+                        output     = new object[0],
+                        waitingFor = new[]
+                        {
+                            new { callId = waitEx.CallId, type = "human", question = waitEx.Question }
+                        }
+                    },
+                    error = (object)null
+                });
+            }
+            catch (Exception ex)
+            {
+                lock (_lock) run.Status = "error";
+                await WriteJsonAsync(resp, 500,
+                    new { data = (object)null, error = new { message = ex.Message } });
+            }
         }
 
         // ----------------------------------------------------------------
@@ -388,8 +583,16 @@ namespace FourthDevs.Lesson05_Agent
                 // Execute tools
                 foreach (var call in toolCalls)
                 {
-                    var    callArgs  = JObject.Parse(call.Arguments ?? "{}");
-                    object result    = ExecuteAgentTool(call.Name, callArgs);
+                    var callArgs = JObject.Parse(call.Arguments ?? "{}");
+
+                    // ask_user: pause the agent and wait for human input
+                    if (call.Name == "ask_user")
+                    {
+                        string question = callArgs["question"]?.ToString() ?? string.Empty;
+                        throw new WaitingForHumanException(call.CallId, question);
+                    }
+
+                    object result    = await ExecuteAgentToolAsync(call.Name, callArgs, model);
                     string resultJson = JsonConvert.SerializeObject(result);
 
                     Console.WriteLine(string.Format("  [tool] {0} → {1}",
@@ -485,6 +688,66 @@ namespace FourthDevs.Lesson05_Agent
                         additionalProperties = false
                     },
                     Strict = true
+                },
+                new ToolDefinition
+                {
+                    Type        = "function",
+                    Name        = "ask_user",
+                    Description = "Ask the user a question and wait for their response. " +
+                                  "Use this when you need clarification, confirmation, or additional " +
+                                  "information that only the user can provide. The agent will pause " +
+                                  "until the user responds.",
+                    Parameters  = new
+                    {
+                        type       = "object",
+                        properties = new
+                        {
+                            question = new { type = "string", description = "The question to ask the user" }
+                        },
+                        required             = new[] { "question" },
+                        additionalProperties = false
+                    },
+                    Strict = true
+                },
+                new ToolDefinition
+                {
+                    Type        = "function",
+                    Name        = "delegate",
+                    Description = "Delegate a task to another agent and wait for the result. " +
+                                  "Use this when a specialised agent can handle part of the work " +
+                                  "(e.g. web research, file operations).",
+                    Parameters  = new
+                    {
+                        type       = "object",
+                        properties = new
+                        {
+                            agent = new { type = "string", description = "Name of the agent template to run (e.g. \"bob\")" },
+                            task  = new { type = "string", description = "A clear description of what the child agent should accomplish" }
+                        },
+                        required             = new[] { "agent", "task" },
+                        additionalProperties = false
+                    },
+                    Strict = true
+                },
+                new ToolDefinition
+                {
+                    Type        = "function",
+                    Name        = "send_message",
+                    Description = "Send a non-blocking message to another running agent. " +
+                                  "The message appears in the target agent's context on their next turn. " +
+                                  "Use this to share information without waiting for a response.",
+                    Parameters  = new
+                    {
+                        type       = "object",
+                        properties = new
+                        {
+                            to      = new { type = "string", description = "The agent ID to send the message to" },
+                            message = new { type = "string", description = "The message content to deliver" }
+                        },
+                        required             = new[] { "to", "message" },
+                        additionalProperties = false
+                    },
+                    Strict = true
                 }
             };
         }
@@ -493,7 +756,7 @@ namespace FourthDevs.Lesson05_Agent
         // Agent tool execution
         // ----------------------------------------------------------------
 
-        static object ExecuteAgentTool(string name, JObject args)
+        static async Task<object> ExecuteAgentToolAsync(string name, JObject args, string model)
         {
             switch (name)
             {
@@ -501,9 +764,73 @@ namespace FourthDevs.Lesson05_Agent
                 case "list_files":   return ExecuteListFiles(args);
                 case "read_file":    return ExecuteReadFile(args);
                 case "write_file":   return ExecuteWriteFile(args);
+                case "delegate":     return await ExecuteDelegateAsync(args, model);
+                case "send_message": return ExecuteSendMessage(args);
                 default:
                     return new { error = "Unknown tool: " + name };
             }
+        }
+
+        static async Task<object> ExecuteDelegateAsync(JObject args, string model)
+        {
+            string agentName = args["agent"]?.ToString();
+            string task      = args["task"]?.ToString();
+
+            if (string.IsNullOrEmpty(agentName) || string.IsNullOrEmpty(task))
+                return new { error = "Both \"agent\" and \"task\" are required." };
+
+            string systemPrompt = LoadAgentTemplate(agentName);
+            if (systemPrompt == null)
+                return new { error = string.Format("Agent template not found: {0}", agentName) };
+
+            var childConversation = new List<object>
+            {
+                new { type = "message", role = "system", content = systemPrompt },
+                new { type = "message", role = "user",   content = task }
+            };
+
+            try
+            {
+                string childResult = await RunAgentLoopAsync(childConversation, model);
+                return new { ok = true, output = childResult };
+            }
+            catch (WaitingForHumanException)
+            {
+                return new { error = "Delegate agent requires human input and cannot complete automatically." };
+            }
+            catch (Exception ex)
+            {
+                return new { error = ex.Message };
+            }
+        }
+
+        static object ExecuteSendMessage(JObject args)
+        {
+            string to      = args["to"]?.ToString();
+            string message = args["message"]?.ToString();
+
+            if (string.IsNullOrEmpty(to) || string.IsNullOrEmpty(message))
+                return new { error = "Both \"to\" and \"message\" are required." };
+
+            lock (_lock)
+            {
+                AgentRunData targetRun;
+                if (!AgentRuns.TryGetValue(to, out targetRun))
+                    return new { error = string.Format("Agent not found: {0}", to) };
+
+                SessionData targetSession;
+                if (!Sessions.TryGetValue(targetRun.SessionId, out targetSession))
+                    return new { error = string.Format("Session not found for agent: {0}", to) };
+
+                targetSession.History.Add(new
+                {
+                    type    = "message",
+                    role    = "system",
+                    content = message
+                });
+            }
+
+            return new { ok = true, output = string.Format("Message delivered to agent {0}", to) };
         }
 
         static object ExecuteCalculator(JObject args)
@@ -697,8 +1024,31 @@ namespace FourthDevs.Lesson05_Agent
 
     internal class AgentRunData
     {
-        public string Id        { get; set; }
-        public string SessionId { get; set; }
-        public string Status    { get; set; }
+        public string                Id           { get; set; }
+        public string                SessionId    { get; set; }
+        public string                Status       { get; set; }
+        public string                Model        { get; set; }
+        public List<object>          Conversation { get; set; }
+        public List<WaitingForEntry> WaitingFor   { get; set; }
+    }
+
+    internal class WaitingForEntry
+    {
+        public string CallId   { get; set; }
+        public string Type     { get; set; }
+        public string Question { get; set; }
+    }
+
+    internal class WaitingForHumanException : Exception
+    {
+        public string CallId   { get; }
+        public string Question { get; }
+
+        public WaitingForHumanException(string callId, string question)
+            : base("Agent is waiting for human input.")
+        {
+            CallId   = callId;
+            Question = question;
+        }
     }
 }
