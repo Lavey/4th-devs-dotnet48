@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>Aype.AI.Tools</AssemblyName>
+    <RootNamespace>Aype.AI.Tools</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aype.AI.Common\Aype.AI.Common.csproj" />
+  </ItemGroup>
+</Project>
