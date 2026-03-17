@@ -22,13 +22,13 @@ This single project combines the two MCP servers:
 ### Build
 
 ```bash
-dotnet build mcp/MCP/MCP.csproj
+dotnet build src/MCP/MCP.csproj
 ```
 
 ### Configure
 
 ```bash
-cd mcp/MCP
+cd src/MCP
 copy App.config.example App.config
 # Edit App.config to set MCP_MODE and the relevant settings
 ```
@@ -79,7 +79,7 @@ Add to `%APPDATA%\Claude\claude_desktop_config.json`:
 {
   "mcpServers": {
     "files": {
-      "command": "C:\\path\\to\\mcp\\MCP\\bin\\Release\\net48\\MCP.exe",
+      "command": "C:\\path\\to\\src\\MCP\\bin\\Release\\net48\\MCP.exe",
       "args": ["files"],
       "env": {
         "FS_ROOTS": "C:\\Users\\YourUser\\Documents,C:\\Projects"
