@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <!-- UploadThing API token (required) -->
+    <!-- Get from: https://uploadthing.com/dashboard -->
+    <add key="UPLOADTHING_TOKEN" value="" />
+    <!-- HTTP server port (default: 3000) -->
+    <add key="PORT" value="3000" />
+    <!-- Bind address (default: 127.0.0.1) -->
+    <add key="HOST" value="127.0.0.1" />
+  </appSettings>
+</configuration>
