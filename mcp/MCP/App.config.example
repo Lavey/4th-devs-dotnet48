@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in the settings for the mode you want to run.
+  App.config is listed in .gitignore so your real keys are never committed.
+
+  Usage:
+    MCP.exe files         -- stdio FilesMcp server (default)
+    MCP.exe uploadthing   -- HTTP UploadThingMcp server
+
+  You can also set the mode via the MCP_MODE environment variable or App.config key.
+-->
+<configuration>
+  <appSettings>
+    <!-- ===================================================
+         Mode selection: "files" (default) or "uploadthing"
+         Can also be overridden by the first CLI argument
+         or the MCP_MODE environment variable.
+         =================================================== -->
+    <add key="MCP_MODE" value="files" />
+
+    <!-- ===================================================
+         FilesMcp settings (used when MCP_MODE = "files")
+         =================================================== -->
+
+    <!-- Mount points: comma-separated paths accessible to the MCP server -->
+    <!-- Format: "alias:/path" or just "/path" -->
+    <add key="FS_ROOTS" value="C:\Users\YourUser\Documents" />
+
+    <!-- Log level: debug, info, warning, error -->
+    <add key="LOG_LEVEL" value="info" />
+
+    <!-- Maximum file size in bytes (default: 1048576 = 1MB) -->
+    <add key="MAX_FILE_SIZE" value="1048576" />
+
+    <!-- ===================================================
+         UploadThingMcp settings (used when MCP_MODE = "uploadthing")
+         =================================================== -->
+
+    <!-- UploadThing API token (required) -->
+    <!-- Get from: https://uploadthing.com/dashboard -->
+    <add key="UPLOADTHING_TOKEN" value="" />
+
+    <!-- HTTP server port (default: 3000) -->
+    <add key="PORT" value="3000" />
+
+    <!-- Bind address (default: 127.0.0.1) -->
+    <add key="HOST" value="127.0.0.1" />
+  </appSettings>
+</configuration>

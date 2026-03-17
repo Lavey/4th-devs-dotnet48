@@ -58,6 +58,8 @@ namespace FourthDevs.Lesson05_Agent
 
         private static readonly object _lock = new object();
 
+        private static Mcp.McpClientManager _mcpManager;
+
         // ----------------------------------------------------------------
         // Entry point
         // ----------------------------------------------------------------
@@ -74,6 +76,23 @@ namespace FourthDevs.Lesson05_Agent
             AgentToolExecutors.AgentRuns     = AgentRuns;
             AgentToolExecutors.Sessions      = Sessions;
             AgentToolExecutors.StateLock     = _lock;
+
+            // Initialize MCP client manager (non-blocking – errors are logged, not fatal)
+            _mcpManager = new Mcp.McpClientManager();
+            string mcpJsonPath = ResolveMcpJsonPath(workspaceRoot);
+            if (File.Exists(mcpJsonPath))
+            {
+                Console.WriteLine("Loading MCP config from: " + mcpJsonPath);
+                try
+                {
+                    _mcpManager.InitializeAsync(mcpJsonPath).GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine("[mcp] Initialization error: " + ex.Message);
+                }
+            }
+            AgentRunner.McpManager = _mcpManager;
 
             string prefix = string.Format("http://{0}:{1}/", Host, Port);
             var listener  = new HttpListener();
@@ -203,9 +222,16 @@ namespace FourthDevs.Lesson05_Agent
 
         static Task HandleListMcpServersAsync(HttpListenerResponse resp)
         {
+            var serverList = new List<object>();
+            if (_mcpManager != null)
+            {
+                foreach (var name in _mcpManager.GetServerNames())
+                    serverList.Add(new { name, status = "connected" });
+            }
+
             return WriteJsonAsync(resp, 200, new
             {
-                data  = new { servers = new object[0] },
+                data  = new { servers = serverList },
                 error = (object)null
             });
         }
@@ -564,6 +590,21 @@ namespace FourthDevs.Lesson05_Agent
             string cfg = Cfg("WORKSPACE_PATH");
             if (!string.IsNullOrWhiteSpace(cfg)) return cfg;
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "workspace");
+        }
+
+        static string ResolveMcpJsonPath(string workspaceRoot)
+        {
+            // 1. Check MCP_CONFIG env/app setting
+            string cfg = Cfg("MCP_CONFIG");
+            if (!string.IsNullOrWhiteSpace(cfg)) return cfg;
+
+            // 2. Look for .mcp.json next to the workspace directory (project root)
+            string projectDir = Path.GetDirectoryName(workspaceRoot) ?? workspaceRoot;
+            string candidate  = Path.Combine(projectDir, ".mcp.json");
+            if (File.Exists(candidate)) return candidate;
+
+            // 3. Look in the workspace directory itself
+            return Path.Combine(workspaceRoot, ".mcp.json");
         }
 
         // ----------------------------------------------------------------

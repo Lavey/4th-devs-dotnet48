@@ -42,5 +42,10 @@
 
     <!-- Max turns per agent loop (default: 10) -->
     <add key="AGENT_MAX_TURNS" value="10" />
+
+    <!-- Optional: path to .mcp.json for MCP server configuration.
+         If not set, the server looks for .mcp.json next to the workspace directory,
+         then inside it.  Copy .mcp.example.json to .mcp.json and edit as needed. -->
+    <add key="MCP_CONFIG" value="" />
   </appSettings>
 </configuration>

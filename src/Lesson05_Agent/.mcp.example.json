@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "files": {
+      "transport": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "../../../../mcp/MCP/MCP.csproj",
+        "--",
+        "files"
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "FS_ROOTS": "./workspace"
+      }
+    }
+  }
+}
