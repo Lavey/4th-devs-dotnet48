@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <!-- Mount points: comma-separated paths accessible to the MCP server -->
+    <!-- Format: "alias:/path" or just "/path" -->
+    <add key="FS_ROOTS" value="C:\Users\YourUser\Documents" />
+    <!-- Log level: debug, info, warning, error -->
+    <add key="LOG_LEVEL" value="info" />
+    <!-- Maximum file size in bytes (default: 1048576 = 1MB) -->
+    <add key="MAX_FILE_SIZE" value="1048576" />
+  </appSettings>
+</configuration>

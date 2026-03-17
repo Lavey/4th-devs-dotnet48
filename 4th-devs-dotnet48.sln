@@ -4,6 +4,10 @@ VisualStudioVersion = 18.4.11605.240 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{A1B2C3D4-0000-0000-ABCD-111111111111}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesMcp", "mcp\FilesMcp\FilesMcp.csproj", "{A1B2C3D4-0000-0000-ABCD-AAAAAAAAAAAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadThingMcp", "mcp\UploadThingMcp\UploadThingMcp.csproj", "{A1B2C3D4-0000-0000-ABCD-BBBBBBBBBBBB}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01_Interaction", "src\Lesson01_Interaction\Lesson01_Interaction.csproj", "{A1B2C3D4-0000-0000-ABCD-222222222222}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01_Structured", "src\Lesson01_Structured\Lesson01_Structured.csproj", "{A1B2C3D4-0000-0000-ABCD-333333333333}"
@@ -56,6 +60,14 @@ Global
 		{A1B2C3D4-0000-0000-ABCD-111111111111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-111111111111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-111111111111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-AAAAAAAAAAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-AAAAAAAAAAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-AAAAAAAAAAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-AAAAAAAAAAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-BBBBBBBBBBBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-BBBBBBBBBBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-BBBBBBBBBBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-BBBBBBBBBBBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-222222222222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-222222222222}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-222222222222}.Release|Any CPU.ActiveCfg = Release|Any CPU
