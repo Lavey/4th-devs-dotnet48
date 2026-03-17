@@ -40,6 +40,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson05_Agent", "src\Lesso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson06_AgenticRag", "src\Lesson06_AgenticRag\Lesson06_AgenticRag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000001}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_Chunking", "src\Lesson07_Chunking\Lesson07_Chunking.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_Embedding", "src\Lesson07_Embedding\Lesson07_Embedding.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000003}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_HybridRag", "src\Lesson07_HybridRag\Lesson07_HybridRag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000004}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +128,18 @@ Global
 		{A1B2C3D4-0000-0000-ABCD-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-000000000004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
