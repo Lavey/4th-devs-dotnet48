@@ -4,7 +4,7 @@ VisualStudioVersion = 18.4.11605.240
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{A1B2C3D4-0000-0000-ABCD-111111111111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCP", "mcp\MCP\MCP.csproj", "{A1B2C3D4-0000-0000-ABCD-CCCCCCCCCCCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCP", "src\MCP\MCP.csproj", "{A1B2C3D4-0000-0000-ABCD-CCCCCCCCCCCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01_Interaction", "src\Lesson01_Interaction\Lesson01_Interaction.csproj", "{A1B2C3D4-0000-0000-ABCD-222222222222}"
 EndProject
