@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.4.11605.240 stable
+VisualStudioVersion = 18.4.11605.240
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{A1B2C3D4-0000-0000-ABCD-111111111111}"
 EndProject
@@ -49,14 +49,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_Embedding", "src\Lesson07_Embedding\Lesson07_Embedding.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000003}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_HybridRag", "src\Lesson07_HybridRag\Lesson07_HybridRag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000004}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aype.AI.Common", "src\Aype.AI\Aype.AI.Common\Aype.AI.Common.csproj", "{B2C3D4E5-0000-0000-ABCD-000000000001}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aype.AI.ApiClient", "src\Aype.AI\Aype.AI.ApiClient\Aype.AI.ApiClient.csproj", "{B2C3D4E5-0000-0000-ABCD-000000000002}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aype.AI.Tools", "src\Aype.AI\Aype.AI.Tools\Aype.AI.Tools.csproj", "{B2C3D4E5-0000-0000-ABCD-000000000003}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aype.AI._AgentHybridRag", "src\Aype.AI\Aype.AI._AgentHybridRag\Aype.AI._AgentHybridRag.csproj", "{B2C3D4E5-0000-0000-ABCD-000000000004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -160,22 +152,6 @@ Global
 		{A1B2C3D4-0000-0000-ABCD-000000000004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-000000000004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-000000000004}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000002}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000002}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000002}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000003}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000003}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000003}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000004}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000004}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C3D4E5-0000-0000-ABCD-000000000004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
