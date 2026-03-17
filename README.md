@@ -22,6 +22,7 @@ copy App.example.config src\Lesson02_Tools\App.config
 copy App.example.config src\Lesson02_ToolUse\App.config
 copy App.example.config src\Lesson05_Confirmation\App.config
 copy App.example.config src\Lesson05_Agent\App.config
+copy App.example.config src\Lesson06_AgenticRag\App.config
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
@@ -48,6 +49,7 @@ dotnet run --project src\Lesson02_Tools\Lesson02_Tools.csproj
 dotnet run --project src\Lesson02_ToolUse\Lesson02_ToolUse.csproj
 dotnet run --project src\Lesson05_Confirmation\Lesson05_Confirmation.csproj
 dotnet run --project src\Lesson05_Agent\Lesson05_Agent.csproj
+dotnet run --project src\Lesson06_AgenticRag\Lesson06_AgenticRag.csproj
 ```
 
 ## Ćwiczenia
@@ -61,6 +63,7 @@ dotnet run --project src\Lesson05_Agent\Lesson05_Agent.csproj
 | [`Lesson02_ToolUse`](src/Lesson02_ToolUse/) | `01_02_tool_use` | Sandboxed filesystem function calling |
 | [`Lesson05_Confirmation`](src/Lesson05_Confirmation/) | `01_05_confirmation` | Agent plików i e-mail z potwierdzeniem (HITL) |
 | [`Lesson05_Agent`](src/Lesson05_Agent/) | `01_05_agent` | Serwer HTTP REST z pętlą agentową i zarządzaniem sesjami |
+| [`Lesson06_AgenticRag`](src/Lesson06_AgenticRag/) | `02_01_agentic_rag` | Agentic RAG z wieloetapowym wyszukiwaniem dokumentów |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -79,13 +82,14 @@ src/
   Lesson02_ToolUse/         ← Ćwiczenie: narzędzia systemu plików w piaskownicy
   Lesson05_Confirmation/    ← Ćwiczenie: agent plików i e-mail z potwierdzeniem (HITL)
   Lesson05_Agent/           ← Ćwiczenie: serwer HTTP REST z pętlą agentową
+  Lesson06_AgenticRag/      ← Ćwiczenie: Agentic RAG z wieloetapowym wyszukiwaniem
 ```
 
 ## Dodawanie nowych ćwiczeń
 
 1. Utwórz nowy projekt Console App w `src/LessonXX_Name/`:
    ```powershell
-   dotnet new console -f net48 -o src/LessonXX_Name -n LessonXX_Name --langVersion 7.3
+   dotnet new console -f net48 -o src/LessonXX_Name -n LessonXX_Name --langVersion 7.2
    ```
 2. Dodaj referencję do `Common`:
    ```xml
