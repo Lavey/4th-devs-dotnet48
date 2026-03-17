@@ -4,7 +4,7 @@
     <TargetFramework>net48</TargetFramework>
     <AssemblyName>Lesson06_AgenticRag</AssemblyName>
     <RootNamespace>FourthDevs.Lesson06_AgenticRag</RootNamespace>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>7.2</LangVersion>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
