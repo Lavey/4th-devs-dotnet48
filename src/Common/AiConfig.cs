@@ -9,15 +9,18 @@ namespace FourthDevs.Common
     /// </summary>
     public static class AiConfig
     {
-        private const string EndpointOpenAi     = "https://api.openai.com/v1/responses";
-        private const string EndpointOpenRouter = "https://openrouter.ai/api/v1/responses";
+        private const string EndpointOpenAi             = "https://api.openai.com/v1/responses";
+        private const string EndpointOpenRouter         = "https://openrouter.ai/api/v1/responses";
+        private const string EmbeddingsEndpointOpenAi     = "https://api.openai.com/v1/embeddings";
+        private const string EmbeddingsEndpointOpenRouter = "https://openrouter.ai/api/v1/embeddings";
 
-        public static string Provider        { get; }
-        public static string ApiKey          { get; }
-        public static string ApiEndpoint     { get; }
-        public static string HttpReferer     { get; }
-        public static string AppName         { get; }
-        public static string GeminiApiKey    { get; }
+        public static string Provider             { get; }
+        public static string ApiKey               { get; }
+        public static string ApiEndpoint          { get; }
+        public static string EmbeddingsEndpoint   { get; }
+        public static string HttpReferer          { get; }
+        public static string AppName              { get; }
+        public static string GeminiApiKey         { get; }
 
         static AiConfig()
         {
@@ -47,8 +50,9 @@ namespace FourthDevs.Common
                 ? requested
                 : (hasOpenAi ? "openai" : "openrouter");
 
-            ApiKey       = Provider == "openai" ? openAiKey : openRouterKey;
-            ApiEndpoint  = Provider == "openai" ? EndpointOpenAi : EndpointOpenRouter;
+            ApiKey             = Provider == "openai" ? openAiKey : openRouterKey;
+            ApiEndpoint        = Provider == "openai" ? EndpointOpenAi : EndpointOpenRouter;
+            EmbeddingsEndpoint = Provider == "openai" ? EmbeddingsEndpointOpenAi : EmbeddingsEndpointOpenRouter;
             HttpReferer  = Get("OPENROUTER_HTTP_REFERER");
             AppName      = Get("OPENROUTER_APP_NAME");
             GeminiApiKey = Get("GEMINI_API_KEY");

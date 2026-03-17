@@ -23,6 +23,9 @@ copy App.example.config src\Lesson02_ToolUse\App.config
 copy App.example.config src\Lesson05_Confirmation\App.config
 copy App.example.config src\Lesson05_Agent\App.config
 copy App.example.config src\Lesson06_AgenticRag\App.config
+copy App.example.config src\Lesson07_Chunking\App.config
+copy App.example.config src\Lesson07_Embedding\App.config
+copy App.example.config src\Lesson07_HybridRag\App.config
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
@@ -50,6 +53,9 @@ dotnet run --project src\Lesson02_ToolUse\Lesson02_ToolUse.csproj
 dotnet run --project src\Lesson05_Confirmation\Lesson05_Confirmation.csproj
 dotnet run --project src\Lesson05_Agent\Lesson05_Agent.csproj
 dotnet run --project src\Lesson06_AgenticRag\Lesson06_AgenticRag.csproj
+dotnet run --project src\Lesson07_Chunking\Lesson07_Chunking.csproj
+dotnet run --project src\Lesson07_Embedding\Lesson07_Embedding.csproj
+dotnet run --project src\Lesson07_HybridRag\Lesson07_HybridRag.csproj
 ```
 
 ## Ćwiczenia
@@ -64,6 +70,9 @@ dotnet run --project src\Lesson06_AgenticRag\Lesson06_AgenticRag.csproj
 | [`Lesson05_Confirmation`](src/Lesson05_Confirmation/) | `01_05_confirmation` | Agent plików i e-mail z potwierdzeniem (HITL) |
 | [`Lesson05_Agent`](src/Lesson05_Agent/) | `01_05_agent` | Serwer HTTP REST z pętlą agentową i zarządzaniem sesjami |
 | [`Lesson06_AgenticRag`](src/Lesson06_AgenticRag/) | `02_01_agentic_rag` | Agentic RAG z wieloetapowym wyszukiwaniem dokumentów |
+| [`Lesson07_Chunking`](src/Lesson07_Chunking/) | `02_02_chunking` | Cztery strategie podziału tekstu: characters, separators, context, topics |
+| [`Lesson07_Embedding`](src/Lesson07_Embedding/) | `02_02_embedding` | Interaktywne demo embeddingów z kolorową macierzą podobieństwa |
+| [`Lesson07_HybridRag`](src/Lesson07_HybridRag/) | `02_02_hybrid_rag` | Hybrid RAG: SQLite FTS5 + cosine similarity + RRF |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -83,6 +92,9 @@ src/
   Lesson05_Confirmation/    ← Ćwiczenie: agent plików i e-mail z potwierdzeniem (HITL)
   Lesson05_Agent/           ← Ćwiczenie: serwer HTTP REST z pętlą agentową
   Lesson06_AgenticRag/      ← Ćwiczenie: Agentic RAG z wieloetapowym wyszukiwaniem
+  Lesson07_Chunking/        ← Ćwiczenie: cztery strategie podziału tekstu
+  Lesson07_Embedding/       ← Ćwiczenie: interaktywne demo embeddingów
+  Lesson07_HybridRag/       ← Ćwiczenie: Hybrid RAG (FTS5 + cosine similarity + RRF)
 ```
 
 ## Dodawanie nowych ćwiczeń
