@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using FourthDevs.Common.Models;
+using FourthDevs.Lesson05_Agent.Mcp;
+using Newtonsoft.Json.Linq;
 
 namespace FourthDevs.Lesson05_Agent.Tools
 {
@@ -9,9 +11,13 @@ namespace FourthDevs.Lesson05_Agent.Tools
     /// </summary>
     internal static class AgentToolDefinitions
     {
-        internal static List<ToolDefinition> Build()
+        /// <summary>
+        /// Build the combined list of built-in tools plus any tools provided by
+        /// connected MCP servers.
+        /// </summary>
+        internal static List<ToolDefinition> Build(Mcp.McpClientManager mcpManager = null)
         {
-            return new List<ToolDefinition>
+            var list = new List<ToolDefinition>
             {
                 Calculator(),
                 ListFiles(),
@@ -20,6 +26,42 @@ namespace FourthDevs.Lesson05_Agent.Tools
                 AskUser(),
                 Delegate(),
                 SendMessage()
+            };
+
+            // Append MCP tools (prefixed as serverName__toolName)
+            if (mcpManager != null)
+            {
+                foreach (var mcpTool in mcpManager.GetTools())
+                {
+                    list.Add(McpToolToDefinition(mcpTool));
+                }
+            }
+
+            return list;
+        }
+
+        // ----------------------------------------------------------------
+        // MCP tool adapter
+        // ----------------------------------------------------------------
+
+        private static ToolDefinition McpToolToDefinition(McpToolInfo tool)
+        {
+            // The Responses API requires strict:true, which disallows additionalProperties.
+            // We clone the inputSchema and set additionalProperties = false if needed.
+            var schema = tool.InputSchema != null
+                ? (JObject)tool.InputSchema.DeepClone()
+                : new JObject { ["type"] = "object", ["properties"] = new JObject() };
+
+            if (schema["additionalProperties"] == null)
+                schema["additionalProperties"] = false;
+
+            return new ToolDefinition
+            {
+                Type        = "function",
+                Name        = tool.PrefixedName,
+                Description = tool.Description ?? tool.PrefixedName,
+                Parameters  = schema,
+                Strict      = true
             };
         }
 

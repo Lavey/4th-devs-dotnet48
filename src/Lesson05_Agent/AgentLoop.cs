@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using FourthDevs.Common;
 using FourthDevs.Common.Models;
+using FourthDevs.Lesson05_Agent.Mcp;
 using FourthDevs.Lesson05_Agent.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,6 +31,9 @@ namespace FourthDevs.Lesson05_Agent
         // Workspace root needed to load agent templates.
         internal static string WorkspaceRoot { get; set; }
 
+        // MCP manager shared across all agent loops.
+        internal static McpClientManager McpManager { get; set; }
+
         // ----------------------------------------------------------------
         // Main agent loop
         // ----------------------------------------------------------------
@@ -36,7 +41,7 @@ namespace FourthDevs.Lesson05_Agent
         internal static async Task<string> RunAgentLoopAsync(
             List<object> conversation, string model)
         {
-            var tools = AgentToolDefinitions.Build();
+            var tools = AgentToolDefinitions.Build(McpManager);
 
             for (int step = 0; step < AgentMaxTurns; step++)
             {
@@ -118,6 +123,20 @@ namespace FourthDevs.Lesson05_Agent
         private static async Task<object> ExecuteAgentToolAsync(
             string name, JObject args, string model)
         {
+            // Route MCP tools (prefixed as serverName__toolName) to the MCP manager
+            if (McpManager != null && name.Contains("__"))
+            {
+                try
+                {
+                    string result = await McpManager.CallToolAsync(name, args);
+                    return new { result };
+                }
+                catch (Exception ex)
+                {
+                    return new { error = ex.Message };
+                }
+            }
+
             switch (name)
             {
                 case "calculator":   return AgentToolExecutors.ExecuteCalculator(args);

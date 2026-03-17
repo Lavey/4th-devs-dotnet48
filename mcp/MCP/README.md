@@ -1,17 +1,14 @@
-# MCP Servers — .NET Framework 4.8 Port
-
-![4th-devs logo](assets/logo.svg)
+# MCP — Unified MCP Server (.NET Framework 4.8)
 
 C# 7.3 / .NET Framework 4.8 port of the MCP (Model Context Protocol) servers from
 [i-am-alice/4th-devs](https://github.com/i-am-alice/4th-devs/tree/main/mcp).
 
----
+This single project combines the two MCP servers:
 
-## Project
-
-| Project | Modes | Description |
-|---------|-------|-------------|
-| [MCP](MCP/README.md) | `files` (stdio), `uploadthing` (HTTP) | Unified MCP server combining sandboxed file-system access and UploadThing file-hosting |
+| Mode | Transport | Description | Source |
+|------|-----------|-------------|--------|
+| `files` | stdio | Sandboxed file-system access with read, search, write, and manage tools | [mcp/files-mcp](https://github.com/i-am-alice/4th-devs/tree/main/mcp/files-mcp) |
+| `uploadthing` | HTTP | UploadThing file-hosting service with upload, list, and manage tools | [mcp/uploadthing-mcp](https://github.com/i-am-alice/4th-devs/tree/main/mcp/uploadthing-mcp) |
 
 ---
 
@@ -28,28 +25,46 @@ C# 7.3 / .NET Framework 4.8 port of the MCP (Model Context Protocol) servers fro
 dotnet build mcp/MCP/MCP.csproj
 ```
 
-### Run — files mode (stdio)
+### Configure
 
 ```bash
-# Set mount points via environment variable
-set FS_ROOTS=C:\Users\YourUser\Documents
-
-# Or copy and edit App.config.example → App.config
 cd mcp/MCP
 copy App.config.example App.config
-# Edit App.config, then:
-dotnet run -- files
+# Edit App.config to set MCP_MODE and the relevant settings
 ```
 
-### Run — uploadthing mode (HTTP)
+### Run — FilesMcp mode (stdio)
 
 ```bash
-set UPLOADTHING_TOKEN=your_token_here
-set PORT=3000
+# via CLI argument
+MCP.exe files
 
-# Or via App.config
-cd mcp/MCP
-dotnet run -- uploadthing
+# via environment variable
+set MCP_MODE=files
+MCP.exe
+
+# via App.config (MCP_MODE = files)
+MCP.exe
+```
+
+### Run — UploadThingMcp mode (HTTP)
+
+```bash
+# via CLI argument
+set UPLOADTHING_TOKEN=your_token_here
+MCP.exe uploadthing
+
+# via environment variable
+set MCP_MODE=uploadthing
+set UPLOADTHING_TOKEN=your_token_here
+MCP.exe
+```
+
+The HTTP server prints:
+```
+MCP server starting in [uploadthing] mode
+Listening on http://127.0.0.1:3000/
+Press Ctrl+C to stop.
 ```
 
 ---
@@ -76,13 +91,58 @@ Add to `%APPDATA%\Claude\claude_desktop_config.json`:
 
 ### Claude Desktop — uploadthing mode (HTTP)
 
-Start the server first, then configure the MCP client to connect to `http://localhost:3000/mcp`.
+Start the server as a background service:
+
+```bash
+set UPLOADTHING_TOKEN=your_token_here
+MCP.exe uploadthing
+```
+
+Then configure your MCP client:
+
+```json
+{
+  "mcpServers": {
+    "uploadthing": {
+      "type": "http",
+      "url": "http://127.0.0.1:3000/mcp"
+    }
+  }
+}
+```
+
+### Use both servers simultaneously
+
+Run two separate instances — one per mode:
+
+```bash
+# Terminal 1 — files server (stdio, managed by MCP client)
+# Terminal 2 — uploadthing server (HTTP)
+set UPLOADTHING_TOKEN=your_token_here
+MCP.exe uploadthing
+```
+
+```json
+{
+  "mcpServers": {
+    "files": {
+      "command": "C:\\path\\to\\MCP.exe",
+      "args": ["files"],
+      "env": { "FS_ROOTS": "C:\\Projects" }
+    },
+    "uploadthing": {
+      "type": "http",
+      "url": "http://127.0.0.1:3000/mcp"
+    }
+  }
+}
+```
 
 ---
 
 ## Architecture
 
-Both modes implement the [MCP specification](https://spec.modelcontextprotocol.io/) (protocol version `2024-11-05`):
+The server implements the [MCP specification](https://spec.modelcontextprotocol.io/) (protocol version `2024-11-05`):
 
 - **JSON-RPC 2.0** message format
 - **files mode**: stdio transport — reads from `stdin`, writes to `stdout`, logs to `stderr`
