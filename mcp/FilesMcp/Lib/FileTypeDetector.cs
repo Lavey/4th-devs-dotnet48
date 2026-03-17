@@ -24,8 +24,8 @@ namespace FourthDevs.FilesMcp.Lib
             ".php", ".phtml", ".asp", ".aspx", ".cshtml", ".razor"
         };
 
-        private const int SampleSize = 8192;
-        private const double BinaryThreshold = 0.3;
+        private const int FileSampleSizeBytes = 8192;
+        private const double NonPrintableCharThreshold = 0.3;
 
         public static bool IsTextFile(string filePath)
         {
@@ -36,7 +36,7 @@ namespace FourthDevs.FilesMcp.Lib
             // Fallback: sample the file
             try
             {
-                byte[] buffer = new byte[SampleSize];
+                byte[] buffer = new byte[FileSampleSizeBytes];
                 int bytesRead;
                 using (var fs = File.OpenRead(filePath))
                     bytesRead = fs.Read(buffer, 0, buffer.Length);
@@ -55,7 +55,7 @@ namespace FourthDevs.FilesMcp.Lib
 
                 if (nullBytes > 0) return false;
                 double ratio = (double)nonPrintable / bytesRead;
-                return ratio < BinaryThreshold;
+                return ratio < NonPrintableCharThreshold;
             }
             catch
             {

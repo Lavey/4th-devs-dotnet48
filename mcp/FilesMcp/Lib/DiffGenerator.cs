@@ -8,7 +8,7 @@ namespace FourthDevs.FilesMcp.Lib
 {
     internal static class DiffGenerator
     {
-        private const int ContextLines = 3;
+        private const int DefaultContextLines = 3;
         /// <summary>
         /// Generate a unified diff between oldContent and newContent.
         /// </summary>
@@ -51,7 +51,7 @@ namespace FourthDevs.FilesMcp.Lib
                 if (i >= allLines.Count) break;
 
                 // Gather changed region with context
-                int contextBefore = ContextLines;
+                int contextBefore = DefaultContextLines;
                 int hunkStart = Math.Max(0, i - contextBefore);
                 int oldHunkStart = oldLine - (i - hunkStart);
                 int newHunkStart = newLine - (i - hunkStart);
