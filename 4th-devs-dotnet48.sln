@@ -6,49 +6,49 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCP", "src\MCP\MCP.csproj", "{A1B2C3D4-0000-0000-ABCD-CCCCCCCCCCCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01_Interaction", "src\Lesson01_Interaction\Lesson01_Interaction.csproj", "{A1B2C3D4-0000-0000-ABCD-222222222222}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_01_interaction", "src\01_01_interaction\01_01_interaction.csproj", "{A1B2C3D4-0000-0000-ABCD-222222222222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01_Structured", "src\Lesson01_Structured\Lesson01_Structured.csproj", "{A1B2C3D4-0000-0000-ABCD-333333333333}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_01_structured", "src\01_01_structured\01_01_structured.csproj", "{A1B2C3D4-0000-0000-ABCD-333333333333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson01_Grounding", "src\Lesson01_Grounding\Lesson01_Grounding.csproj", "{A1B2C3D4-0000-0000-ABCD-444444444444}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_01_grounding", "src\01_01_grounding\01_01_grounding.csproj", "{A1B2C3D4-0000-0000-ABCD-444444444444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson02_Tools", "src\Lesson02_Tools\Lesson02_Tools.csproj", "{A1B2C3D4-0000-0000-ABCD-555555555555}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_02_tools", "src\01_02_tools\01_02_tools.csproj", "{A1B2C3D4-0000-0000-ABCD-555555555555}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson02_ToolUse", "src\Lesson02_ToolUse\Lesson02_ToolUse.csproj", "{A1B2C3D4-0000-0000-ABCD-666666666666}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_02_tool_use", "src\01_02_tool_use\01_02_tool_use.csproj", "{A1B2C3D4-0000-0000-ABCD-666666666666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_McpCore", "src\Lesson03_McpCore\Lesson03_McpCore.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777701}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_03_mcp_core", "src\01_03_mcp_core\01_03_mcp_core.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777701}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_McpNative", "src\Lesson03_McpNative\Lesson03_McpNative.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777702}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_03_mcp_native", "src\01_03_mcp_native\01_03_mcp_native.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777702}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_McpTranslator", "src\Lesson03_McpTranslator\Lesson03_McpTranslator.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777703}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_03_mcp_translator", "src\01_03_mcp_translator\01_03_mcp_translator.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson03_UploadMcp", "src\Lesson03_UploadMcp\Lesson03_UploadMcp.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_03_upload_mcp", "src\01_03_upload_mcp\01_03_upload_mcp.csproj", "{A1B2C3D4-0000-0000-ABCD-777777777704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_Audio", "src\Lesson04_Audio\Lesson04_Audio.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888801}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_04_audio", "src\01_04_audio\01_04_audio.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_ImageRecognition", "src\Lesson04_ImageRecognition\Lesson04_ImageRecognition.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888802}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_04_image_recognition", "src\01_04_image_recognition\01_04_image_recognition.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888802}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_ImageEditing", "src\Lesson04_ImageEditing\Lesson04_ImageEditing.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888803}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_04_image_editing", "src\01_04_image_editing\01_04_image_editing.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_ImageGuidance", "src\Lesson04_ImageGuidance\Lesson04_ImageGuidance.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888804}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_04_image_guidance", "src\01_04_image_guidance\01_04_image_guidance.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_JsonImage", "src\Lesson04_JsonImage\Lesson04_JsonImage.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888805}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_04_json_image", "src\01_04_json_image\01_04_json_image.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888805}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson04_Reports", "src\Lesson04_Reports\Lesson04_Reports.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888806}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_04_reports", "src\01_04_reports\01_04_reports.csproj", "{A1B2C3D4-0000-0000-ABCD-888888888806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson05_Confirmation", "src\Lesson05_Confirmation\Lesson05_Confirmation.csproj", "{A1B2C3D4-0000-0000-ABCD-999999999901}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_05_confirmation", "src\01_05_confirmation\01_05_confirmation.csproj", "{A1B2C3D4-0000-0000-ABCD-999999999901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson05_Agent", "src\Lesson05_Agent\Lesson05_Agent.csproj", "{A1B2C3D4-0000-0000-ABCD-999999999902}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_05_agent", "src\01_05_agent\01_05_agent.csproj", "{A1B2C3D4-0000-0000-ABCD-999999999902}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson06_AgenticRag", "src\Lesson06_AgenticRag\Lesson06_AgenticRag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_01_agentic_rag", "src\02_01_agentic_rag\02_01_agentic_rag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_Chunking", "src\Lesson07_Chunking\Lesson07_Chunking.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000002}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_02_chunking", "src\02_02_chunking\02_02_chunking.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_Embedding", "src\Lesson07_Embedding\Lesson07_Embedding.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000003}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_02_embedding", "src\02_02_embedding\02_02_embedding.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson07_HybridRag", "src\Lesson07_HybridRag\Lesson07_HybridRag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000004}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_02_hybrid_rag", "src\02_02_hybrid_rag\02_02_hybrid_rag.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lesson08_GraphAgents", "src\Lesson08_GraphAgents\Lesson08_GraphAgents.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000005}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_03_graph_agents", "src\02_03_graph_agents\02_03_graph_agents.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
