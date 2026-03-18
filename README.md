@@ -15,17 +15,17 @@ Szablon znajduje się w głównym katalogu repozytorium: [`App.example.config`](
 
 ```powershell
 # Skopiuj szablon do każdego projektu, który chcesz uruchomić
-copy App.example.config src\Lesson01_Interaction\App.config
-copy App.example.config src\Lesson01_Structured\App.config
-copy App.example.config src\Lesson01_Grounding\App.config
-copy App.example.config src\Lesson02_Tools\App.config
-copy App.example.config src\Lesson02_ToolUse\App.config
-copy App.example.config src\Lesson05_Confirmation\App.config
-copy App.example.config src\Lesson05_Agent\App.config
-copy App.example.config src\Lesson06_AgenticRag\App.config
-copy App.example.config src\Lesson07_Chunking\App.config
-copy App.example.config src\Lesson07_Embedding\App.config
-copy App.example.config src\Lesson07_HybridRag\App.config
+copy App.example.config src\01_01_interaction\App.config
+copy App.example.config src\01_01_structured\App.config
+copy App.example.config src\01_01_grounding\App.config
+copy App.example.config src\01_02_tools\App.config
+copy App.example.config src\01_02_tool_use\App.config
+copy App.example.config src\01_05_confirmation\App.config
+copy App.example.config src\01_05_agent\App.config
+copy App.example.config src\02_01_agentic_rag\App.config
+copy App.example.config src\02_02_chunking\App.config
+copy App.example.config src\02_02_embedding\App.config
+copy App.example.config src\02_02_hybrid_rag\App.config
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
@@ -45,34 +45,34 @@ Lub otwórz `4th-devs-dotnet48.sln` w Visual Studio i wciśnij **Build → Build
 ## Uruchamianie ćwiczeń
 
 ```powershell
-dotnet run --project src\Lesson01_Interaction\Lesson01_Interaction.csproj
-dotnet run --project src\Lesson01_Structured\Lesson01_Structured.csproj
-dotnet run --project src\Lesson01_Grounding\Lesson01_Grounding.csproj
-dotnet run --project src\Lesson02_Tools\Lesson02_Tools.csproj
-dotnet run --project src\Lesson02_ToolUse\Lesson02_ToolUse.csproj
-dotnet run --project src\Lesson05_Confirmation\Lesson05_Confirmation.csproj
-dotnet run --project src\Lesson05_Agent\Lesson05_Agent.csproj
-dotnet run --project src\Lesson06_AgenticRag\Lesson06_AgenticRag.csproj
-dotnet run --project src\Lesson07_Chunking\Lesson07_Chunking.csproj
-dotnet run --project src\Lesson07_Embedding\Lesson07_Embedding.csproj
-dotnet run --project src\Lesson07_HybridRag\Lesson07_HybridRag.csproj
+dotnet run --project src\01_01_interaction\01_01_interaction.csproj
+dotnet run --project src\01_01_structured\01_01_structured.csproj
+dotnet run --project src\01_01_grounding\01_01_grounding.csproj
+dotnet run --project src\01_02_tools\01_02_tools.csproj
+dotnet run --project src\01_02_tool_use\01_02_tool_use.csproj
+dotnet run --project src\01_05_confirmation\01_05_confirmation.csproj
+dotnet run --project src\01_05_agent\01_05_agent.csproj
+dotnet run --project src\02_01_agentic_rag\02_01_agentic_rag.csproj
+dotnet run --project src\02_02_chunking\02_02_chunking.csproj
+dotnet run --project src\02_02_embedding\02_02_embedding.csproj
+dotnet run --project src\02_02_hybrid_rag\02_02_hybrid_rag.csproj
 ```
 
 ## Ćwiczenia
 
 | Projekt | Oryginał JS | Opis |
 |---------|------------|------|
-| [`Lesson01_Interaction`](src/Lesson01_Interaction/) | `01_01_interaction` | Wieloturowa rozmowa z historią wiadomości |
-| [`Lesson01_Structured`](src/Lesson01_Structured/) | `01_01_structured` | Ustrukturyzowane wyjście JSON ze schematem |
-| [`Lesson01_Grounding`](src/Lesson01_Grounding/) | `01_01_grounding` | Fact-checked HTML z notatek Markdown |
-| [`Lesson02_Tools`](src/Lesson02_Tools/) | `01_02_tools` | Function calling: get_weather + send_email |
-| [`Lesson02_ToolUse`](src/Lesson02_ToolUse/) | `01_02_tool_use` | Sandboxed filesystem function calling |
-| [`Lesson05_Confirmation`](src/Lesson05_Confirmation/) | `01_05_confirmation` | Agent plików i e-mail z potwierdzeniem (HITL) |
-| [`Lesson05_Agent`](src/Lesson05_Agent/) | `01_05_agent` | Serwer HTTP REST z pętlą agentową i zarządzaniem sesjami |
-| [`Lesson06_AgenticRag`](src/Lesson06_AgenticRag/) | `02_01_agentic_rag` | Agentic RAG z wieloetapowym wyszukiwaniem dokumentów |
-| [`Lesson07_Chunking`](src/Lesson07_Chunking/) | `02_02_chunking` | Cztery strategie podziału tekstu: characters, separators, context, topics |
-| [`Lesson07_Embedding`](src/Lesson07_Embedding/) | `02_02_embedding` | Interaktywne demo embeddingów z kolorową macierzą podobieństwa |
-| [`Lesson07_HybridRag`](src/Lesson07_HybridRag/) | `02_02_hybrid_rag` | Hybrid RAG: SQLite FTS5 + cosine similarity + RRF |
+| [`01_01_interaction`](src/01_01_interaction/) | `01_01_interaction` | Wieloturowa rozmowa z historią wiadomości |
+| [`01_01_structured`](src/01_01_structured/) | `01_01_structured` | Ustrukturyzowane wyjście JSON ze schematem |
+| [`01_01_grounding`](src/01_01_grounding/) | `01_01_grounding` | Fact-checked HTML z notatek Markdown |
+| [`01_02_tools`](src/01_02_tools/) | `01_02_tools` | Function calling: get_weather + send_email |
+| [`01_02_tool_use`](src/01_02_tool_use/) | `01_02_tool_use` | Sandboxed filesystem function calling |
+| [`01_05_confirmation`](src/01_05_confirmation/) | `01_05_confirmation` | Agent plików i e-mail z potwierdzeniem (HITL) |
+| [`01_05_agent`](src/01_05_agent/) | `01_05_agent` | Serwer HTTP REST z pętlą agentową i zarządzaniem sesjami |
+| [`02_01_agentic_rag`](src/02_01_agentic_rag/) | `02_01_agentic_rag` | Agentic RAG z wieloetapowym wyszukiwaniem dokumentów |
+| [`02_02_chunking`](src/02_02_chunking/) | `02_02_chunking` | Cztery strategie podziału tekstu: characters, separators, context, topics |
+| [`02_02_embedding`](src/02_02_embedding/) | `02_02_embedding` | Interaktywne demo embeddingów z kolorową macierzą podobieństwa |
+| [`02_02_hybrid_rag`](src/02_02_hybrid_rag/) | `02_02_hybrid_rag` | Hybrid RAG: SQLite FTS5 + cosine similarity + RRF |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -84,24 +84,24 @@ App.example.config          ← Szablon konfiguracji (skopiuj do App.config w ka
 .gitignore
 src/
   Common/                   ← Biblioteka współdzielona (AiConfig, ResponsesApiClient, modele)
-  Lesson01_Interaction/     ← Ćwiczenie: wieloturowa rozmowa
-  Lesson01_Structured/      ← Ćwiczenie: ustrukturyzowane wyjście
-  Lesson01_Grounding/       ← Ćwiczenie: gruntowanie faktów w HTML
-  Lesson02_Tools/           ← Ćwiczenie: function calling (narzędzia: pogoda, e-mail)
-  Lesson02_ToolUse/         ← Ćwiczenie: narzędzia systemu plików w piaskownicy
-  Lesson05_Confirmation/    ← Ćwiczenie: agent plików i e-mail z potwierdzeniem (HITL)
-  Lesson05_Agent/           ← Ćwiczenie: serwer HTTP REST z pętlą agentową
-  Lesson06_AgenticRag/      ← Ćwiczenie: Agentic RAG z wieloetapowym wyszukiwaniem
-  Lesson07_Chunking/        ← Ćwiczenie: cztery strategie podziału tekstu
-  Lesson07_Embedding/       ← Ćwiczenie: interaktywne demo embeddingów
-  Lesson07_HybridRag/       ← Ćwiczenie: Hybrid RAG (FTS5 + cosine similarity + RRF)
+  01_01_interaction/        ← Ćwiczenie: wieloturowa rozmowa
+  01_01_structured/         ← Ćwiczenie: ustrukturyzowane wyjście
+  01_01_grounding/          ← Ćwiczenie: gruntowanie faktów w HTML
+  01_02_tools/              ← Ćwiczenie: function calling (narzędzia: pogoda, e-mail)
+  01_02_tool_use/           ← Ćwiczenie: narzędzia systemu plików w piaskownicy
+  01_05_confirmation/       ← Ćwiczenie: agent plików i e-mail z potwierdzeniem (HITL)
+  01_05_agent/              ← Ćwiczenie: serwer HTTP REST z pętlą agentową
+  02_01_agentic_rag/        ← Ćwiczenie: Agentic RAG z wieloetapowym wyszukiwaniem
+  02_02_chunking/           ← Ćwiczenie: cztery strategie podziału tekstu
+  02_02_embedding/          ← Ćwiczenie: interaktywne demo embeddingów
+  02_02_hybrid_rag/         ← Ćwiczenie: Hybrid RAG (FTS5 + cosine similarity + RRF)
 ```
 
 ## Dodawanie nowych ćwiczeń
 
-1. Utwórz nowy projekt Console App w `src/LessonXX_Name/`:
+1. Utwórz nowy projekt Console App w `src/XX_YY_name/`:
    ```powershell
-   dotnet new console -f net48 -o src/LessonXX_Name -n LessonXX_Name --langVersion 7.2
+   dotnet new console -f net48 -o src/XX_YY_name -n XX_YY_name --langVersion 7.2
    ```
 2. Dodaj referencję do `Common`:
    ```xml
