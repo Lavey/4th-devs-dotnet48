@@ -245,7 +245,7 @@ VALUES (@id, @agentId, @seq, @type, @role, @content, @callId,
                 cmd.Parameters.AddWithValue("@name", (object)item.Name ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@args", (object)item.Arguments ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@output", (object)item.Output ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@isError", item.IsError.HasValue ? (object)(item.IsError.Value ? 1 : 0) : DBNull.Value);
+                cmd.Parameters.AddWithValue("@isError", NullableBoolToDb(item.IsError));
                 cmd.Parameters.AddWithValue("@summary", (object)item.Summary ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@signature", (object)item.Signature ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@createdAt", item.CreatedAt);
@@ -347,6 +347,12 @@ VALUES (@id, @agentId, @seq, @type, @role, @content, @callId,
         // ────────────────────────────────────────────────────────────
         // Helpers
         // ────────────────────────────────────────────────────────────
+
+        private static object NullableBoolToDb(bool? value)
+        {
+            if (!value.HasValue) return DBNull.Value;
+            return value.Value ? 1 : 0;
+        }
 
         internal static long ToUnixMs(DateTime utc)
         {

@@ -28,7 +28,7 @@ namespace FourthDevs.Lesson05_Agent.Events
     {
         public int InputTokens  { get; set; }
         public int OutputTokens { get; set; }
-        public int TotalTokens  { get; set; }
+        public int TotalTokens  { get { return InputTokens + OutputTokens; } }
         public int CachedTokens { get; set; }
     }
 

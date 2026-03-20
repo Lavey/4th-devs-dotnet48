@@ -27,6 +27,8 @@ namespace FourthDevs.Lesson05_Agent
     /// </summary>
     internal static class AgentRunner
     {
+        private const int MaxToolOutputLogLength = 1000;
+
         // Maximum number of turns is read from config in Program and
         // injected here before first use.
         internal static int AgentMaxTurns { get; set; } = 10;
@@ -227,8 +229,8 @@ namespace FourthDevs.Lesson05_Agent
                             CallId     = call.CallId,
                             Name       = call.Name,
                             Arguments  = call.Arguments ?? "{}",
-                            Output     = resultJson.Length > 1000
-                                ? resultJson.Substring(0, 1000) + "…" : resultJson,
+                            Output     = resultJson.Length > MaxToolOutputLogLength
+                                ? resultJson.Substring(0, MaxToolOutputLogLength) + "…" : resultJson,
                             DurationMs = toolSw.ElapsedMilliseconds
                         });
 
@@ -396,11 +398,7 @@ namespace FourthDevs.Lesson05_Agent
             return new TokenUsage
             {
                 InputTokens  = parsed.Usage.InputTokens,
-                OutputTokens = parsed.Usage.OutputTokens,
-                TotalTokens  = parsed.Usage.InputTokens + parsed.Usage.OutputTokens,
-                CachedTokens = parsed.Usage.OutputTokensDetails != null
-                    ? parsed.Usage.OutputTokensDetails.ReasoningTokens
-                    : 0
+                OutputTokens = parsed.Usage.OutputTokens
             };
         }
 

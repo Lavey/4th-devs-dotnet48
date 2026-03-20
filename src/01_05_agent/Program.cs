@@ -539,12 +539,13 @@ namespace FourthDevs.Lesson05_Agent
             });
 
             // Emit agent.resumed event
+            string deliverTraceId = Guid.NewGuid().ToString();
             if (_events != null)
             {
                 _events.Emit(new AgentResumedEvent
                 {
                     Ctx = EventFactory.CreateContext(
-                        Guid.NewGuid().ToString(), run.SessionId, agentId, agentId, 0),
+                        deliverTraceId, run.SessionId, agentId, agentId, 0),
                     DeliveredCallId = entry.CallId,
                     Remaining       = 0
                 });
@@ -554,7 +555,7 @@ namespace FourthDevs.Lesson05_Agent
             {
                 string result = await AgentRunner.RunAgentLoopAsync(
                     conversation, model,
-                    sessionId: run.SessionId, agentId: agentId);
+                    traceId: deliverTraceId, sessionId: run.SessionId, agentId: agentId);
 
                 // Persist history to the session (skip system messages)
                 SessionData session;
