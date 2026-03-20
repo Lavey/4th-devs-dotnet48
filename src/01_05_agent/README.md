@@ -6,7 +6,10 @@ Lekki **serwer HTTP REST** uruchamiający agenty AI na żądanie.
 
 Klient wysyła zapytanie POST; serwer uruchamia pętlę agentową (wywołania narzędzi,
 historia sesji) i zwraca wynik. Obsługuje uwierzytelnianie Bearer token,
-persystencję sesji (w pamięci) i szablony agentów z plików `.agent.md`.
+persystencję sesji (w pamięci i SQLite) i szablony agentów z plików `.agent.md`.
+
+Zawiera system zdarzeń agentowych (event emitter + event logger) oraz warstwę
+persystencji SQLite (Drizzle schema) — oba mirrowane z oryginalnego projektu TS.
 
 ## Oryginał JS
 
@@ -157,3 +160,32 @@ curl -s http://127.0.0.1:3000/api/chat/completions \
 | `WORKSPACE_PATH`  | `workspace/` obok exe                 | Katalog z szablonami agentów      |
 | `AGENT_MAX_TURNS` | `10`                                  | Maksymalna liczba kroków agenta   |
 | `MCP_CONFIG`      | *(auto)*                              | Ścieżka do pliku `.mcp.json`      |
+| `DATABASE_URL`    | `file:.data/agent.db`                 | Ścieżka bazy SQLite               |
+
+## Zdarzenia agenta (Events)
+
+System zdarzeń mirroruje `01_05_agent/src/events/` z oryginalnego projektu TS.
+Zdarzenia są emitowane przez `AgentEventEmitter` podczas pętli agentowej i logowane
+na konsolę przez `EventLogger`.
+
+| Zdarzenie               | Kiedy emitowane                                   |
+|-------------------------|---------------------------------------------------|
+| `agent.started`         | Start nowej pętli agentowej                       |
+| `agent.completed`       | Agent zakończył pracę z wynikiem                  |
+| `agent.failed`          | Pętla zakończyła się błędem                       |
+| `agent.waiting`         | Agent czeka na odpowiedź użytkownika (HITL)       |
+| `agent.resumed`         | Agent wznowiony po dostarczeniu odpowiedzi        |
+| `turn.started`          | Początek nowej tury (krok pętli)                  |
+| `turn.completed`        | Koniec tury z użyciem tokenów                     |
+| `generation.completed`  | Zakończenie wywołania LLM z czasem i tokenami     |
+| `tool.called`           | Rozpoczęcie wykonania narzędzia                   |
+| `tool.completed`        | Narzędzie zakończone sukcesem z czasem            |
+| `tool.failed`           | Narzędzie zakończone błędem                       |
+
+## Baza danych SQLite (Drizzle schema)
+
+Schema SQLite mirroruje `01_05_agent/drizzle/0000_romantic_union_jack.sql`.
+Tabele: `users`, `sessions`, `agents`, `items`.
+
+Baza jest inicjalizowana automatycznie przy starcie serwera.
+Domyślna lokalizacja: `.data/agent.db` obok pliku wykonywalnego.

@@ -98,3 +98,10 @@ src/Lesson05_Confirmation/workspace/output/*
 !src/Lesson05_Confirmation/workspace/output/.gitkeep
 src/02_04_ops/workspace/output/*
 !src/02_04_ops/workspace/output/.gitkeep
+
+# SQLite database files
+.data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
