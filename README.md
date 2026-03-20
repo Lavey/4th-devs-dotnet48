@@ -27,6 +27,7 @@ copy App.example.config src\02_02_chunking\App.config
 copy App.example.config src\02_02_embedding\App.config
 copy App.example.config src\02_02_hybrid_rag\App.config
 copy App.example.config src\02_04_ops\App.config
+copy App.example.config src\02_05_sandbox\App.config
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
@@ -58,6 +59,7 @@ dotnet run --project src\02_02_chunking\02_02_chunking.csproj
 dotnet run --project src\02_02_embedding\02_02_embedding.csproj
 dotnet run --project src\02_02_hybrid_rag\02_02_hybrid_rag.csproj
 dotnet run --project src\02_04_ops\02_04_ops.csproj
+dotnet run --project src\02_05_sandbox\02_05_sandbox.csproj
 ```
 
 ## Ćwiczenia
@@ -76,6 +78,7 @@ dotnet run --project src\02_04_ops\02_04_ops.csproj
 | [`02_02_embedding`](src/02_02_embedding/) | `02_02_embedding` | Interaktywne demo embeddingów z kolorową macierzą podobieństwa |
 | [`02_02_hybrid_rag`](src/02_02_hybrid_rag/) | `02_02_hybrid_rag` | Hybrid RAG: SQLite FTS5 + cosine similarity + RRF |
 | [`02_04_ops`](src/02_04_ops/) | `02_04_ops` | Multi-agent Daily Ops: orkiestrator deleguje do agentów mail/calendar/tasks/notes |
+| [`02_05_sandbox`](src/02_05_sandbox/) | `02_05_sandbox` | Agent MCP sandbox: dynamiczne odkrywanie narzędzi i wykonywanie JS w Jint |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -99,6 +102,7 @@ src/
   02_02_embedding/          ← Ćwiczenie: interaktywne demo embeddingów
   02_02_hybrid_rag/         ← Ćwiczenie: Hybrid RAG (FTS5 + cosine similarity + RRF)
   02_04_ops/                ← Ćwiczenie: multi-agent Daily Ops (orkiestrator + agenci specjaliści)
+  02_05_sandbox/            ← Ćwiczenie: agent MCP sandbox (odkrywanie narzędzi + JS w Jint)
 ```
 
 ## Dodawanie nowych ćwiczeń
