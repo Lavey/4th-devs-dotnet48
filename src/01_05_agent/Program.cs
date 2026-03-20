@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FourthDevs.Common;
+using FourthDevs.Lesson05_Agent.Db;
+using FourthDevs.Lesson05_Agent.Events;
 using FourthDevs.Lesson05_Agent.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -59,6 +61,8 @@ namespace FourthDevs.Lesson05_Agent
         private static readonly object _lock = new object();
 
         private static Mcp.McpClientManager _mcpManager;
+        private static AgentEventEmitter    _events;
+        private static AgentDb              _database;
 
         // ----------------------------------------------------------------
         // Entry point
@@ -69,9 +73,29 @@ namespace FourthDevs.Lesson05_Agent
             string workspaceRoot = GetWorkspacePath();
             Directory.CreateDirectory(workspaceRoot);
 
+            // Initialize event emitter and subscribe console logger
+            _events = new AgentEventEmitter();
+            EventLogger.Subscribe(_events);
+
+            // Initialize SQLite database (optional — errors are logged, not fatal)
+            string dbUrl = Cfg("DATABASE_URL");
+            if (string.IsNullOrWhiteSpace(dbUrl))
+                dbUrl = "file:" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".data", "agent.db");
+            try
+            {
+                _database = new AgentDb(dbUrl);
+                Console.WriteLine("Database   : " + dbUrl);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("[db] Initialization error: " + ex.Message);
+            }
+
             // Inject shared state into extracted classes
             AgentRunner.WorkspaceRoot     = workspaceRoot;
             AgentRunner.AgentMaxTurns     = AgentMaxTurns;
+            AgentRunner.Events            = _events;
+            AgentRunner.Database          = _database;
             AgentToolExecutors.WorkspaceRoot = workspaceRoot;
             AgentToolExecutors.AgentRuns     = AgentRuns;
             AgentToolExecutors.Sessions      = Sessions;
@@ -296,8 +320,36 @@ namespace FourthDevs.Lesson05_Agent
 
             // Run agent
             string agentId = Guid.NewGuid().ToString();
+            string traceId = Guid.NewGuid().ToString();
             var runData    = new AgentRunData { Id = agentId, SessionId = sessionId, Status = "running" };
             lock (_lock) AgentRuns[agentId] = runData;
+
+            // Persist session + agent row in DB
+            if (_database != null)
+            {
+                try
+                {
+                    _database.UpsertSession(sessionId, null, agentId, "active");
+                    _database.UpsertAgent(new AgentRow
+                    {
+                        Id          = agentId,
+                        SessionId   = sessionId,
+                        RootAgentId = agentId,
+                        Depth       = 0,
+                        Task        = systemPrompt ?? string.Empty,
+                        Config      = JsonConvert.SerializeObject(new { model = resolvedModel }),
+                        Status      = "running",
+                        WaitingFor  = "[]",
+                        TurnCount   = 0,
+                        CreatedAt   = AgentDb.ToUnixMs(DateTime.UtcNow),
+                        StartedAt   = AgentDb.ToUnixMs(DateTime.UtcNow)
+                    });
+                }
+                catch (Exception dbEx)
+                {
+                    Console.Error.WriteLine("[db] persist error: " + dbEx.Message);
+                }
+            }
 
             try
             {
@@ -311,7 +363,9 @@ namespace FourthDevs.Lesson05_Agent
 
                 try
                 {
-                    var result = await AgentRunner.RunAgentLoopAsync(conversation, resolvedModel);
+                    var result = await AgentRunner.RunAgentLoopAsync(
+                        conversation, resolvedModel,
+                        traceId, sessionId, agentId, agentName);
 
                     // Persist history (without system prompt)
                     var historyItems = conversation
@@ -484,9 +538,24 @@ namespace FourthDevs.Lesson05_Agent
                 output
             });
 
+            // Emit agent.resumed event
+            string deliverTraceId = Guid.NewGuid().ToString();
+            if (_events != null)
+            {
+                _events.Emit(new AgentResumedEvent
+                {
+                    Ctx = EventFactory.CreateContext(
+                        deliverTraceId, run.SessionId, agentId, agentId, 0),
+                    DeliveredCallId = entry.CallId,
+                    Remaining       = 0
+                });
+            }
+
             try
             {
-                string result = await AgentRunner.RunAgentLoopAsync(conversation, model);
+                string result = await AgentRunner.RunAgentLoopAsync(
+                    conversation, model,
+                    traceId: deliverTraceId, sessionId: run.SessionId, agentId: agentId);
 
                 // Persist history to the session (skip system messages)
                 SessionData session;
