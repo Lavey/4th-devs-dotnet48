@@ -126,7 +126,9 @@ namespace FourthDevs.Lesson05_Confirmation
         {
             Directory.CreateDirectory(workspaceRoot);
             Directory.CreateDirectory(Path.Combine(workspaceRoot, "docs"));
+            Directory.CreateDirectory(Path.Combine(workspaceRoot, "input"));
             Directory.CreateDirectory(Path.Combine(workspaceRoot, "output"));
+            Directory.CreateDirectory(Path.Combine(workspaceRoot, "prompts"));
         }
 
         // ----------------------------------------------------------------
