@@ -54,6 +54,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_04_ops", "src\02_04_ops\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_05_sandbox", "src\02_05_sandbox\02_05_sandbox.csproj", "{A1B2C3D4-0000-0000-ABCD-000000000007}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_01_observability", "src\03_01_observability\03_01_observability.csproj", "{A1B2C3D4-0000-0000-ABCD-030100000001}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +166,10 @@ Global
 		{A1B2C3D4-0000-0000-ABCD-000000000007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-000000000007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0000-0000-ABCD-000000000007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-030100000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-030100000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-030100000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0000-0000-ABCD-030100000001}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
