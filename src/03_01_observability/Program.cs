@@ -106,8 +106,9 @@ namespace FourthDevs.Observability
                 {
                     await WriteJsonAsync(resp, 200, new
                     {
-                        status = "ok",
-                        service = "03_01_observability"
+                        ok = true,
+                        service = "03_01_observability",
+                        tracing = TracingManager.IsActive ? "configured" : "not_configured"
                     }).ConfigureAwait(false);
                     return;
                 }
@@ -181,7 +182,7 @@ namespace FourthDevs.Observability
             }
 
             string message = (string)json["message"];
-            string sessionId = (string)json["sessionId"] ?? Guid.NewGuid().ToString("N");
+            string sessionId = (string)json["session_id"] ?? Guid.NewGuid().ToString("N");
 
             if (string.IsNullOrWhiteSpace(message))
             {
@@ -220,7 +221,7 @@ namespace FourthDevs.Observability
 
             await WriteJsonAsync(ctx.Response, 200, new
             {
-                sessionId = sessionId,
+                session_id = sessionId,
                 response = result.Response,
                 turns = result.Turns,
                 usage = result.Usage

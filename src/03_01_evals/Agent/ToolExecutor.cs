@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FourthDevs.Common.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace FourthDevs.Evals.Agent
@@ -61,13 +62,15 @@ namespace FourthDevs.Evals.Agent
             switch (name)
             {
                 case "get_current_time":
-                    return Task.FromResult(DateTime.UtcNow.ToString("o"));
+                    return Task.FromResult(
+                        JsonConvert.SerializeObject(new { nowUtc = DateTime.UtcNow.ToString("o") }));
 
                 case "sum_numbers":
                     return Task.FromResult(SumNumbers(rawArgs));
 
                 default:
-                    return Task.FromResult(string.Format("Unknown tool: {0}", name));
+                    return Task.FromResult(
+                        JsonConvert.SerializeObject(new { error = string.Format("Unknown tool: {0}", name) }));
             }
         }
 
@@ -78,18 +81,29 @@ namespace FourthDevs.Evals.Agent
                 JObject args = JObject.Parse(rawArgs);
                 JToken numsTok = args["numbers"];
                 if (numsTok == null || numsTok.Type != JTokenType.Array)
-                    return "Error: 'numbers' must be an array.";
+                    return JsonConvert.SerializeObject(new { error = "'numbers' must be an array" });
 
-                double sum = 0;
+                var numbers = new List<double>();
                 foreach (JToken n in numsTok)
                 {
-                    sum += n.Value<double>();
+                    double val = n.Value<double>();
+                    if (!double.IsNaN(val) && !double.IsInfinity(val))
+                        numbers.Add(val);
                 }
-                return sum.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+                if (numbers.Count == 0)
+                    return JsonConvert.SerializeObject(
+                        new { error = "numbers must contain at least one numeric value" });
+
+                double sum = 0;
+                foreach (double d in numbers)
+                    sum += d;
+
+                return JsonConvert.SerializeObject(new { count = numbers.Count, sum });
             }
             catch (Exception ex)
             {
-                return "Error: " + ex.Message;
+                return JsonConvert.SerializeObject(new { error = ex.Message });
             }
         }
     }
