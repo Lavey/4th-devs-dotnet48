@@ -70,9 +70,21 @@ namespace FourthDevs.Observability.Core
 
                 if (!resp.IsSuccessStatusCode)
                 {
+                    // Try to extract a structured error message
+                    string errorMsg;
+                    try
+                    {
+                        var errObj = JObject.Parse(respBody);
+                        errorMsg = (string)errObj["error"]?["message"]
+                            ?? string.Format("HTTP {0}", (int)resp.StatusCode);
+                    }
+                    catch
+                    {
+                        errorMsg = string.Format("HTTP {0}", (int)resp.StatusCode);
+                    }
+
                     throw new HttpRequestException(
-                        string.Format("Chat Completions API error {0}: {1}",
-                            (int)resp.StatusCode, respBody));
+                        string.Format("Chat Completions API error: {0}", errorMsg));
                 }
 
                 return ParseResponse(respBody);
