@@ -1,0 +1,11 @@
+category,item,amount,currency
+Infrastructure,AWS EC2,1250.00,USD
+Infrastructure,AWS S3,85.50,USD
+Infrastructure,AWS RDS,320.00,USD
+Software,GitHub Enterprise,210.00,USD
+Software,Jira,45.00,USD
+Software,Slack,62.50,USD
+Personnel,Contractor - Backend,4500.00,USD
+Personnel,Contractor - Frontend,3800.00,USD
+Operations,Monitoring (Datadog),150.00,USD
+Operations,CI/CD (CircleCI),99.00,USD
