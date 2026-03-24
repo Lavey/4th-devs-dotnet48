@@ -20,14 +20,30 @@ copy App.example.config src\01_01_structured\App.config
 copy App.example.config src\01_01_grounding\App.config
 copy App.example.config src\01_02_tools\App.config
 copy App.example.config src\01_02_tool_use\App.config
+copy App.example.config src\01_03_mcp_core\App.config
+copy App.example.config src\01_03_mcp_native\App.config
+copy App.example.config src\01_03_mcp_translator\App.config
+copy App.example.config src\01_03_upload_mcp\App.config
+copy App.example.config src\01_04_audio\App.config
+copy App.example.config src\01_04_image_editing\App.config
+copy App.example.config src\01_04_image_guidance\App.config
+copy App.example.config src\01_04_image_recognition\App.config
+copy App.example.config src\01_04_json_image\App.config
+copy App.example.config src\01_04_reports\App.config
 copy App.example.config src\01_05_confirmation\App.config
 copy App.example.config src\01_05_agent\App.config
 copy App.example.config src\02_01_agentic_rag\App.config
 copy App.example.config src\02_02_chunking\App.config
 copy App.example.config src\02_02_embedding\App.config
 copy App.example.config src\02_02_hybrid_rag\App.config
+copy App.example.config src\02_03_graph_agents\App.config
 copy App.example.config src\02_04_ops\App.config
 copy App.example.config src\02_05_sandbox\App.config
+copy App.example.config src\03_01_observability\App.config
+copy App.example.config src\03_01_evals\App.config
+copy App.example.config src\03_02_events\App.config
+copy App.example.config src\03_02_code\App.config
+copy App.example.config src\03_02_email\App.config
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
@@ -52,14 +68,30 @@ dotnet run --project src\01_01_structured\01_01_structured.csproj
 dotnet run --project src\01_01_grounding\01_01_grounding.csproj
 dotnet run --project src\01_02_tools\01_02_tools.csproj
 dotnet run --project src\01_02_tool_use\01_02_tool_use.csproj
+dotnet run --project src\01_03_mcp_core\01_03_mcp_core.csproj
+dotnet run --project src\01_03_mcp_native\01_03_mcp_native.csproj
+dotnet run --project src\01_03_mcp_translator\01_03_mcp_translator.csproj
+dotnet run --project src\01_03_upload_mcp\01_03_upload_mcp.csproj
+dotnet run --project src\01_04_audio\01_04_audio.csproj
+dotnet run --project src\01_04_image_editing\01_04_image_editing.csproj
+dotnet run --project src\01_04_image_guidance\01_04_image_guidance.csproj
+dotnet run --project src\01_04_image_recognition\01_04_image_recognition.csproj
+dotnet run --project src\01_04_json_image\01_04_json_image.csproj
+dotnet run --project src\01_04_reports\01_04_reports.csproj
 dotnet run --project src\01_05_confirmation\01_05_confirmation.csproj
 dotnet run --project src\01_05_agent\01_05_agent.csproj
 dotnet run --project src\02_01_agentic_rag\02_01_agentic_rag.csproj
 dotnet run --project src\02_02_chunking\02_02_chunking.csproj
 dotnet run --project src\02_02_embedding\02_02_embedding.csproj
 dotnet run --project src\02_02_hybrid_rag\02_02_hybrid_rag.csproj
+dotnet run --project src\02_03_graph_agents\02_03_graph_agents.csproj
 dotnet run --project src\02_04_ops\02_04_ops.csproj
 dotnet run --project src\02_05_sandbox\02_05_sandbox.csproj
+dotnet run --project src\03_01_observability\03_01_observability.csproj
+dotnet run --project src\03_01_evals\03_01_evals.csproj
+dotnet run --project src\03_02_events\03_02_events.csproj
+dotnet run --project src\03_02_code\03_02_code.csproj
+dotnet run --project src\03_02_email\03_02_email.csproj
 ```
 
 ## Ćwiczenia
@@ -71,14 +103,30 @@ dotnet run --project src\02_05_sandbox\02_05_sandbox.csproj
 | [`01_01_grounding`](src/01_01_grounding/) | `01_01_grounding` | Fact-checked HTML z notatek Markdown |
 | [`01_02_tools`](src/01_02_tools/) | `01_02_tools` | Function calling: get_weather + send_email |
 | [`01_02_tool_use`](src/01_02_tool_use/) | `01_02_tool_use` | Sandboxed filesystem function calling |
+| [`01_03_mcp_core`](src/01_03_mcp_core/) | `01_03_mcp_core` | Demonstracja MCP (narzędzia, zasoby, szablony promptów) — in-process server |
+| [`01_03_mcp_native`](src/01_03_mcp_native/) | `01_03_mcp_native` | Agent łączący narzędzia MCP i natywne w jednej pętli tool-call |
+| [`01_03_mcp_translator`](src/01_03_mcp_translator/) | `01_03_mcp_translator` | Agent obserwujący folder, tłumaczący pliki tekstowe na angielski |
+| [`01_03_upload_mcp`](src/01_03_upload_mcp/) | `01_03_upload_mcp` | Agent uploadujący pliki z workspace, prowadzący rejestr w uploaded.md |
+| [`01_04_audio`](src/01_04_audio/) | `01_04_audio` | Transkrypcja audio (Whisper) i generowanie mowy (TTS) przez OpenAI API |
+| [`01_04_image_editing`](src/01_04_image_editing/) | `01_04_image_editing` | Agent generowania i edytowania obrazów z recenzją przez vision AI |
+| [`01_04_image_guidance`](src/01_04_image_guidance/) | `01_04_image_guidance` | Generowanie obrazów oparte na szablonie JSON i obrazie referencyjnym pozy |
+| [`01_04_image_recognition`](src/01_04_image_recognition/) | `01_04_image_recognition` | Agent klasyfikujący obrazy przy użyciu vision AI i profili kategorii |
+| [`01_04_json_image`](src/01_04_json_image/) | `01_04_json_image` | Token-efektywne generowanie obrazów z szablonów JSON — reprodukowalne prompty |
+| [`01_04_reports`](src/01_04_reports/) | `01_04_reports` | Agent do analizy dokumentów i generowania ustrukturyzowanych raportów Markdown |
 | [`01_05_confirmation`](src/01_05_confirmation/) | `01_05_confirmation` | Agent plików i e-mail z potwierdzeniem (HITL) |
 | [`01_05_agent`](src/01_05_agent/) | `01_05_agent` | Serwer HTTP REST z pętlą agentową i zarządzaniem sesjami |
 | [`02_01_agentic_rag`](src/02_01_agentic_rag/) | `02_01_agentic_rag` | Agentic RAG z wieloetapowym wyszukiwaniem dokumentów |
 | [`02_02_chunking`](src/02_02_chunking/) | `02_02_chunking` | Cztery strategie podziału tekstu: characters, separators, context, topics |
 | [`02_02_embedding`](src/02_02_embedding/) | `02_02_embedding` | Interaktywne demo embeddingów z kolorową macierzą podobieństwa |
 | [`02_02_hybrid_rag`](src/02_02_hybrid_rag/) | `02_02_hybrid_rag` | Hybrid RAG: SQLite FTS5 + cosine similarity + RRF |
+| [`02_03_graph_agents`](src/02_03_graph_agents/) | `02_03_graph_agents` | Agent RAG z grafem wiedzy Neo4j — hybrid search i eksploracja entności |
 | [`02_04_ops`](src/02_04_ops/) | `02_04_ops` | Multi-agent Daily Ops: orkiestrator deleguje do agentów mail/calendar/tasks/notes |
 | [`02_05_sandbox`](src/02_05_sandbox/) | `02_05_sandbox` | Agent MCP sandbox: dynamiczne odkrywanie narzędzi i wykonywanie JS w Jint |
+| [`03_01_observability`](src/03_01_observability/) | `03_01_observability` | Serwer HTTP z agentem obsługujący obserwowalność i integrację Langfuse |
+| [`03_01_evals`](src/03_01_evals/) | `03_01_evals` | Serwer HTTP z agentem wspierającym eksperymenty oceny vs. syntetyczne datasety |
+| [`03_02_events`](src/03_02_events/) | `03_02_events` | Multi-agent event architecture — heartbeat loop z workflow coordination |
+| [`03_02_code`](src/03_02_code/) | `03_02_code` | Agent uruchamiający kod TypeScript w sandboxie Deno z dostępem do narzędzi MCP |
+| [`03_02_email`](src/03_02_email/) | `03_02_email` | Agent dwufazowy: triaging i isolation mailów z bazą wiedzy per-odpowiedź |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -90,19 +138,36 @@ App.example.config          ← Szablon konfiguracji (skopiuj do App.config w ka
 .gitignore
 src/
   Common/                   ← Biblioteka współdzielona (AiConfig, ResponsesApiClient, modele)
+  MCP/                      ← Unified MCP server — tryb stdio (files) lub HTTP (uploadthing)
   01_01_interaction/        ← Ćwiczenie: wieloturowa rozmowa
   01_01_structured/         ← Ćwiczenie: ustrukturyzowane wyjście
   01_01_grounding/          ← Ćwiczenie: gruntowanie faktów w HTML
   01_02_tools/              ← Ćwiczenie: function calling (narzędzia: pogoda, e-mail)
   01_02_tool_use/           ← Ćwiczenie: narzędzia systemu plików w piaskownicy
+  01_03_mcp_core/           ← Ćwiczenie: demonstracja MCP (narzędzia, zasoby, prompty)
+  01_03_mcp_native/         ← Ćwiczenie: agent łączący MCP i natywne narzędzia
+  01_03_mcp_translator/     ← Ćwiczenie: agent tłumaczący pliki z obserwacją folderu
+  01_03_upload_mcp/         ← Ćwiczenie: agent uploadujący pliki z rejestrem
+  01_04_audio/              ← Ćwiczenie: transkrypcja audio (Whisper) i TTS
+  01_04_image_editing/      ← Ćwiczenie: generowanie i edycja obrazów z vision AI
+  01_04_image_guidance/     ← Ćwiczenie: generowanie obrazów z szablonu i pozy referencyjnej
+  01_04_image_recognition/  ← Ćwiczenie: klasyfikacja obrazów przez vision AI
+  01_04_json_image/         ← Ćwiczenie: generowanie obrazów z szablonów JSON
+  01_04_reports/            ← Ćwiczenie: analiza dokumentów i raporty Markdown
   01_05_confirmation/       ← Ćwiczenie: agent plików i e-mail z potwierdzeniem (HITL)
   01_05_agent/              ← Ćwiczenie: serwer HTTP REST z pętlą agentową
   02_01_agentic_rag/        ← Ćwiczenie: Agentic RAG z wieloetapowym wyszukiwaniem
   02_02_chunking/           ← Ćwiczenie: cztery strategie podziału tekstu
   02_02_embedding/          ← Ćwiczenie: interaktywne demo embeddingów
   02_02_hybrid_rag/         ← Ćwiczenie: Hybrid RAG (FTS5 + cosine similarity + RRF)
+  02_03_graph_agents/       ← Ćwiczenie: agent RAG z grafem wiedzy Neo4j
   02_04_ops/                ← Ćwiczenie: multi-agent Daily Ops (orkiestrator + agenci specjaliści)
   02_05_sandbox/            ← Ćwiczenie: agent MCP sandbox (odkrywanie narzędzi + JS w Jint)
+  03_01_observability/      ← Ćwiczenie: obserwowalność agentów z integracją Langfuse
+  03_01_evals/              ← Ćwiczenie: eksperymenty oceny vs. syntetyczne datasety
+  03_02_events/             ← Ćwiczenie: multi-agent event architecture z heartbeat loop
+  03_02_code/               ← Ćwiczenie: agent uruchamiający kod w sandboxie Deno + MCP
+  03_02_email/              ← Ćwiczenie: agent dwufazowy triaging i isolation mailów
 ```
 
 ## Dodawanie nowych ćwiczeń
@@ -125,5 +190,9 @@ src/
 | Pakiet | Wersja | Cel |
 |--------|--------|-----|
 | `Newtonsoft.Json` | 13.0.3 | Serializacja / deserializacja JSON |
-| `System.Net.Http` | wbudowany w .NET 4.8 | Klient HTTP do Responses API |
+| `System.Net.Http` | 4.3.4 | Klient HTTP do Responses API |
 | `System.Configuration` | wbudowany w .NET 4.8 | Odczyt App.config |
+| `System.Data.SQLite.Core` | 1.0.119 | Baza danych SQLite (FTS5, sesje agenta) |
+| `Jint` | 4.0.0 | Silnik JavaScript (sandbox JS w agencie MCP) |
+| `Neo4j.Driver` | 5.28.4 | Sterownik bazy grafowej Neo4j |
+| `DiffPlex` | 1.7.2 | Porównywanie plików (diff) w serwerze MCP |
