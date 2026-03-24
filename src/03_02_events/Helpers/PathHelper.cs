@@ -30,5 +30,25 @@ namespace FourthDevs.Events.Helpers
                 throw new InvalidOperationException("Path escapes workspace: " + relativePath);
             return full;
         }
+
+        public static string AsRelativeSafePath(string baseDir, object value)
+        {
+            string path = value as string;
+            if (string.IsNullOrWhiteSpace(path)) return null;
+            path = path.Trim();
+            try
+            {
+                string combined = Path.Combine(baseDir, path);
+                string full = Path.GetFullPath(combined);
+                string fullBase = Path.GetFullPath(baseDir);
+                if (!full.StartsWith(fullBase, StringComparison.OrdinalIgnoreCase))
+                    return null;
+                return path;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

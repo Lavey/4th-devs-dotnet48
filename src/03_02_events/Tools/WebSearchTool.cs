@@ -50,22 +50,19 @@ namespace FourthDevs.Events.Tools
                     ?? "gpt-4.1");
 
                 var client = new ResponsesApiClient();
-                var request = new ResponsesRequest
+                var inputMsgs = new List<FourthDevs.Common.Models.InputMessage>
+                {
+                    new FourthDevs.Common.Models.InputMessage
+                    {
+                        Role = "user",
+                        Content = "Search the web for: " + query + "\nReturn concise findings with source URLs in markdown."
+                    }
+                };
+
+                var request = new FourthDevs.Common.Models.ResponsesRequest
                 {
                     Model = model,
-                    Input = new List<object>
-                    {
-                        new InputMessage
-                        {
-                            Role = "user",
-                            Content = $"Search the web for: {query}\nReturn concise findings with source URLs in markdown."
-                        }
-                    },
-                    Tools = new List<object>
-                    {
-                        new JObject { ["type"] = "web_search_preview" }
-                    },
-                    Store = false
+                    Input = inputMsgs
                 };
 
                 var response = await client.SendAsync(request).ConfigureAwait(false);
@@ -78,7 +75,7 @@ namespace FourthDevs.Events.Tools
             }
             catch (Exception ex)
             {
-                return ToolResult.Text($"Error: web search failed ({ex.Message})");
+                return ToolResult.Text("Error: web search failed (" + ex.Message + ")");
             }
         }
     }

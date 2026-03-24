@@ -49,7 +49,7 @@ namespace FourthDevs.Events.Tools
                 return Task.FromResult(ToolResult.Text("Error: markdown_path and output_path must be valid workspace-relative paths."));
             }
 
-            var templatePath = Path.Combine(Config.EnvConfig.Paths.WorkspaceRootDir, "template.html");
+            var templatePath = Path.Combine(CommonToolHelpers.WorkspaceRootDir, "template.html");
             if (!File.Exists(templatePath))
             {
                 return Task.FromResult(ToolResult.Text("Error: template.html not found."));

@@ -6,7 +6,12 @@ namespace FourthDevs.Events.Tools
     {
         public static string WorkspaceDir
         {
-            get { return Config.EnvConfig.Paths.WorkspaceDir; }
+            get { return Config.EnvConfig.ProjectPath; }
+        }
+
+        public static string WorkspaceRootDir
+        {
+            get { return Config.EnvConfig.WorkspacePath; }
         }
 
         public static string ImageAssetsDir

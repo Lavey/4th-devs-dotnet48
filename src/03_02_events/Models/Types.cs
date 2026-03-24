@@ -88,6 +88,22 @@ namespace FourthDevs.Events.Models
         public string Content { get; set; } = string.Empty;
         public string WaitId { get; set; }
         public string Question { get; set; }
+
+        public static ToolResult Text(string content)
+        {
+            return new ToolResult { Kind = "text", Content = content ?? string.Empty };
+        }
+
+        public static ToolResult HumanRequest(string waitId, string question)
+        {
+            return new ToolResult
+            {
+                Kind = "human_request",
+                WaitId = waitId,
+                Question = question,
+                Content = "Human decision requested (" + waitId + "): " + question
+            };
+        }
     }
 
     public class ToolRuntimeContext

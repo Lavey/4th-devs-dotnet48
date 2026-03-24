@@ -133,6 +133,46 @@ namespace FourthDevs.Events.Mcp
             return defs;
         }
 
+        /// <summary>
+        /// Returns a Tool wrapper for an MCP tool by prefixed name.
+        /// </summary>
+        public Tool GetToolDefinition(string prefixedName)
+        {
+            int sep = prefixedName.IndexOf("__", StringComparison.Ordinal);
+            if (sep < 0) return null;
+
+            string serverName = prefixedName.Substring(0, sep);
+            string toolName = prefixedName.Substring(sep + 2);
+
+            McpToolInfo found = null;
+            foreach (var t in _allTools)
+            {
+                if (t.ServerName == serverName && t.Name == toolName)
+                {
+                    found = t;
+                    break;
+                }
+            }
+            if (found == null) return null;
+
+            var mcpManager = this;
+            return new Tool
+            {
+                Definition = new ToolDefinition
+                {
+                    Type = "function",
+                    Name = prefixedName,
+                    Description = "[" + serverName + "] " + found.Description,
+                    Parameters = found.InputSchema
+                },
+                Handler = async (args, ctx) =>
+                {
+                    var result = await mcpManager.CallToolAsync(prefixedName, args);
+                    return ToolResult.Text(result);
+                }
+            };
+        }
+
         public void Dispose()
         {
             foreach (var kv in _servers)
