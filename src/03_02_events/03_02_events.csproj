@@ -6,6 +6,7 @@
     <RootNamespace>FourthDevs.Events</RootNamespace>
     <LangVersion>7.3</LangVersion>
     <Nullable>disable</Nullable>
+    <AppConfig>App.config</AppConfig>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
@@ -14,11 +15,13 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="App.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="workspace\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
