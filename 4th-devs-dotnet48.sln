@@ -59,8 +59,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_01_observability", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_01_evals", "src\03_01_evals\03_01_evals.csproj", "{A1B2C3D4-0000-0000-ABCD-030100000002}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_02_email", "src\03_02_email\03_02_email.csproj", "{50C9D34D-BD10-4C1C-AD9A-2C8639CFA63F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_02_code", "src\03_02_code\03_02_code.csproj", "{3D768699-8C71-4384-AA6B-7DCF1B942E46}"
@@ -438,9 +436,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{50C9D34D-BD10-4C1C-AD9A-2C8639CFA63F} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{3D768699-8C71-4384-AA6B-7DCF1B942E46} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal
