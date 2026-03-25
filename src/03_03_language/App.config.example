@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in your API keys.
+  App.config is listed in .gitignore so your real keys are never committed.
+-->
+<configuration>
+  <appSettings>
+    <!-- Gemini API key (required) -->
+    <add key="GEMINI_API_KEY" value="" />
+
+    <!-- Model to use for the main agent (default: gemini-3-flash-preview) -->
+    <add key="GEMINI_MODEL" value="gemini-3-flash-preview" />
+
+    <!-- Model to use for TTS (default: gemini-2.5-flash-preview-tts) -->
+    <add key="TTS_MODEL" value="gemini-2.5-flash-preview-tts" />
+  </appSettings>
+</configuration>
