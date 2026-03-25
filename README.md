@@ -92,6 +92,9 @@ dotnet run --project src\03_01_evals\03_01_evals.csproj
 dotnet run --project src\03_02_events\03_02_events.csproj
 dotnet run --project src\03_02_code\03_02_code.csproj
 dotnet run --project src\03_02_email\03_02_email.csproj
+dotnet run --project src\03_03_calendar\03_03_calendar.csproj
+dotnet run --project src\03_03_browser\03_03_browser.csproj
+dotnet run --project src\03_03_language\03_03_language.csproj
 ```
 
 ## Ćwiczenia
@@ -127,6 +130,9 @@ dotnet run --project src\03_02_email\03_02_email.csproj
 | [`03_02_events`](src/03_02_events/) | `03_02_events` | Multi-agent event architecture — heartbeat loop z workflow coordination |
 | [`03_02_code`](src/03_02_code/) | `03_02_code` | Agent uruchamiający kod TypeScript w sandboxie Deno z dostępem do narzędzi MCP |
 | [`03_02_email`](src/03_02_email/) | `03_02_email` | Agent dwufazowy: triaging i isolation mailów z bazą wiedzy per-odpowiedź |
+| [`03_03_calendar`](src/03_03_calendar/) | `03_03_calendar` | Agent kalendarza dwufazowy: dodawanie zdarzeń + powiadomienia o nadchodzących eventach |
+| [`03_03_browser`](src/03_03_browser/) | `03_03_browser` | Agent przeglądarkowy: interaktywny czat z Selenium WebDriver, obsługa Goodreads |
+| [`03_03_language`](src/03_03_language/) | `03_03_language` | Coach języka angielskiego: ASR + analiza wymowy + TTS feedback (Gemini API) |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -168,6 +174,9 @@ src/
   03_02_events/             ← Ćwiczenie: multi-agent event architecture z heartbeat loop
   03_02_code/               ← Ćwiczenie: agent uruchamiający kod w sandboxie Deno + MCP
   03_02_email/              ← Ćwiczenie: agent dwufazowy triaging i isolation mailów
+  03_03_calendar/           ← Ćwiczenie: agent kalendarza (dodawanie zdarzeń + powiadomienia)
+  03_03_browser/            ← Ćwiczenie: agent przeglądarkowy (Selenium WebDriver + Goodreads)
+  03_03_language/           ← Ćwiczenie: coach języka angielskiego (Gemini ASR + TTS)
 ```
 
 ## Dodawanie nowych ćwiczeń
