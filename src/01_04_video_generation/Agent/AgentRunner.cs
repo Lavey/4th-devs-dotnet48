@@ -152,18 +152,15 @@ namespace FourthDevs.VideoGeneration.Agent
                 }
 
                 // Append function_call items to conversation
-                foreach (JToken item in outputArray)
+                foreach (JObject call in toolCalls)
                 {
-                    if (item["type"]?.ToString() == "function_call")
+                    conversation.Add(new
                     {
-                        conversation.Add(new
-                        {
-                            type      = "function_call",
-                            call_id   = item["call_id"]?.ToString(),
-                            name      = item["name"]?.ToString(),
-                            arguments = item["arguments"]?.ToString() ?? "{}"
-                        });
-                    }
+                        type      = "function_call",
+                        call_id   = call["call_id"]?.ToString(),
+                        name      = call["name"]?.ToString(),
+                        arguments = call["arguments"]?.ToString() ?? "{}"
+                    });
                 }
 
                 // Execute tool calls; append results to conversation
