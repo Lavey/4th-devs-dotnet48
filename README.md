@@ -30,6 +30,8 @@ copy App.example.config src\01_04_image_guidance\App.config
 copy App.example.config src\01_04_image_recognition\App.config
 copy App.example.config src\01_04_json_image\App.config
 copy App.example.config src\01_04_reports\App.config
+copy App.example.config src\01_04_video\App.config
+copy App.example.config src\01_04_video_generation\App.config
 copy App.example.config src\01_05_confirmation\App.config
 copy App.example.config src\01_05_agent\App.config
 copy App.example.config src\02_01_agentic_rag\App.config
@@ -38,12 +40,23 @@ copy App.example.config src\02_02_embedding\App.config
 copy App.example.config src\02_02_hybrid_rag\App.config
 copy App.example.config src\02_03_graph_agents\App.config
 copy App.example.config src\02_04_ops\App.config
+copy App.example.config src\02_05_agent\App.config
 copy App.example.config src\02_05_sandbox\App.config
 copy App.example.config src\03_01_observability\App.config
 copy App.example.config src\03_01_evals\App.config
 copy App.example.config src\03_02_events\App.config
 copy App.example.config src\03_02_code\App.config
 copy App.example.config src\03_02_email\App.config
+copy App.example.config src\03_03_calendar\App.config
+copy App.example.config src\03_03_browser\App.config
+copy App.example.config src\03_03_language\App.config
+copy src\03_04_gmail\App.config.example src\03_04_gmail\App.config
+
+# Projekty wymagające dodatkowych kluczy API:
+# 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
+# 01_04_video_generation: ustaw też REPLICATE_API_TOKEN (Kling video)
+# 03_04_gmail: ustaw GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET (patrz App.config.example w projekcie)
+# Dla tych projektów użyj ich własnego App.config.example jako szablonu
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
 ```
@@ -78,6 +91,8 @@ dotnet run --project src\01_04_image_guidance\01_04_image_guidance.csproj
 dotnet run --project src\01_04_image_recognition\01_04_image_recognition.csproj
 dotnet run --project src\01_04_json_image\01_04_json_image.csproj
 dotnet run --project src\01_04_reports\01_04_reports.csproj
+dotnet run --project src\01_04_video\01_04_video.csproj
+dotnet run --project src\01_04_video_generation\01_04_video_generation.csproj
 dotnet run --project src\01_05_confirmation\01_05_confirmation.csproj
 dotnet run --project src\01_05_agent\01_05_agent.csproj
 dotnet run --project src\02_01_agentic_rag\02_01_agentic_rag.csproj
@@ -86,6 +101,7 @@ dotnet run --project src\02_02_embedding\02_02_embedding.csproj
 dotnet run --project src\02_02_hybrid_rag\02_02_hybrid_rag.csproj
 dotnet run --project src\02_03_graph_agents\02_03_graph_agents.csproj
 dotnet run --project src\02_04_ops\02_04_ops.csproj
+dotnet run --project src\02_05_agent\02_05_agent.csproj
 dotnet run --project src\02_05_sandbox\02_05_sandbox.csproj
 dotnet run --project src\03_01_observability\03_01_observability.csproj
 dotnet run --project src\03_01_evals\03_01_evals.csproj
@@ -95,6 +111,10 @@ dotnet run --project src\03_02_email\03_02_email.csproj
 dotnet run --project src\03_03_calendar\03_03_calendar.csproj
 dotnet run --project src\03_03_browser\03_03_browser.csproj
 dotnet run --project src\03_03_language\03_03_language.csproj
+
+# 03_04_gmail — najpierw autoryzacja, potem czat:
+dotnet run --project src\03_04_gmail\03_04_gmail.csproj -- auth
+dotnet run --project src\03_04_gmail\03_04_gmail.csproj
 ```
 
 ## Ćwiczenia
@@ -116,6 +136,8 @@ dotnet run --project src\03_03_language\03_03_language.csproj
 | [`01_04_image_recognition`](src/01_04_image_recognition/) | `01_04_image_recognition` | Agent klasyfikujący obrazy przy użyciu vision AI i profili kategorii |
 | [`01_04_json_image`](src/01_04_json_image/) | `01_04_json_image` | Token-efektywne generowanie obrazów z szablonów JSON — reprodukowalne prompty |
 | [`01_04_reports`](src/01_04_reports/) | `01_04_reports` | Agent do analizy dokumentów i generowania ustrukturyzowanych raportów Markdown |
+| [`01_04_video`](src/01_04_video/) | `01_04_video` | Agent analizy wideo: transkrypcja, ekstrakcja scen i odpowiedzi na pytania przez Gemini API (YouTube/lokalne) |
+| [`01_04_video_generation`](src/01_04_video_generation/) | `01_04_video_generation` | Agent generowania wideo: klatki startowa/końcowa przez Gemini + animacja przez Replicate Kling |
 | [`01_05_confirmation`](src/01_05_confirmation/) | `01_05_confirmation` | Agent plików i e-mail z potwierdzeniem (HITL) |
 | [`01_05_agent`](src/01_05_agent/) | `01_05_agent` | Serwer HTTP REST z pętlą agentową i zarządzaniem sesjami |
 | [`02_01_agentic_rag`](src/02_01_agentic_rag/) | `02_01_agentic_rag` | Agentic RAG z wieloetapowym wyszukiwaniem dokumentów |
@@ -124,6 +146,7 @@ dotnet run --project src\03_03_language\03_03_language.csproj
 | [`02_02_hybrid_rag`](src/02_02_hybrid_rag/) | `02_02_hybrid_rag` | Hybrid RAG: SQLite FTS5 + cosine similarity + RRF |
 | [`02_03_graph_agents`](src/02_03_graph_agents/) | `02_03_graph_agents` | Agent RAG z grafem wiedzy Neo4j — hybrid search i eksploracja entności |
 | [`02_04_ops`](src/02_04_ops/) | `02_04_ops` | Multi-agent Daily Ops: orkiestrator deleguje do agentów mail/calendar/tasks/notes |
+| [`02_05_agent`](src/02_05_agent/) | `02_05_agent` | Agent z pamięcią obserwacyjną (Observer/Reflector) — serwer HTTP REST z zarządzaniem sesjami |
 | [`02_05_sandbox`](src/02_05_sandbox/) | `02_05_sandbox` | Agent MCP sandbox: dynamiczne odkrywanie narzędzi i wykonywanie JS w Jint |
 | [`03_01_observability`](src/03_01_observability/) | `03_01_observability` | Serwer HTTP z agentem obsługujący obserwowalność i integrację Langfuse |
 | [`03_01_evals`](src/03_01_evals/) | `03_01_evals` | Serwer HTTP z agentem wspierającym eksperymenty oceny vs. syntetyczne datasety |
@@ -133,6 +156,7 @@ dotnet run --project src\03_03_language\03_03_language.csproj
 | [`03_03_calendar`](src/03_03_calendar/) | `03_03_calendar` | Agent kalendarza dwufazowy: dodawanie zdarzeń + powiadomienia o nadchodzących eventach |
 | [`03_03_browser`](src/03_03_browser/) | `03_03_browser` | Agent przeglądarkowy: interaktywny czat z Selenium WebDriver, obsługa Goodreads |
 | [`03_03_language`](src/03_03_language/) | `03_03_language` | Coach języka angielskiego: ASR + analiza wymowy + TTS feedback (Gemini API) |
+| [`03_04_gmail`](src/03_04_gmail/) | `03_04_gmail` | Agent Gmail z OAuth 2.0: wyszukiwanie, czytanie, wysyłanie, modyfikacja maili i pobieranie załączników |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -160,6 +184,8 @@ src/
   01_04_image_recognition/  ← Ćwiczenie: klasyfikacja obrazów przez vision AI
   01_04_json_image/         ← Ćwiczenie: generowanie obrazów z szablonów JSON
   01_04_reports/            ← Ćwiczenie: analiza dokumentów i raporty Markdown
+  01_04_video/              ← Ćwiczenie: agent analizy wideo (Gemini — YouTube i pliki lokalne)
+  01_04_video_generation/   ← Ćwiczenie: generowanie wideo (klatki Gemini + animacja Replicate Kling)
   01_05_confirmation/       ← Ćwiczenie: agent plików i e-mail z potwierdzeniem (HITL)
   01_05_agent/              ← Ćwiczenie: serwer HTTP REST z pętlą agentową
   02_01_agentic_rag/        ← Ćwiczenie: Agentic RAG z wieloetapowym wyszukiwaniem
@@ -168,6 +194,7 @@ src/
   02_02_hybrid_rag/         ← Ćwiczenie: Hybrid RAG (FTS5 + cosine similarity + RRF)
   02_03_graph_agents/       ← Ćwiczenie: agent RAG z grafem wiedzy Neo4j
   02_04_ops/                ← Ćwiczenie: multi-agent Daily Ops (orkiestrator + agenci specjaliści)
+  02_05_agent/              ← Ćwiczenie: agent z pamięcią obserwacyjną (Observer/Reflector, serwer HTTP)
   02_05_sandbox/            ← Ćwiczenie: agent MCP sandbox (odkrywanie narzędzi + JS w Jint)
   03_01_observability/      ← Ćwiczenie: obserwowalność agentów z integracją Langfuse
   03_01_evals/              ← Ćwiczenie: eksperymenty oceny vs. syntetyczne datasety
@@ -177,6 +204,7 @@ src/
   03_03_calendar/           ← Ćwiczenie: agent kalendarza (dodawanie zdarzeń + powiadomienia)
   03_03_browser/            ← Ćwiczenie: agent przeglądarkowy (Selenium WebDriver + Goodreads)
   03_03_language/           ← Ćwiczenie: coach języka angielskiego (Gemini ASR + TTS)
+  03_04_gmail/              ← Ćwiczenie: agent Gmail z OAuth 2.0 (wyszukiwanie, czytanie, wysyłanie, modyfikacja)
 ```
 
 ## Dodawanie nowych ćwiczeń
