@@ -1,0 +1,27 @@
+{
+  "style": {
+    "artStyle": "2D animation, Studio Ghibli inspired",
+    "colorPalette": "warm autumn tones, golden light",
+    "lighting": "soft afternoon sunlight, long shadows",
+    "quality": "high detail, professional illustration",
+    "atmosphere": "peaceful, whimsical"
+  },
+  "scene": {
+    "environment": "snowy forest clearing with a wooden fence",
+    "weather": "light snowfall, snowflakes visible",
+    "time": "late afternoon, golden hour",
+    "background": "pine trees heavy with snow, soft bokeh"
+  },
+  "subject": {
+    "main": "happy red fox preparing to jump",
+    "details": "fluffy orange fur, white chest, alert ears, bushy tail raised",
+    "orientation": "side view facing right, legs bent ready to spring",
+    "position": "left third of frame",
+    "scale": "occupies 40% of frame height"
+  },
+  "composition": {
+    "framing": "wide shot",
+    "rule_of_thirds": true,
+    "depth": "foreground fence, midground fox, background forest"
+  }
+}
