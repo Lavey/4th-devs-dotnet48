@@ -157,7 +157,11 @@ namespace FourthDevs.Awareness.Agent
                         string relPath = args["path"]?.ToString() ?? string.Empty;
                         string fullDir = string.IsNullOrWhiteSpace(relPath)
                             ? workspaceDir
-                            : Path.Combine(workspaceDir, relPath.Replace('/', Path.DirectorySeparatorChar));
+                            : Path.GetFullPath(Path.Combine(workspaceDir, relPath.Replace('/', Path.DirectorySeparatorChar)));
+
+                        // Guard against path traversal
+                        if (!fullDir.StartsWith(workspaceDir, StringComparison.OrdinalIgnoreCase))
+                            return "Access denied: path is outside workspace.";
 
                         if (!Directory.Exists(fullDir))
                             return $"Directory not found: {relPath}";
@@ -187,7 +191,12 @@ namespace FourthDevs.Awareness.Agent
                     Handler = async (args) =>
                     {
                         string relPath = args["path"]?.ToString() ?? string.Empty;
-                        string fullPath = Path.Combine(workspaceDir, relPath.Replace('/', Path.DirectorySeparatorChar));
+                        string fullPath = Path.GetFullPath(Path.Combine(workspaceDir, relPath.Replace('/', Path.DirectorySeparatorChar)));
+
+                        // Guard against path traversal
+                        if (!fullPath.StartsWith(workspaceDir, StringComparison.OrdinalIgnoreCase))
+                            return "Access denied: path is outside workspace.";
+
                         if (!File.Exists(fullPath))
                             return $"File not found: {relPath}";
                         await Task.FromResult(0);

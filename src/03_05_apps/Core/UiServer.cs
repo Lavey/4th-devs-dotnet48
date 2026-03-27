@@ -121,7 +121,9 @@ namespace FourthDevs.Apps.Core
                     string[] kv = part.Split('=');
                     if (kv.Length == 2 && kv[0] == "focus")
                     {
-                        focus = kv[1];
+                        string val = kv[1].Trim().ToLowerInvariant();
+                        if (val == "todo" || val == "shopping")
+                            focus = val;
                         break;
                     }
                 }
