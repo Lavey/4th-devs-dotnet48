@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="OPENAI_API_KEY" value="" />
+    <add key="OPENROUTER_API_KEY" value="" />
+    <add key="AI_PROVIDER" value="" />
+    <add key="OPENROUTER_HTTP_REFERER" value="" />
+    <add key="OPENROUTER_APP_NAME" value="" />
+  </appSettings>
+</configuration>
