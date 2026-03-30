@@ -292,7 +292,14 @@ console.log('" + ResultMarker + @"' + JSON.stringify(__final));
         {
             string normalized = relativePath.Replace('/', Path.DirectorySeparatorChar);
             string abs = Path.Combine(VaultDir, normalized);
-            return Path.GetFullPath(abs);
+            string full = Path.GetFullPath(abs);
+
+            // Guard against path traversal (e.g. ../../etc/passwd)
+            string vaultNorm = Path.GetFullPath(VaultDir);
+            if (!full.StartsWith(vaultNorm, StringComparison.OrdinalIgnoreCase))
+                throw new UnauthorizedAccessException("Access denied: path is outside vault.");
+
+            return full;
         }
 
         private static string VaultRead(string path)

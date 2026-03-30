@@ -55,6 +55,7 @@ copy App.example.config src\03_05_awareness\App.config
 copy App.example.config src\03_05_apps\App.config
 copy App.example.config src\03_05_artifacts\App.config
 copy App.example.config src\03_05_render\App.config
+copy App.example.config src\04_01_garden\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -131,6 +132,9 @@ dotnet run --project src\03_05_artifacts\03_05_artifacts.csproj
 
 # 03_05_render — agent renderowania dashboardów (live preview na porcie 3502):
 dotnet run --project src\03_05_render\03_05_render.csproj
+
+# 04_01_garden — cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami i umiejętnościami:
+dotnet run --project src\04_01_garden\04_01_garden.csproj
 ```
 
 ## Ćwiczenia
@@ -177,6 +181,7 @@ dotnet run --project src\03_05_render\03_05_render.csproj
 | [`03_05_apps`](src/03_05_apps/) | `03_05_apps` | Agent menedżera list (todo/shopping) w Markdown z przeglądarką UI serwowaną przez HttpListener |
 | [`03_05_artifacts`](src/03_05_artifacts/) | `03_05_artifacts` | Agent generowania artefaktów HTML z zestawami zdolności (CDN) i podglądem na żywo w przeglądarce |
 | [`03_05_render`](src/03_05_render/) | `03_05_render` | Agent renderowania dashboardów: specyfikacje JSON → HTML przez deterministyczny katalog komponentów |
+| [`04_01_garden`](src/04_01_garden/) | `04_01_garden` | Cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami `terminal`/`code_mode`/`git_push`, systemem umiejętności i workflow |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -229,6 +234,7 @@ src/
   03_05_apps/               ← Ćwiczenie: agent menedżera list (todo/shopping Markdown + UI HttpListener)
   03_05_artifacts/          ← Ćwiczenie: agent artefaktów HTML (zestawy zdolności CDN + live preview)
   03_05_render/             ← Ćwiczenie: agent renderowania dashboardów (spec JSON → HTML, katalog komponentów)
+  04_01_garden/             ← Ćwiczenie: cyfrowy ogród (agent z vault Markdown, narzędzia, umiejętności, workflow)
 ```
 
 ## Dodawanie nowych ćwiczeń
