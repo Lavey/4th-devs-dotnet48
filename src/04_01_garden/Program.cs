@@ -68,7 +68,7 @@ namespace FourthDevs.Garden
             string[] lines = new string[]
             {
                 "",
-                "  Cyfrowy Ogrod",
+                "  Cyfrowy Ogr\u00f3d",
                 "",
                 "  Ten przyklad laczy trzy elementy:",
                 "  1. publiczna baze wiedzy w Markdownie w `vault/**`",
