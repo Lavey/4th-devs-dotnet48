@@ -51,6 +51,11 @@ copy App.example.config src\03_03_calendar\App.config
 copy App.example.config src\03_03_browser\App.config
 copy App.example.config src\03_03_language\App.config
 copy src\03_04_gmail\App.config.example src\03_04_gmail\App.config
+copy App.example.config src\03_05_awareness\App.config
+copy App.example.config src\03_05_apps\App.config
+copy App.example.config src\03_05_artifacts\App.config
+copy App.example.config src\03_05_render\App.config
+copy App.example.config src\04_01_garden\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -115,6 +120,21 @@ dotnet run --project src\03_03_language\03_03_language.csproj
 # 03_04_gmail — najpierw autoryzacja, potem czat:
 dotnet run --project src\03_04_gmail\03_04_gmail.csproj -- auth
 dotnet run --project src\03_04_gmail\03_04_gmail.csproj
+
+# 03_05_awareness — agent świadomości (wypełnij workspace/profile przed uruchomieniem):
+dotnet run --project src\03_05_awareness\03_05_awareness.csproj
+
+# 03_05_apps — agent menedżera list (otwiera UI w przeglądarce na porcie 3500):
+dotnet run --project src\03_05_apps\03_05_apps.csproj
+
+# 03_05_artifacts — agent artefaktów HTML (live preview na porcie 3501):
+dotnet run --project src\03_05_artifacts\03_05_artifacts.csproj
+
+# 03_05_render — agent renderowania dashboardów (live preview na porcie 3502):
+dotnet run --project src\03_05_render\03_05_render.csproj
+
+# 04_01_garden — cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami i umiejętnościami:
+dotnet run --project src\04_01_garden\04_01_garden.csproj
 ```
 
 ## Ćwiczenia
@@ -157,6 +177,11 @@ dotnet run --project src\03_04_gmail\03_04_gmail.csproj
 | [`03_03_browser`](src/03_03_browser/) | `03_03_browser` | Agent przeglądarkowy: interaktywny czat z Selenium WebDriver, obsługa Goodreads |
 | [`03_03_language`](src/03_03_language/) | `03_03_language` | Coach języka angielskiego: ASR + analiza wymowy + TTS feedback (Gemini API) |
 | [`03_04_gmail`](src/03_04_gmail/) | `03_04_gmail` | Agent Gmail z OAuth 2.0: wyszukiwanie, czytanie, wysyłanie, modyfikacja maili i pobieranie załączników |
+| [`03_05_awareness`](src/03_05_awareness/) | `03_05_awareness` | Agent świadomości z kontekstem temporalnym, narzędziami `think`/`recall` i pamięcią w plikach workspace |
+| [`03_05_apps`](src/03_05_apps/) | `03_05_apps` | Agent menedżera list (todo/shopping) w Markdown z przeglądarką UI serwowaną przez HttpListener |
+| [`03_05_artifacts`](src/03_05_artifacts/) | `03_05_artifacts` | Agent generowania artefaktów HTML z zestawami zdolności (CDN) i podglądem na żywo w przeglądarce |
+| [`03_05_render`](src/03_05_render/) | `03_05_render` | Agent renderowania dashboardów: specyfikacje JSON → HTML przez deterministyczny katalog komponentów |
+| [`04_01_garden`](src/04_01_garden/) | `04_01_garden` | Cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami `terminal`/`code_mode`/`git_push`, systemem umiejętności i workflow |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -205,6 +230,11 @@ src/
   03_03_browser/            ← Ćwiczenie: agent przeglądarkowy (Selenium WebDriver + Goodreads)
   03_03_language/           ← Ćwiczenie: coach języka angielskiego (Gemini ASR + TTS)
   03_04_gmail/              ← Ćwiczenie: agent Gmail z OAuth 2.0 (wyszukiwanie, czytanie, wysyłanie, modyfikacja)
+  03_05_awareness/          ← Ćwiczenie: agent świadomości (kontekst temporalny, think/recall, pamięć workspace)
+  03_05_apps/               ← Ćwiczenie: agent menedżera list (todo/shopping Markdown + UI HttpListener)
+  03_05_artifacts/          ← Ćwiczenie: agent artefaktów HTML (zestawy zdolności CDN + live preview)
+  03_05_render/             ← Ćwiczenie: agent renderowania dashboardów (spec JSON → HTML, katalog komponentów)
+  04_01_garden/             ← Ćwiczenie: cyfrowy ogród (agent z vault Markdown, narzędzia, umiejętności, workflow)
 ```
 
 ## Dodawanie nowych ćwiczeń
