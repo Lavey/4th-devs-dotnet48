@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FourthDevs.System.Agent
+namespace FourthDevs.AgentSystem.Agent
 {
     /// <summary>
     /// Parsed agent template loaded from a <c>*.md</c> file in workspace/system/agents/.

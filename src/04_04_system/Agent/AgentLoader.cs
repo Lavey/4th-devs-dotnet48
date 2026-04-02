@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace FourthDevs.System.Agent
+namespace FourthDevs.AgentSystem.Agent
 {
     /// <summary>
     /// Loads an agent template from a Markdown file in workspace/system/agents/.

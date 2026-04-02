@@ -56,6 +56,7 @@ copy App.example.config src\03_05_apps\App.config
 copy App.example.config src\03_05_artifacts\App.config
 copy App.example.config src\03_05_render\App.config
 copy App.example.config src\04_01_garden\App.config
+copy App.example.config src\04_04_system\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -135,6 +136,16 @@ dotnet run --project src\03_05_render\03_05_render.csproj
 
 # 04_01_garden — cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami i umiejętnościami:
 dotnet run --project src\04_01_garden\04_01_garden.csproj
+
+# 04_04_system — multi-agent system z bazą wiedzy Markdown sterującą zachowaniem agentów:
+dotnet run --project src\04_04_system\04_04_system.csproj
+
+# 04_04_system — workflow daily-news (research → assemble → deliver):
+dotnet run --project src\04_04_system\04_04_system.csproj -- daily-news
+
+# 04_04_system — przykładowe zapytania (wszystkie 7 lub jedno):
+dotnet run --project src\04_04_system\04_04_system.csproj -- examples
+dotnet run --project src\04_04_system\04_04_system.csproj -- examples 3
 ```
 
 ## Ćwiczenia
@@ -182,6 +193,7 @@ dotnet run --project src\04_01_garden\04_01_garden.csproj
 | [`03_05_artifacts`](src/03_05_artifacts/) | `03_05_artifacts` | Agent generowania artefaktów HTML z zestawami zdolności (CDN) i podglądem na żywo w przeglądarce |
 | [`03_05_render`](src/03_05_render/) | `03_05_render` | Agent renderowania dashboardów: specyfikacje JSON → HTML przez deterministyczny katalog komponentów |
 | [`04_01_garden`](src/04_01_garden/) | `04_01_garden` | Cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami `terminal`/`code_mode`/`git_push`, systemem umiejętności i workflow |
+| [`04_04_system`](src/04_04_system/) | `04_04_system` | Multi-agent system: baza wiedzy Markdown steruje agentami, delegacja zadań, workflow daily-news (research → assemble → deliver) |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -235,6 +247,7 @@ src/
   03_05_artifacts/          ← Ćwiczenie: agent artefaktów HTML (zestawy zdolności CDN + live preview)
   03_05_render/             ← Ćwiczenie: agent renderowania dashboardów (spec JSON → HTML, katalog komponentów)
   04_01_garden/             ← Ćwiczenie: cyfrowy ogród (agent z vault Markdown, narzędzia, umiejętności, workflow)
+  04_04_system/             ← Ćwiczenie: multi-agent system (baza wiedzy Markdown, delegacja, workflow daily-news)
 ```
 
 ## Dodawanie nowych ćwiczeń

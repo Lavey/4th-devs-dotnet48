@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace FourthDevs.System.Tools
+namespace FourthDevs.AgentSystem.Tools
 {
     /// <summary>
     /// Implements the tool handlers for the 04_04_system agent.

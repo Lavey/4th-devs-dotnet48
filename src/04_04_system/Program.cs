@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using FourthDevs.System.Agent;
+using FourthDevs.AgentSystem.Agent;
 
-namespace FourthDevs.System
+namespace FourthDevs.AgentSystem
 {
     /// <summary>
     /// Lesson 19 – Multi-Agent System (04_04_system)

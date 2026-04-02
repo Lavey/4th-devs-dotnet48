@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
-namespace FourthDevs.System.Tools
+namespace FourthDevs.AgentSystem.Tools
 {
     /// <summary>
     /// Builds tool definition arrays for the Responses API.

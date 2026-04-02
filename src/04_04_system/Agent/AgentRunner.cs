@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using FourthDevs.Common;
 using FourthDevs.Common.Models;
-using FourthDevs.System.Tools;
+using FourthDevs.AgentSystem.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace FourthDevs.System.Agent
+namespace FourthDevs.AgentSystem.Agent
 {
     /// <summary>
     /// Runs an agent loop for a given agent template.
