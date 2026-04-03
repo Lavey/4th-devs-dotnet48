@@ -57,6 +57,8 @@ copy App.example.config src\03_05_artifacts\App.config
 copy App.example.config src\03_05_render\App.config
 copy App.example.config src\04_01_garden\App.config
 copy App.example.config src\04_04_system\App.config
+copy App.example.config src\04_05_review\App.config
+copy App.example.config src\04_05_apps\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -146,6 +148,12 @@ dotnet run --project src\04_04_system\04_04_system.csproj -- daily-news
 # 04_04_system — przykładowe zapytania (wszystkie 7 lub jedno):
 dotnet run --project src\04_04_system\04_04_system.csproj -- examples
 dotnet run --project src\04_04_system\04_04_system.csproj -- examples 3
+
+# 04_05_review — laboratorium recenzji Markdown (UI na porcie 4405):
+dotnet run --project src\04_05_review\04_05_review.csproj
+
+# 04_05_apps — agent marketingowy z narzędziami (UI na porcie 4500):
+dotnet run --project src\04_05_apps\04_05_apps.csproj
 ```
 
 ## Ćwiczenia
@@ -194,6 +202,8 @@ dotnet run --project src\04_04_system\04_04_system.csproj -- examples 3
 | [`03_05_render`](src/03_05_render/) | `03_05_render` | Agent renderowania dashboardów: specyfikacje JSON → HTML przez deterministyczny katalog komponentów |
 | [`04_01_garden`](src/04_01_garden/) | `04_01_garden` | Cyfrowy ogród: agent z bazą wiedzy Markdown, narzędziami `terminal`/`code_mode`/`git_push`, systemem umiejętności i workflow |
 | [`04_04_system`](src/04_04_system/) | `04_04_system` | Multi-agent system: baza wiedzy Markdown steruje agentami, delegacja zadań, workflow daily-news (research → assemble → deliver) |
+| [`04_05_review`](src/04_05_review/) | `04_05_review` | Laboratorium recenzji Markdown: agent z komentarzami inline, tryby paragraph/at_once, accept/reject/revert sugestii |
+| [`04_05_apps`](src/04_05_apps/) | `04_05_apps` | Agent marketingowy SaaS: zarządzanie todos, kampaniami, sprzedażą, kuponami i produktami z UI w przeglądarce |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -248,6 +258,8 @@ src/
   03_05_render/             ← Ćwiczenie: agent renderowania dashboardów (spec JSON → HTML, katalog komponentów)
   04_01_garden/             ← Ćwiczenie: cyfrowy ogród (agent z vault Markdown, narzędzia, umiejętności, workflow)
   04_04_system/             ← Ćwiczenie: multi-agent system (baza wiedzy Markdown, delegacja, workflow daily-news)
+  04_05_review/            ← Ćwiczenie: laboratorium recenzji Markdown (komentarze inline, accept/reject/revert)
+  04_05_apps/              ← Ćwiczenie: agent marketingowy (todos, kampanie, sprzedaż, kupony, produkty + UI)
 ```
 
 ## Dodawanie nowych ćwiczeń
