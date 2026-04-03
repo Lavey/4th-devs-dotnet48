@@ -17,6 +17,19 @@ namespace FourthDevs.Review.Core
             _workspacePath = workspacePath;
         }
 
+        /// <summary>
+        /// Resolve a relative path safely within the workspace, preventing directory traversal.
+        /// </summary>
+        private static string SafeResolvePath(string basePath, string relPath)
+        {
+            string combined = Path.Combine(basePath, relPath.Replace("/", Path.DirectorySeparatorChar.ToString()));
+            string full = Path.GetFullPath(combined);
+            string baseFullPath = Path.GetFullPath(basePath);
+            if (!full.StartsWith(baseFullPath))
+                throw new UnauthorizedAccessException("Path escapes workspace: " + relPath);
+            return full;
+        }
+
         // ---- Frontmatter parser ----
 
         public static void ParseFrontmatter(string content, out Dictionary<string, object> frontmatter, out string body)
@@ -257,7 +270,7 @@ namespace FourthDevs.Review.Core
 
         public static DocumentData LoadDocument(string relPath)
         {
-            string fullPath = Path.Combine(_workspacePath, relPath.Replace("/", Path.DirectorySeparatorChar.ToString()));
+            string fullPath = SafeResolvePath(_workspacePath, relPath);
             if (!File.Exists(fullPath))
                 throw new FileNotFoundException("Document not found: " + relPath);
 
@@ -277,7 +290,7 @@ namespace FourthDevs.Review.Core
         {
             string markdown = MarkdownParser.Serialize(doc.Blocks);
             string full = SerializeFrontmatter(doc.Frontmatter, markdown);
-            string fullPath = Path.Combine(_workspacePath, doc.Path.Replace("/", Path.DirectorySeparatorChar.ToString()));
+            string fullPath = SafeResolvePath(_workspacePath, doc.Path);
             File.WriteAllText(fullPath, full);
         }
 
@@ -285,7 +298,7 @@ namespace FourthDevs.Review.Core
 
         public static PromptData LoadPrompt(string relPath)
         {
-            string fullPath = Path.Combine(_workspacePath, relPath.Replace("/", Path.DirectorySeparatorChar.ToString()));
+            string fullPath = SafeResolvePath(_workspacePath, relPath);
             if (!File.Exists(fullPath))
                 throw new FileNotFoundException("Prompt not found: " + relPath);
 
@@ -303,7 +316,7 @@ namespace FourthDevs.Review.Core
                 var contextParts = new List<string>();
                 foreach (string cf in contextFiles)
                 {
-                    string cfPath = Path.Combine(_workspacePath, cf.Replace("/", Path.DirectorySeparatorChar.ToString()));
+                    string cfPath = SafeResolvePath(_workspacePath, cf);
                     if (File.Exists(cfPath))
                         contextParts.Add(File.ReadAllText(cfPath));
                 }
@@ -351,14 +364,14 @@ namespace FourthDevs.Review.Core
             if (!Directory.Exists(reviewsDir))
                 Directory.CreateDirectory(reviewsDir);
 
-            string filePath = Path.Combine(reviewsDir, review.Id + ".json");
+            string filePath = SafeResolvePath(reviewsDir, review.Id + ".json");
             string json = JsonConvert.SerializeObject(review, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
 
         public static ReviewData LoadReview(string reviewId)
         {
-            string filePath = Path.Combine(_workspacePath, "reviews", reviewId + ".json");
+            string filePath = SafeResolvePath(Path.Combine(_workspacePath, "reviews"), reviewId + ".json");
             if (!File.Exists(filePath))
                 return null;
 
