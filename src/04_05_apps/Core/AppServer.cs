@@ -181,7 +181,8 @@ namespace FourthDevs.McpApps.Core
 
         private static void SendError(HttpListenerResponse resp, int status, string message)
         {
-            byte[] buf = Encoding.UTF8.GetBytes(message);
+            string safe = System.Net.WebUtility.HtmlEncode(message ?? "");
+            byte[] buf = Encoding.UTF8.GetBytes(safe);
             resp.StatusCode = status;
             resp.ContentType = "text/plain; charset=utf-8";
             resp.ContentLength64 = buf.Length;
