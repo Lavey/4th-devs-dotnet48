@@ -18,21 +18,28 @@ namespace FourthDevs.AgentGraph.Events
         private static int _seq;
         private static readonly List<AgentEvent> Buffer = new List<AgentEvent>();
         private static readonly List<Action<AgentEvent>> Listeners = new List<Action<AgentEvent>>();
+        private static readonly object Lock = new object();
         private const int MaxBuffer = 500;
 
         public static void Emit(string type, JObject data = null)
         {
-            var evt = new AgentEvent
+            AgentEvent evt;
+            Action<AgentEvent>[] snapshot;
+            lock (Lock)
             {
-                Seq = ++_seq,
-                Type = type,
-                Time = DateTime.UtcNow.ToString("o"),
-                Data = data ?? new JObject()
-            };
-            Buffer.Add(evt);
-            if (Buffer.Count > MaxBuffer) Buffer.RemoveAt(0);
+                evt = new AgentEvent
+                {
+                    Seq = ++_seq,
+                    Type = type,
+                    Time = DateTime.UtcNow.ToString("o"),
+                    Data = data ?? new JObject()
+                };
+                Buffer.Add(evt);
+                if (Buffer.Count > MaxBuffer) Buffer.RemoveAt(0);
+                snapshot = Listeners.ToArray();
+            }
 
-            foreach (var listener in Listeners.ToArray())
+            foreach (var listener in snapshot)
             {
                 try { listener(evt); }
                 catch (Exception ex) { Console.Error.WriteLine("[events] listener error: " + ex.Message); }
@@ -41,10 +48,13 @@ namespace FourthDevs.AgentGraph.Events
 
         public static Action Subscribe(Action<AgentEvent> listener)
         {
-            Listeners.Add(listener);
-            return () => Listeners.Remove(listener);
+            lock (Lock) { Listeners.Add(listener); }
+            return () => { lock (Lock) { Listeners.Remove(listener); } };
         }
 
-        public static IReadOnlyList<AgentEvent> Replay() => Buffer.AsReadOnly();
+        public static IReadOnlyList<AgentEvent> Replay()
+        {
+            lock (Lock) { return Buffer.ToArray(); }
+        }
     }
 }
