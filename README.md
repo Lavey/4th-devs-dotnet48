@@ -59,6 +59,7 @@ copy App.example.config src\04_01_garden\App.config
 copy App.example.config src\04_04_system\App.config
 copy App.example.config src\04_05_review\App.config
 copy App.example.config src\04_05_apps\App.config
+copy App.example.config src\05_01_agent_graph\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -154,6 +155,10 @@ dotnet run --project src\04_05_review\04_05_review.csproj
 
 # 04_05_apps — agent marketingowy z narzędziami (UI na porcie 4500):
 dotnet run --project src\04_05_apps\04_05_apps.csproj
+
+# 05_01_agent_graph — multi-agent graph: orkiestrator + specjaliści, dashboard na porcie 3300:
+dotnet run --project src\05_01_agent_graph\05_01_agent_graph.csproj
+dotnet run --project src\05_01_agent_graph\05_01_agent_graph.csproj -- "Write a blog post about AI agents"
 ```
 
 ## Ćwiczenia
@@ -204,6 +209,7 @@ dotnet run --project src\04_05_apps\04_05_apps.csproj
 | [`04_04_system`](src/04_04_system/) | `04_04_system` | Multi-agent system: baza wiedzy Markdown steruje agentami, delegacja zadań, workflow daily-news (research → assemble → deliver) |
 | [`04_05_review`](src/04_05_review/) | `04_05_review` | Laboratorium recenzji Markdown: agent z komentarzami inline, tryby paragraph/at_once, accept/reject/revert sugestii |
 | [`04_05_apps`](src/04_05_apps/) | `04_05_apps` | Agent marketingowy SaaS: zarządzanie todos, kampaniami, sprzedażą, kuponami i produktami z UI w przeglądarce |
+| [`05_01_agent_graph`](src/05_01_agent_graph/) | `05_01_agent_graph` | Multi-agent graph: orkiestrator + specjaliści (researcher, writer, email_writer), pamięć obserwacyjna, scheduler z retry, dashboard na porcie 3300 |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -260,6 +266,7 @@ src/
   04_04_system/             ← Ćwiczenie: multi-agent system (baza wiedzy Markdown, delegacja, workflow daily-news)
   04_05_review/            ← Ćwiczenie: laboratorium recenzji Markdown (komentarze inline, accept/reject/revert)
   04_05_apps/              ← Ćwiczenie: agent marketingowy (todos, kampanie, sprzedaż, kupony, produkty + UI)
+  05_01_agent_graph/       ← Ćwiczenie: multi-agent graph (orkiestrator + specjaliści, pamięć, scheduler, dashboard)
 ```
 
 ## Dodawanie nowych ćwiczeń
