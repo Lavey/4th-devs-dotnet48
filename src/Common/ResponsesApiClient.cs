@@ -106,6 +106,31 @@ namespace FourthDevs.Common
             return calls;
         }
 
+        /// <summary>
+        /// Posts a raw JObject to the Responses API and returns the parsed JObject response.
+        /// Useful when callers need full control over the request/response shape.
+        /// </summary>
+        public async Task<Newtonsoft.Json.Linq.JObject> PostRawAsync(Newtonsoft.Json.Linq.JObject body)
+        {
+            string json = body.ToString(Formatting.None);
+
+            using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
+            using (var response = await _http.PostAsync(AiConfig.ApiEndpoint, content))
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var parsed = Newtonsoft.Json.Linq.JObject.Parse(responseBody);
+
+                if (!response.IsSuccessStatusCode || parsed["error"] != null)
+                {
+                    string msg = parsed["error"]?["message"]?.ToString()
+                        ?? string.Format("Request failed with status {0}", (int)response.StatusCode);
+                    throw new InvalidOperationException(msg);
+                }
+
+                return parsed;
+            }
+        }
+
         public void Dispose()
         {
             _http?.Dispose();
