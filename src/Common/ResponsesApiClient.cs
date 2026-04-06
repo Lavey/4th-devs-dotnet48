@@ -120,10 +120,17 @@ namespace FourthDevs.Common
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var parsed = Newtonsoft.Json.Linq.JObject.Parse(responseBody);
 
-                if (!response.IsSuccessStatusCode || parsed["error"] != null)
+                var errorToken = parsed["error"];
+                bool hasError = errorToken != null && errorToken.Type != Newtonsoft.Json.Linq.JTokenType.Null;
+                if (!response.IsSuccessStatusCode || hasError)
                 {
-                    string msg = parsed["error"]?["message"]?.ToString()
-                        ?? string.Format("Request failed with status {0}", (int)response.StatusCode);
+                    string msg = null;
+                    if (errorToken is Newtonsoft.Json.Linq.JObject errorObj)
+                        msg = errorObj["message"]?.ToString();
+                    else if (hasError)
+                        msg = errorToken.ToString();
+                    if (string.IsNullOrEmpty(msg))
+                        msg = string.Format("Request failed with status {0}", (int)response.StatusCode);
                     throw new InvalidOperationException(msg);
                 }
 

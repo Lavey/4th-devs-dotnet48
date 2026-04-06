@@ -173,11 +173,13 @@ namespace FourthDevs.AgentGraph.Ai
             var sb = new StringBuilder();
             foreach (var item in output)
             {
+                if (!(item is JObject)) continue;
                 if (item["type"] == null || item["type"].ToString() != "message") continue;
                 var content = item["content"] as JArray;
                 if (content == null) continue;
                 foreach (var part in content)
                 {
+                    if (!(part is JObject)) continue;
                     if (part["type"] != null && part["type"].ToString() == "output_text")
                         sb.Append(part["text"] != null ? part["text"].ToString() : "");
                 }
@@ -192,6 +194,7 @@ namespace FourthDevs.AgentGraph.Ai
             if (output == null) return result;
             foreach (var item in output)
             {
+                if (!(item is JObject)) continue;
                 if (item["type"] == null || item["type"].ToString() != "function_call") continue;
                 JObject args;
                 try { args = JObject.Parse(item["arguments"] != null ? item["arguments"].ToString() : "{}"); }
@@ -215,8 +218,8 @@ namespace FourthDevs.AgentGraph.Ai
                 InputTokens = u["input_tokens"] != null ? u["input_tokens"].Value<int>() : 0,
                 OutputTokens = u["output_tokens"] != null ? u["output_tokens"].Value<int>() : 0,
                 TotalTokens = u["total_tokens"] != null ? u["total_tokens"].Value<int>() : 0,
-                CachedTokens = u["input_tokens_details"] != null && u["input_tokens_details"]["cached_tokens"] != null
-                    ? u["input_tokens_details"]["cached_tokens"].Value<int>() : 0,
+                CachedTokens = u["input_tokens_details"] is JObject inputDetails && inputDetails["cached_tokens"] != null
+                    ? inputDetails["cached_tokens"].Value<int>() : 0,
             };
         }
     }
