@@ -46,37 +46,52 @@ namespace FourthDevs.AgentGraph.Store
         public Task<T> Add(T item)
         {
             EnsureLoaded();
-            _items.Add(item);
-            Persist();
+            lock (_lock)
+            {
+                _items.Add(item);
+                Persist();
+            }
             return Task.FromResult(item);
         }
 
         public Task<T> Update(string id, Action<T> patch)
         {
             EnsureLoaded();
-            var item = _items.FirstOrDefault(i => i.Id == id);
-            if (item == null) return Task.FromResult<T>(default(T));
-            patch(item);
-            Persist();
-            return Task.FromResult(item);
+            lock (_lock)
+            {
+                var item = _items.FirstOrDefault(i => i.Id == id);
+                if (item == null) return Task.FromResult<T>(default(T));
+                patch(item);
+                Persist();
+                return Task.FromResult(item);
+            }
         }
 
         public Task<T> GetById(string id)
         {
             EnsureLoaded();
-            return Task.FromResult(_items.FirstOrDefault(i => i.Id == id));
+            lock (_lock)
+            {
+                return Task.FromResult(_items.FirstOrDefault(i => i.Id == id));
+            }
         }
 
         public Task<List<T>> Find(Func<T, bool> predicate)
         {
             EnsureLoaded();
-            return Task.FromResult(_items.Where(predicate).ToList());
+            lock (_lock)
+            {
+                return Task.FromResult(_items.Where(predicate).ToList());
+            }
         }
 
         public Task<List<T>> All()
         {
             EnsureLoaded();
-            return Task.FromResult(new List<T>(_items));
+            lock (_lock)
+            {
+                return Task.FromResult(new List<T>(_items));
+            }
         }
     }
 }
