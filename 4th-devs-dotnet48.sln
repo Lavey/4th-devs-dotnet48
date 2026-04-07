@@ -97,6 +97,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_05_apps", "src\04_05_app
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_01_agent_graph", "src\05_01_agent_graph\05_01_agent_graph.csproj", "{5B208D40-76A4-4677-8CCE-4046DA7D4CF2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_02_ui", "src\05_02_ui\05_02_ui.csproj", "{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -671,8 +675,23 @@ Global
 		{5B208D40-76A4-4677-8CCE-4046DA7D4CF2}.Release|x64.Build.0 = Release|Any CPU
 		{5B208D40-76A4-4677-8CCE-4046DA7D4CF2}.Release|x86.ActiveCfg = Release|Any CPU
 		{5B208D40-76A4-4677-8CCE-4046DA7D4CF2}.Release|x86.Build.0 = Release|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Debug|x64.Build.0 = Debug|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Debug|x86.Build.0 = Debug|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Release|x64.ActiveCfg = Release|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Release|x64.Build.0 = Release|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Release|x86.ActiveCfg = Release|Any CPU
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal
