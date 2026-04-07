@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in your API keys.
+  App.config is listed in .gitignore so your real keys are never committed.
+
+  To get keys:
+    OpenAI:      https://platform.openai.com/api-keys
+    OpenRouter:  https://openrouter.ai/settings/keys
+    Gemini:      https://aistudio.google.com/app/apikey
+    ElevenLabs:  https://elevenlabs.io/app/settings/api-keys
+    LiveKit:     https://cloud.livekit.io/
+-->
+<configuration>
+  <appSettings>
+    <!-- ======================================================
+         AI Provider selection
+         Set to "openai" or "openrouter".
+         ====================================================== -->
+    <add key="AI_PROVIDER" value="" />
+
+    <!-- OpenAI API key (sk-...) -->
+    <add key="OPENAI_API_KEY" value="" />
+
+    <!-- OpenRouter API key (sk-or-v1-...) -->
+    <add key="OPENROUTER_API_KEY" value="" />
+
+    <!-- ======================================================
+         Voice provider keys
+         Voice mode is auto-detected based on available keys:
+           1. GOOGLE_API_KEY / GEMINI_API_KEY → Gemini Realtime
+           2. ELEVEN_API_KEY + OPENAI_API_KEY → ElevenLabs TTS
+           3. OPENAI_API_KEY alone            → OpenAI Realtime
+         ====================================================== -->
+    <add key="GOOGLE_API_KEY" value="" />
+    <add key="GEMINI_API_KEY" value="" />
+    <add key="ELEVEN_API_KEY" value="" />
+
+    <!-- ======================================================
+         LiveKit server configuration
+         ====================================================== -->
+    <add key="LIVEKIT_API_KEY" value="devkey" />
+    <add key="LIVEKIT_API_SECRET" value="secret" />
+    <add key="LIVEKIT_URL" value="ws://localhost:7880" />
+
+    <!-- Token server port (default: 3310) -->
+    <add key="TOKEN_SERVER_PORT" value="3310" />
+  </appSettings>
+</configuration>

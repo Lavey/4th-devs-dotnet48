@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>05_02 Voice Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "livekit-client": "https://esm.sh/livekit-client@2.13.3"
+        }
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      body { font-family: 'Inter', system-ui, sans-serif; }
+      .wave-canvas { image-rendering: pixelated; }
+      .log-entry { animation: fadeIn 0.2s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes pulse-ring {
+        0% { transform: scale(0.8); opacity: 0.6; }
+        50% { transform: scale(1.2); opacity: 0.2; }
+        100% { transform: scale(0.8); opacity: 0.6; }
+      }
+      .pulse-ring { animation: pulse-ring 2s ease-in-out infinite; }
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+  </head>
+  <body class="bg-[#0a0e1a] text-slate-200 min-h-screen flex items-center justify-center font-sans">
+    <div class="w-full max-w-2xl mx-auto p-6">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold text-white mb-1">Voice Agent</h1>
+        <p class="text-slate-400 text-sm">LiveKit-powered real-time voice AI</p>
+        <div id="mode-badge" class="inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-400">
+          Detecting mode…
+        </div>
+      </div>
+
+      <!-- Main Card -->
+      <div class="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+        <!-- Visualization Area -->
+        <div class="relative h-48 bg-gradient-to-b from-[#0f1629] to-[#111827] flex items-center justify-center">
+          <canvas id="wave-canvas" class="wave-canvas absolute inset-0 w-full h-full" width="600" height="192"></canvas>
+          <div id="idle-indicator" class="relative z-10 flex flex-col items-center">
+            <div class="relative">
+              <div class="w-16 h-16 rounded-full bg-slate-800/60 flex items-center justify-center border border-slate-700/50">
+                <svg class="w-7 h-7 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4M12 15a3 3 0 003-3V5a3 3 0 00-6 0v7a3 3 0 003 3z" />
+                </svg>
+              </div>
+              <div class="absolute inset-0 rounded-full border border-slate-600/30 pulse-ring"></div>
+            </div>
+            <span class="text-slate-500 text-xs mt-3" id="status-text">Click Connect to start</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="p-5 border-t border-slate-800/50">
+          <div class="flex items-center gap-3">
+            <button id="connect-btn"
+              class="flex-1 py-2.5 px-4 rounded-xl font-medium text-sm transition-all duration-200
+                     bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20
+                     disabled:opacity-40 disabled:cursor-not-allowed"
+              onclick="handleConnect()">
+              Connect
+            </button>
+            <button id="disconnect-btn"
+              class="flex-1 py-2.5 px-4 rounded-xl font-medium text-sm transition-all duration-200
+                     bg-red-600/80 hover:bg-red-500 text-white shadow-lg shadow-red-600/20
+                     disabled:opacity-40 disabled:cursor-not-allowed hidden"
+              onclick="handleDisconnect()">
+              Disconnect
+            </button>
+            <button id="mute-btn"
+              class="p-2.5 rounded-xl transition-all duration-200
+                     bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700/50
+                     disabled:opacity-40 disabled:cursor-not-allowed"
+              onclick="handleMuteToggle()" disabled>
+              <svg id="mic-on-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4M12 15a3 3 0 003-3V5a3 3 0 00-6 0v7a3 3 0 003 3z" />
+              </svg>
+              <svg id="mic-off-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Event Log -->
+        <div class="border-t border-slate-800/50">
+          <div class="flex items-center justify-between px-5 py-2.5">
+            <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Event Log</span>
+            <button onclick="clearLog()" class="text-xs text-slate-600 hover:text-slate-400 transition-colors">Clear</button>
+          </div>
+          <div id="event-log" class="h-48 overflow-y-auto px-5 pb-4 space-y-1 text-xs font-mono">
+            <div class="text-slate-600 italic">Waiting for connection…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center mt-4 text-xs text-slate-600">
+        05_02_voice — .NET 4.8 port
+      </div>
+    </div>
+
+    <script type="module">
+      import {
+        Room,
+        RoomEvent,
+        Track,
+        ConnectionState,
+        DisconnectReason,
+      } from "livekit-client";
+
+      // ── State ──────────────────────────────────────────────
+      let room = null;
+      let audioCtx = null;
+      let analyser = null;
+      let animFrameId = null;
+      let isMuted = false;
+      let agentMode = null;
+
+      const canvas = document.getElementById("wave-canvas");
+      const ctx2d = canvas.getContext("2d");
+      const logEl = document.getElementById("event-log");
+      const connectBtn = document.getElementById("connect-btn");
+      const disconnectBtn = document.getElementById("disconnect-btn");
+      const muteBtn = document.getElementById("mute-btn");
+      const statusText = document.getElementById("status-text");
+      const idleIndicator = document.getElementById("idle-indicator");
+      const modeBadge = document.getElementById("mode-badge");
+
+      // ── Logging ────────────────────────────────────────────
+      function log(msg, type = "info") {
+        const ts = new Date().toLocaleTimeString("en-GB", { hour12: false });
+        const colors = {
+          info: "text-slate-400",
+          ok: "text-emerald-400",
+          warn: "text-amber-400",
+          error: "text-red-400",
+          event: "text-blue-400",
+        };
+        const div = document.createElement("div");
+        div.className = `log-entry ${colors[type] || colors.info}`;
+        div.textContent = `[${ts}] ${msg}`;
+        logEl.appendChild(div);
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      window.clearLog = function () {
+        logEl.innerHTML = "";
+      };
+
+      // ── Mode detection ─────────────────────────────────────
+      async function fetchConfig() {
+        try {
+          const res = await fetch("/api/config");
+          const data = await res.json();
+          agentMode = data.agentMode;
+          updateModeBadge();
+          log(`Mode: ${agentMode.label} (${agentMode.id})`, "info");
+        } catch (e) {
+          log("Failed to fetch config: " + e.message, "error");
+        }
+      }
+
+      function updateModeBadge() {
+        if (!agentMode) return;
+        const badge = modeBadge;
+        if (agentMode.status === "ready") {
+          const colors = {
+            gemini: "bg-blue-900/60 text-blue-300 border border-blue-700/40",
+            elevenlabs: "bg-purple-900/60 text-purple-300 border border-purple-700/40",
+            openai: "bg-emerald-900/60 text-emerald-300 border border-emerald-700/40",
+          };
+          badge.className = `inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium ${colors[agentMode.id] || "bg-slate-800 text-slate-400"}`;
+          badge.textContent = agentMode.label;
+        } else {
+          badge.className = "inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium bg-red-900/60 text-red-300 border border-red-700/40";
+          badge.textContent = "⚠ " + (agentMode.error || agentMode.description);
+        }
+      }
+
+      // ── Connect / Disconnect ───────────────────────────────
+      window.handleConnect = async function () {
+        connectBtn.disabled = true;
+        statusText.textContent = "Connecting…";
+        log("Requesting token…", "info");
+
+        try {
+          const res = await fetch("/api/token");
+          const data = await res.json();
+          log(`Token received — room: ${data.room}, identity: ${data.identity}`, "ok");
+
+          agentMode = data.agentMode;
+          updateModeBadge();
+
+          room = new Room({
+            adaptiveStream: true,
+            dynacast: true,
+          });
+
+          attachRoomEvents(room);
+
+          log(`Connecting to ${data.url}…`, "info");
+          await room.connect(data.url, data.token);
+          log("Connected!", "ok");
+
+          // Publish microphone
+          await room.localParticipant.setMicrophoneEnabled(true);
+          log("Microphone published", "ok");
+
+          // UI state
+          connectBtn.classList.add("hidden");
+          disconnectBtn.classList.remove("hidden");
+          disconnectBtn.disabled = false;
+          muteBtn.disabled = false;
+          idleIndicator.classList.add("hidden");
+          statusText.textContent = "Connected";
+
+          startVisualization();
+        } catch (e) {
+          log("Connection failed: " + e.message, "error");
+          connectBtn.disabled = false;
+          statusText.textContent = "Connection failed";
+        }
+      };
+
+      window.handleDisconnect = async function () {
+        disconnectBtn.disabled = true;
+        if (room) {
+          await room.disconnect();
+          room = null;
+        }
+        resetUI();
+        log("Disconnected", "warn");
+      };
+
+      window.handleMuteToggle = async function () {
+        if (!room) return;
+        isMuted = !isMuted;
+        await room.localParticipant.setMicrophoneEnabled(!isMuted);
+        document.getElementById("mic-on-icon").classList.toggle("hidden", isMuted);
+        document.getElementById("mic-off-icon").classList.toggle("hidden", !isMuted);
+        log(isMuted ? "Microphone muted" : "Microphone unmuted", "info");
+      };
+
+      // ── Room events ────────────────────────────────────────
+      function attachRoomEvents(r) {
+        r.on(RoomEvent.Connected, () => {
+          log("Room: connected", "event");
+        });
+
+        r.on(RoomEvent.Disconnected, (reason) => {
+          const reasonText = reason !== undefined ? ` (${DisconnectReason[reason] || reason})` : "";
+          log("Room: disconnected" + reasonText, "warn");
+          resetUI();
+        });
+
+        r.on(RoomEvent.ParticipantConnected, (p) => {
+          log(`Participant joined: ${p.identity}`, "event");
+        });
+
+        r.on(RoomEvent.ParticipantDisconnected, (p) => {
+          log(`Participant left: ${p.identity}`, "event");
+        });
+
+        r.on(RoomEvent.TrackSubscribed, (track, pub, participant) => {
+          log(`Track subscribed: ${track.kind} from ${participant.identity}`, "event");
+          if (track.kind === Track.Kind.Audio) {
+            const el = track.attach();
+            el.id = "agent-audio-" + participant.identity;
+            document.body.appendChild(el);
+            connectAnalyser(el);
+          }
+        });
+
+        r.on(RoomEvent.TrackUnsubscribed, (track, pub, participant) => {
+          log(`Track unsubscribed: ${track.kind} from ${participant.identity}`, "event");
+          track.detach().forEach((el) => el.remove());
+        });
+
+        r.on(RoomEvent.ActiveSpeakersChanged, (speakers) => {
+          if (speakers.length > 0) {
+            statusText.textContent = "Speaking: " + speakers.map((s) => s.identity).join(", ");
+          } else {
+            statusText.textContent = "Connected — listening";
+          }
+        });
+
+        r.on(RoomEvent.DataReceived, (payload, participant, kind) => {
+          try {
+            const text = new TextDecoder().decode(payload);
+            log(`Data from ${participant?.identity || "server"}: ${text}`, "event");
+          } catch (e) {
+            log(`Data received (binary, ${payload.byteLength} bytes)`, "event");
+          }
+        });
+
+        r.on(RoomEvent.ConnectionStateChanged, (state) => {
+          log(`Connection state: ${state}`, "info");
+        });
+
+        r.on(RoomEvent.Reconnecting, () => {
+          log("Reconnecting…", "warn");
+          statusText.textContent = "Reconnecting…";
+        });
+
+        r.on(RoomEvent.Reconnected, () => {
+          log("Reconnected", "ok");
+          statusText.textContent = "Connected";
+        });
+      }
+
+      // ── Audio visualization ────────────────────────────────
+      function connectAnalyser(audioEl) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        const source = audioCtx.createMediaElementSource(audioEl);
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }
+
+      function startVisualization() {
+        const draw = () => {
+          animFrameId = requestAnimationFrame(draw);
+          const w = canvas.width;
+          const h = canvas.height;
+          ctx2d.clearRect(0, 0, w, h);
+
+          if (analyser) {
+            const bufLen = analyser.frequencyBinCount;
+            const data = new Uint8Array(bufLen);
+            analyser.getByteTimeDomainData(data);
+
+            ctx2d.lineWidth = 2;
+            ctx2d.strokeStyle = "#3b82f6";
+            ctx2d.beginPath();
+
+            const sliceW = w / bufLen;
+            let x = 0;
+            for (let i = 0; i < bufLen; i++) {
+              const v = data[i] / 128.0;
+              const y = (v * h) / 2;
+              if (i === 0) ctx2d.moveTo(x, y);
+              else ctx2d.lineTo(x, y);
+              x += sliceW;
+            }
+            ctx2d.lineTo(w, h / 2);
+            ctx2d.stroke();
+          } else {
+            // Idle wave
+            const time = Date.now() / 1000;
+            ctx2d.lineWidth = 1;
+            ctx2d.strokeStyle = "#1e293b";
+            ctx2d.beginPath();
+            for (let x = 0; x < w; x++) {
+              const y = h / 2 + Math.sin(x * 0.02 + time) * 8;
+              if (x === 0) ctx2d.moveTo(x, y);
+              else ctx2d.lineTo(x, y);
+            }
+            ctx2d.stroke();
+          }
+        };
+        draw();
+      }
+
+      function stopVisualization() {
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+        ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // ── UI reset ───────────────────────────────────────────
+      function resetUI() {
+        stopVisualization();
+        connectBtn.classList.remove("hidden");
+        connectBtn.disabled = false;
+        disconnectBtn.classList.add("hidden");
+        muteBtn.disabled = true;
+        isMuted = false;
+        document.getElementById("mic-on-icon").classList.remove("hidden");
+        document.getElementById("mic-off-icon").classList.add("hidden");
+        idleIndicator.classList.remove("hidden");
+        statusText.textContent = "Click Connect to start";
+
+        // Remove any attached audio elements
+        document.querySelectorAll("[id^='agent-audio-']").forEach((el) => el.remove());
+
+        if (audioCtx) {
+          audioCtx.close().catch(() => {});
+          audioCtx = null;
+          analyser = null;
+        }
+      }
+
+      // ── Resize canvas ──────────────────────────────────────
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = Math.floor(rect.width);
+        canvas.height = Math.floor(rect.height);
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      // ── Init ───────────────────────────────────────────────
+      fetchConfig();
+      startVisualization();
+    </script>
+  </body>
+</html>
