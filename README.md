@@ -60,11 +60,14 @@ copy App.example.config src\04_04_system\App.config
 copy App.example.config src\04_05_review\App.config
 copy App.example.config src\04_05_apps\App.config
 copy App.example.config src\05_01_agent_graph\App.config
+copy App.example.config src\05_02_ui\App.config
+copy src\05_02_voice\App.config.example src\05_02_voice\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
 # 01_04_video_generation: ustaw też REPLICATE_API_TOKEN (Kling video)
 # 03_04_gmail: ustaw GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET (patrz App.config.example w projekcie)
+# 05_02_voice: ustaw LIVEKIT_API_KEY, LIVEKIT_API_SECRET, LIVEKIT_URL (opcjonalnie GOOGLE_API_KEY lub ELEVEN_API_KEY)
 # Dla tych projektów użyj ich własnego App.config.example jako szablonu
 
 # Następnie otwórz każdy App.config i uzupełnij OPENAI_API_KEY lub OPENROUTER_API_KEY
@@ -159,6 +162,12 @@ dotnet run --project src\04_05_apps\04_05_apps.csproj
 # 05_01_agent_graph — multi-agent graph: orkiestrator + specjaliści, dashboard na porcie 3300:
 dotnet run --project src\05_01_agent_graph\05_01_agent_graph.csproj
 dotnet run --project src\05_01_agent_graph\05_01_agent_graph.csproj -- "Write a blog post about AI agents"
+
+# 05_02_ui — streaming chat UI z agentem, mock scenarios i SSE (dashboard na porcie 3300):
+dotnet run --project src\05_02_ui\05_02_ui.csproj
+
+# 05_02_voice — voice agent z LiveKit, token server na porcie 3310 (wymaga LiveKit server):
+dotnet run --project src\05_02_voice\05_02_voice.csproj
 ```
 
 ## Ćwiczenia
@@ -210,6 +219,8 @@ dotnet run --project src\05_01_agent_graph\05_01_agent_graph.csproj -- "Write a 
 | [`04_05_review`](src/04_05_review/) | `04_05_review` | Laboratorium recenzji Markdown: agent z komentarzami inline, tryby paragraph/at_once, accept/reject/revert sugestii |
 | [`04_05_apps`](src/04_05_apps/) | `04_05_apps` | Agent marketingowy SaaS: zarządzanie todos, kampaniami, sprzedażą, kuponami i produktami z UI w przeglądarce |
 | [`05_01_agent_graph`](src/05_01_agent_graph/) | `05_01_agent_graph` | Multi-agent graph: orkiestrator + specjaliści (researcher, writer, email_writer), pamięć obserwacyjna, scheduler z retry, dashboard na porcie 3300 |
+| [`05_02_ui`](src/05_02_ui/) | `05_02_ui` | Streaming chat UI z agentem: SSE streaming, mock scenarios, tryb live (Responses API), dashboard z dark theme na porcie 3300 |
+| [`05_02_voice`](src/05_02_voice/) | `05_02_voice` | Voice agent z LiveKit: token server, detekcja trybu głosowego (Gemini/ElevenLabs/OpenAI), MCP config, dashboard na porcie 3310 |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -267,6 +278,8 @@ src/
   04_05_review/            ← Ćwiczenie: laboratorium recenzji Markdown (komentarze inline, accept/reject/revert)
   04_05_apps/              ← Ćwiczenie: agent marketingowy (todos, kampanie, sprzedaż, kupony, produkty + UI)
   05_01_agent_graph/       ← Ćwiczenie: multi-agent graph (orkiestrator + specjaliści, pamięć, scheduler, dashboard)
+  05_02_ui/                ← Ćwiczenie: streaming chat UI (SSE, mock/live, agent z narzędziami, dashboard)
+  05_02_voice/             ← Ćwiczenie: voice agent (LiveKit token server, detekcja trybu głosowego, MCP config)
 ```
 
 ## Dodawanie nowych ćwiczeń
@@ -295,3 +308,4 @@ src/
 | `Jint` | 4.0.0 | Silnik JavaScript (sandbox JS w agencie MCP) |
 | `Neo4j.Driver` | 5.28.4 | Sterownik bazy grafowej Neo4j |
 | `DiffPlex` | 1.7.2 | Porównywanie plików (diff) w serwerze MCP |
+| `System.IdentityModel.Tokens.Jwt` | 6.35.0 | Generowanie tokenów JWT (LiveKit w 05_02_voice) |
