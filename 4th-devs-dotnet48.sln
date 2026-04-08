@@ -97,8 +97,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_05_apps", "src\04_05_app
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_01_agent_graph", "src\05_01_agent_graph\05_01_agent_graph.csproj", "{5B208D40-76A4-4677-8CCE-4046DA7D4CF2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_02_ui", "src\05_02_ui\05_02_ui.csproj", "{95ECA3C4-C343-46CE-A61F-C1CD977FDA6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_02_voice", "src\05_02_voice\05_02_voice.csproj", "{1E32F4FA-1C9F-4DA9-A61E-994D7C50EB20}"
@@ -746,10 +744,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{19C437A7-67E2-4A3D-A072-D819F7554958} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{C3D883E6-9520-43CB-81FA-EBAA4B985036} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
-		{BE3B1F67-D3C0-4AC7-8286-260B609764B7} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal
