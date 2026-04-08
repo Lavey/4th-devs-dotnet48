@@ -62,6 +62,9 @@ copy App.example.config src\04_05_apps\App.config
 copy App.example.config src\05_01_agent_graph\App.config
 copy App.example.config src\05_02_ui\App.config
 copy src\05_02_voice\App.config.example src\05_02_voice\App.config
+copy App.example.config src\05_03_autoprompt\App.config
+copy App.example.config src\05_03_ax\App.config
+copy App.example.config src\05_03_coding\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -168,6 +171,17 @@ dotnet run --project src\05_02_ui\05_02_ui.csproj
 
 # 05_02_voice — voice agent z LiveKit, token server na porcie 3310 (wymaga LiveKit server):
 dotnet run --project src\05_02_voice\05_02_voice.csproj
+
+# 05_03_autoprompt — automatyczna optymalizacja promptów (optimize/verify):
+dotnet run --project src\05_03_autoprompt\05_03_autoprompt.csproj -- optimize projects\demo
+dotnet run --project src\05_03_autoprompt\05_03_autoprompt.csproj -- verify projects\demo
+
+# 05_03_ax — klasyfikator e-maili z optymalizacją few-shot (classify/optimize):
+dotnet run --project src\05_03_ax\05_03_ax.csproj
+dotnet run --project src\05_03_ax\05_03_ax.csproj -- optimize
+
+# 05_03_coding — agent kodujący z narzędziami filesystem i pamięcią sesji:
+dotnet run --project src\05_03_coding\05_03_coding.csproj
 ```
 
 ## Ćwiczenia
@@ -221,6 +235,9 @@ dotnet run --project src\05_02_voice\05_02_voice.csproj
 | [`05_01_agent_graph`](src/05_01_agent_graph/) | `05_01_agent_graph` | Multi-agent graph: orkiestrator + specjaliści (researcher, writer, email_writer), pamięć obserwacyjna, scheduler z retry, dashboard na porcie 3300 |
 | [`05_02_ui`](src/05_02_ui/) | `05_02_ui` | Streaming chat UI z agentem: SSE streaming, mock scenarios, tryb live (Responses API), dashboard z dark theme na porcie 3300 |
 | [`05_02_voice`](src/05_02_voice/) | `05_02_voice` | Voice agent z LiveKit: token server, detekcja trybu głosowego (Gemini/ElevenLabs/OpenAI), MCP config, dashboard na porcie 3310 |
+| [`05_03_autoprompt`](src/05_03_autoprompt/) | `05_03_autoprompt` | Automatyczna optymalizacja promptów: hill-climbing loop z LLM-as-judge, kandydaci strategiczni, train/verify split |
+| [`05_03_ax`](src/05_03_ax/) | `05_03_ax` | Klasyfikator e-maili z optymalizacją few-shot: sygnatura I/O, metryka Jaccard, BootstrapFewShot |
+| [`05_03_coding`](src/05_03_coding/) | `05_03_coding` | Agent kodujący: interaktywne CLI, narzędzia filesystem, pamięć sesji z kompaktowaniem, logi JSONL |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -280,6 +297,9 @@ src/
   05_01_agent_graph/       ← Ćwiczenie: multi-agent graph (orkiestrator + specjaliści, pamięć, scheduler, dashboard)
   05_02_ui/                ← Ćwiczenie: streaming chat UI (SSE, mock/live, agent z narzędziami, dashboard)
   05_02_voice/             ← Ćwiczenie: voice agent (LiveKit token server, detekcja trybu głosowego, MCP config)
+  05_03_autoprompt/        ← Ćwiczenie: automatyczna optymalizacja promptów (hill-climbing, LLM-as-judge, train/verify)
+  05_03_ax/                ← Ćwiczenie: klasyfikator e-maili (sygnatura I/O, few-shot, BootstrapFewShot)
+  05_03_coding/            ← Ćwiczenie: agent kodujący (CLI, narzędzia filesystem, pamięć sesji, logi JSONL)
 ```
 
 ## Dodawanie nowych ćwiczeń

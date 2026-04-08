@@ -1,0 +1,38 @@
+{
+  "name": "demo",
+  "prompt": "./prompt.initial.md",
+  "schema": "./schema.json",
+  "testsDir": "./test-data",
+  "models": {
+    "execution": { "model": "gpt-5.4-mini", "reasoning": { "effort": "none" } },
+    "judge":     { "model": "gpt-5.4",      "reasoning": { "effort": "high" } },
+    "improver":  { "model": "gpt-5.4",      "reasoning": { "effort": "high" } }
+  },
+  "optimization": {
+    "candidates": 3,
+    "cases": ["01", "02"],
+    "verifyCases": ["03"]
+  },
+  "evaluation": {
+    "sections": [
+      {
+        "key": "tasks",
+        "weight": 0.5,
+        "matchBy": ["task"],
+        "fields": { "task": "semantic", "status": "exact", "assignee": "exact" }
+      },
+      {
+        "key": "decisions",
+        "weight": 0.3,
+        "matchBy": ["decision"],
+        "fields": { "decision": "semantic", "status": "exact", "owner": "exact" }
+      },
+      {
+        "key": "projects",
+        "weight": 0.2,
+        "matchBy": ["name"],
+        "fields": { "name": "semantic", "status": "exact" }
+      }
+    ]
+  }
+}
