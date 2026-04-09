@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in your settings.
+  App.config is listed in .gitignore so your real keys are never committed.
+-->
+<configuration>
+  <appSettings>
+    <!-- Port for the UI HTTP server -->
+    <add key="UI_PORT" value="5173" />
+
+    <!-- Base URL of the 05_04_api backend (include /v1) -->
+    <add key="API_BASE_URL" value="http://127.0.0.1:3000/v1" />
+  </appSettings>
+</configuration>

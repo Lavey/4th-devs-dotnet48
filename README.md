@@ -65,6 +65,8 @@ copy src\05_02_voice\App.config.example src\05_02_voice\App.config
 copy App.example.config src\05_03_autoprompt\App.config
 copy App.example.config src\05_03_ax\App.config
 copy App.example.config src\05_03_coding\App.config
+copy App.example.config src\05_04_api\App.config
+copy App.example.config src\05_04_ui\App.config
 
 # Projekty wymagające dodatkowych kluczy API:
 # 01_04_video i 01_04_video_generation: ustaw GEMINI_API_KEY
@@ -182,6 +184,15 @@ dotnet run --project src\05_03_ax\05_03_ax.csproj -- optimize
 
 # 05_03_coding — agent kodujący z narzędziami filesystem i pamięcią sesji:
 dotnet run --project src\05_03_coding\05_03_coding.csproj
+
+# 05_04_api — multi-agent API server z SQLite, sesjami, wątkami i pamięcią (port 3000):
+dotnet run --project src\05_04_api\05_04_api.csproj
+# Pierwsza migracja bazy (automatyczna przy starcie) i seed głównego konta:
+dotnet run --project src\05_04_api\05_04_api.csproj -- seed
+
+# 05_04_ui — chat UI dla 05_04_api z wątkami, agentami i streamingiem (port 5173):
+# Najpierw uruchom 05_04_api, potem 05_04_ui w osobnym terminalu:
+dotnet run --project src\05_04_ui\05_04_ui.csproj
 ```
 
 ## Ćwiczenia
@@ -238,6 +249,8 @@ dotnet run --project src\05_03_coding\05_03_coding.csproj
 | [`05_03_autoprompt`](src/05_03_autoprompt/) | `05_03_autoprompt` | Automatyczna optymalizacja promptów: hill-climbing loop z LLM-as-judge, kandydaci strategiczni, train/verify split |
 | [`05_03_ax`](src/05_03_ax/) | `05_03_ax` | Klasyfikator e-maili z optymalizacją few-shot: sygnatura I/O, metryka Jaccard, BootstrapFewShot |
 | [`05_03_coding`](src/05_03_coding/) | `05_03_coding` | Agent kodujący: interaktywne CLI, narzędzia filesystem, pamięć sesji z kompaktowaniem, logi JSONL |
+| [`05_04_api`](src/05_04_api/) | `05_04_api` | Multi-agent API server: sesje, wątki, agenci, pamięć obserwacyjna, SQLite, SSE event streaming, auth na porcie 3000 |
+| [`05_04_ui`](src/05_04_ui/) | `05_04_ui` | Chat UI dla 05_04_api: wątki, wybór agenta, streaming odpowiedzi, panel pamięci, dark theme na porcie 5173 |
 
 Każdy projekt zawiera własny `README.md` z opisem i przykładem uruchomienia.
 
@@ -300,6 +313,8 @@ src/
   05_03_autoprompt/        ← Ćwiczenie: automatyczna optymalizacja promptów (hill-climbing, LLM-as-judge, train/verify)
   05_03_ax/                ← Ćwiczenie: klasyfikator e-maili (sygnatura I/O, few-shot, BootstrapFewShot)
   05_03_coding/            ← Ćwiczenie: agent kodujący (CLI, narzędzia filesystem, pamięć sesji, logi JSONL)
+  05_04_api/               ← Ćwiczenie: multi-agent API server (sesje, wątki, agenci, pamięć, SQLite, SSE, auth)
+  05_04_ui/                ← Ćwiczenie: chat UI dla 05_04_api (wątki, agenci, streaming, panel pamięci, dark theme)
 ```
 
 ## Dodawanie nowych ćwiczeń
