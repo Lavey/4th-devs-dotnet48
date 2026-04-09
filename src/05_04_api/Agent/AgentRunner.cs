@@ -47,9 +47,7 @@ namespace FourthDevs.MultiAgentApi.Agent
                 return run;
             }
 
-            var revision = run.RevisionId != null
-                ? _db.GetActiveRevision(run.AgentId)
-                : _db.GetActiveRevision(run.AgentId);
+            var revision = _db.GetActiveRevision(run.AgentId);
 
             if (revision == null)
             {
