@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copy this file to App.config and fill in your API keys.
+  App.config is listed in .gitignore so your real keys are never committed.
+
+  To get keys:
+    OpenAI:      https://platform.openai.com/api-keys
+    OpenRouter:  https://openrouter.ai/settings/keys
+-->
+<configuration>
+  <appSettings>
+    <!-- ======================================================
+         AI Provider selection
+         Set to "openai" or "openrouter".
+         If both keys are present, defaults to "openai".
+         ====================================================== -->
+    <add key="AI_PROVIDER" value="" />
+
+    <!-- OpenAI API key (sk-…) -->
+    <add key="OPENAI_API_KEY" value="" />
+
+    <!-- OpenRouter API key (sk-or-v1-…) -->
+    <add key="OPENROUTER_API_KEY" value="" />
+
+    <!-- Optional: sent as HTTP-Referer when using OpenRouter -->
+    <add key="OPENROUTER_HTTP_REFERER" value="" />
+
+    <!-- Optional: sent as X-Title when using OpenRouter -->
+    <add key="OPENROUTER_APP_NAME" value="" />
+
+    <!-- Server bind address (default: 127.0.0.1) -->
+    <add key="HOST" value="127.0.0.1" />
+
+    <!-- Server port (default: 3000) -->
+    <add key="PORT" value="3000" />
+
+    <!-- SQLite database path (default: var/05_04_api.sqlite) -->
+    <add key="DATABASE_PATH" value="var/05_04_api.sqlite" />
+
+    <!-- Authentication mode: dev_headers or api_key -->
+    <add key="AUTH_MODE" value="dev_headers" />
+
+    <!-- CORS allowed origins (comma-separated) -->
+    <add key="CORS_ALLOW_ORIGINS" value="http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173" />
+  </appSettings>
+</configuration>
