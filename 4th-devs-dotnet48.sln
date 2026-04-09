@@ -111,6 +111,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_04_api", "src\05_04_api\05_04_api.csproj", "{710509B3-93DC-4E89-8816-BD0517921765}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_04_ui", "src\05_04_ui\05_04_ui.csproj", "{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -757,11 +759,24 @@ Global
 		{710509B3-93DC-4E89-8816-BD0517921765}.Release|x64.Build.0 = Release|Any CPU
 		{710509B3-93DC-4E89-8816-BD0517921765}.Release|x86.ActiveCfg = Release|Any CPU
 		{710509B3-93DC-4E89-8816-BD0517921765}.Release|x86.Build.0 = Release|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Debug|x64.Build.0 = Debug|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Debug|x86.Build.0 = Debug|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x64.ActiveCfg = Release|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x64.Build.0 = Release|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x86.ActiveCfg = Release|Any CPU
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{710509B3-93DC-4E89-8816-BD0517921765} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 	EndGlobalSection
 EndGlobal

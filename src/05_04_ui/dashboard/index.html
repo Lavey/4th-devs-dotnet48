@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat App — 05_04_ui</title>
+<style>
+  :root {
+    --bg: #0b0b0f;
+    --bg-surface: #141419;
+    --bg-surface-2: #1c1c24;
+    --bg-surface-3: #24242f;
+    --border: #2a2a38;
+    --text: #e8e8ed;
+    --text-dim: #8888a0;
+    --text-dimmer: #55556a;
+    --accent: #7c6ef0;
+    --accent-dim: #5a4ec0;
+    --accent-glow: rgba(124,110,240,.15);
+    --green: #4ade80;
+    --red: #f87171;
+    --orange: #fb923c;
+    --blue: #60a5fa;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --font: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --mono: 'SF Mono',SFMono-Regular,ui-monospace,'DejaVu Sans Mono',Menlo,Consolas,monospace;
+    --sidebar-width: 260px;
+    --memory-width: 300px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6}
+  body{display:flex;flex-direction:column;overflow:hidden}
+
+  /* ---- Login Screen ---- */
+  .login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000}
+  .login-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;width:360px;display:flex;flex-direction:column;gap:16px}
+  .login-box h2{font-size:20px;color:var(--accent);text-align:center}
+  .login-box .subtitle{font-size:13px;color:var(--text-dim);text-align:center}
+  .login-box input{background:var(--bg-surface-2);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;font-size:14px;font-family:var(--font);outline:none;width:100%}
+  .login-box input:focus{border-color:var(--accent)}
+  .login-box input::placeholder{color:var(--text-dimmer)}
+  .login-box button{background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:10px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+  .login-box button:hover{background:var(--accent-dim)}
+  .login-box button:disabled{opacity:.5;cursor:not-allowed}
+  .login-box .error{color:var(--red);font-size:13px;text-align:center}
+
+  /* ---- Top Header ---- */
+  .header{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--border);background:var(--bg-surface);flex-shrink:0}
+  .header h1{font-size:16px;font-weight:600;color:var(--accent);flex-shrink:0}
+  .header .spacer{flex:1}
+  .header label{font-size:12px;color:var(--text-dim);display:flex;align-items:center;gap:6px}
+  .header select{background:var(--bg-surface-2);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;cursor:pointer}
+  .header select:hover{border-color:var(--accent)}
+  .header .status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+  .header .status-dot.streaming{background:var(--orange);animation:pulse 1s infinite}
+  .header .btn-sm{background:var(--bg-surface-2);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;cursor:pointer}
+  .header .btn-sm:hover{border-color:var(--accent)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* ---- Main Layout ---- */
+  .app-layout{display:flex;flex:1;overflow:hidden}
+
+  /* ---- Sidebar (threads) ---- */
+  .sidebar{width:var(--sidebar-width);background:var(--bg-surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+  .sidebar-header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border)}
+  .sidebar-header h2{font-size:13px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;flex:1}
+  .sidebar-header button{background:var(--accent);color:#fff;border:none;border-radius:var(--radius);padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer}
+  .sidebar-header button:hover{background:var(--accent-dim)}
+  .thread-list{flex:1;overflow-y:auto;padding:6px}
+  .thread-list::-webkit-scrollbar{width:4px}
+  .thread-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .thread-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;margin-bottom:2px;transition:background .1s}
+  .thread-item:hover{background:var(--bg-surface-2)}
+  .thread-item.active{background:var(--accent-glow);border:1px solid var(--accent-dim)}
+  .thread-item .thread-title{flex:1;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .thread-item .thread-delete{opacity:0;color:var(--text-dimmer);font-size:16px;cursor:pointer;padding:0 4px;line-height:1}
+  .thread-item:hover .thread-delete{opacity:1}
+  .thread-item .thread-delete:hover{color:var(--red)}
+
+  /* ---- Chat area ---- */
+  .chat-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+  /* ---- Messages ---- */
+  .messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+  .messages::-webkit-scrollbar{width:6px}
+  .messages::-webkit-scrollbar-track{background:transparent}
+  .messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  .msg{max-width:85%;display:flex;flex-direction:column;gap:6px}
+  .msg.user{align-self:flex-end}
+  .msg.assistant{align-self:flex-start}
+  .msg-bubble{padding:10px 14px;border-radius:var(--radius-lg);font-size:14px;line-height:1.6;word-wrap:break-word}
+  .msg.user .msg-bubble{background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+  .msg.assistant .msg-bubble{background:var(--bg-surface);border:1px solid var(--border);border-bottom-left-radius:4px}
+  .msg-meta{font-size:11px;color:var(--text-dimmer);padding:0 4px}
+  .msg.user .msg-meta{text-align:right}
+
+  /* ---- Text rendering ---- */
+  .msg-text{white-space:pre-wrap;word-wrap:break-word}
+  .msg-text code{background:var(--bg-surface-2);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:13px}
+  .msg-text pre{background:var(--bg-surface-2);padding:10px 12px;border-radius:var(--radius);overflow-x:auto;margin:8px 0}
+  .msg-text pre code{background:none;padding:0}
+  .msg-text strong{font-weight:600}
+  .msg-text table{border-collapse:collapse;margin:8px 0;font-size:13px}
+  .msg-text th,.msg-text td{border:1px solid var(--border);padding:4px 8px}
+  .msg-text th{background:var(--bg-surface-2);font-weight:600}
+
+  /* ---- Composer ---- */
+  .composer{display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--border);background:var(--bg-surface);flex-shrink:0}
+  .composer textarea{flex:1;background:var(--bg-surface-2);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px 14px;font-size:14px;font-family:var(--font);resize:none;outline:none;min-height:44px;max-height:120px;line-height:1.5}
+  .composer textarea:focus{border-color:var(--accent)}
+  .composer textarea::placeholder{color:var(--text-dimmer)}
+  .composer button{background:var(--accent);color:#fff;border:none;border-radius:var(--radius-lg);padding:0 20px;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0;transition:background .15s}
+  .composer button:hover{background:var(--accent-dim)}
+  .composer button:disabled{opacity:.4;cursor:not-allowed}
+
+  /* ---- Memory Panel ---- */
+  .memory-panel{width:var(--memory-width);background:var(--bg-surface);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+  .memory-panel.hidden{display:none}
+  .memory-header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border)}
+  .memory-header h2{font-size:13px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;flex:1}
+  .memory-header button{background:none;border:none;color:var(--text-dimmer);cursor:pointer;font-size:16px}
+  .memory-header button:hover{color:var(--text)}
+  .memory-list{flex:1;overflow-y:auto;padding:10px}
+  .memory-list::-webkit-scrollbar{width:4px}
+  .memory-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+  .memory-item{padding:10px 12px;background:var(--bg-surface-2);border-radius:var(--radius);margin-bottom:8px;border-left:3px solid var(--accent)}
+  .memory-item.reflection{border-left-color:var(--blue)}
+  .memory-item .mem-type{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dimmer);margin-bottom:4px}
+  .memory-item .mem-content{font-size:13px;color:var(--text-dim);line-height:1.5}
+  .memory-item .mem-keywords{font-size:11px;color:var(--text-dimmer);margin-top:6px;font-style:italic}
+  .memory-empty{font-size:13px;color:var(--text-dimmer);text-align:center;padding:20px}
+
+  /* ---- Empty state ---- */
+  .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-dimmer);gap:8px}
+  .empty-state .icon{font-size:48px;opacity:.3}
+  .empty-state p{font-size:14px}
+
+  /* ---- Loading ---- */
+  .loading{display:flex;align-items:center;justify-content:center;padding:20px;color:var(--text-dimmer);gap:8px}
+  .spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---- Streaming indicator ---- */
+  .streaming-indicator{display:inline-block;width:6px;height:14px;background:var(--accent);border-radius:1px;animation:blink .8s infinite;vertical-align:middle;margin-left:2px}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h2>&#x1F510; Chat App</h2>
+    <div class="subtitle">Sign in to continue</div>
+    <input type="email" id="loginEmail" placeholder="Email" value="admin@localhost">
+    <input type="password" id="loginPassword" placeholder="Password" value="password">
+    <button id="loginBtn">Sign In</button>
+    <div class="error" id="loginError" style="display:none"></div>
+  </div>
+</div>
+
+<!-- App -->
+<div id="appContainer" style="display:none;flex-direction:column;height:100%">
+
+<div class="header">
+  <h1>&#x1F4AC; Chat App</h1>
+  <div class="status-dot" id="statusDot" title="Idle"></div>
+  <div class="spacer"></div>
+  <label>
+    Agent
+    <select id="agentSelect"><option value="">Loading...</option></select>
+  </label>
+  <button class="btn-sm" id="memoryBtn" title="Toggle memory panel">&#x1F9E0; Memory</button>
+  <button class="btn-sm" id="logoutBtn" title="Sign out">&#x23FB; Logout</button>
+</div>
+
+<div class="app-layout">
+  <!-- Sidebar: Threads -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>Threads</h2>
+      <button id="newThreadBtn">+ New</button>
+    </div>
+    <div class="thread-list" id="threadList">
+      <div class="loading"><div class="spinner"></div>Loading...</div>
+    </div>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="chat-area">
+    <div class="messages" id="messages">
+      <div class="empty-state" id="emptyState">
+        <div class="icon">&#x1F916;</div>
+        <p>Select or create a thread to start chatting</p>
+      </div>
+    </div>
+    <div class="composer">
+      <textarea id="input" placeholder="Type a message..." rows="1"></textarea>
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <!-- Memory Panel -->
+  <div class="memory-panel hidden" id="memoryPanel">
+    <div class="memory-header">
+      <h2>&#x1F9E0; Memory</h2>
+      <button id="memoryCloseBtn" title="Close">&times;</button>
+    </div>
+    <div class="memory-list" id="memoryList">
+      <div class="memory-empty">No memories yet</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ---- State ----
+  var sessionToken = null;
+  var sessionId = null;
+  var agents = [];
+  var threads = [];
+  var activeThreadId = null;
+  var streaming = false;
+  var autoScroll = true;
+  var memoryVisible = false;
+  var eventSource = null;
+
+  // ---- DOM refs ----
+  var loginScreen = document.getElementById('loginScreen');
+  var appContainer = document.getElementById('appContainer');
+  var loginEmail = document.getElementById('loginEmail');
+  var loginPassword = document.getElementById('loginPassword');
+  var loginBtn = document.getElementById('loginBtn');
+  var loginError = document.getElementById('loginError');
+  var logoutBtn = document.getElementById('logoutBtn');
+  var agentSelect = document.getElementById('agentSelect');
+  var messagesEl = document.getElementById('messages');
+  var emptyState = document.getElementById('emptyState');
+  var inputEl = document.getElementById('input');
+  var sendBtn = document.getElementById('sendBtn');
+  var statusDot = document.getElementById('statusDot');
+  var threadList = document.getElementById('threadList');
+  var newThreadBtn = document.getElementById('newThreadBtn');
+  var memoryBtn = document.getElementById('memoryBtn');
+  var memoryPanel = document.getElementById('memoryPanel');
+  var memoryCloseBtn = document.getElementById('memoryCloseBtn');
+  var memoryList = document.getElementById('memoryList');
+
+  // ---- Init ----
+  checkSession();
+
+  // ---- Event Listeners ----
+  loginBtn.addEventListener('click', doLogin);
+  loginPassword.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+  logoutBtn.addEventListener('click', doLogout);
+  newThreadBtn.addEventListener('click', createThread);
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  inputEl.addEventListener('input', autoResize);
+  memoryBtn.addEventListener('click', toggleMemory);
+  memoryCloseBtn.addEventListener('click', toggleMemory);
+  messagesEl.addEventListener('scroll', function() {
+    autoScroll = (messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight) < 50;
+  });
+  agentSelect.addEventListener('change', function() {
+    // Agent selection affects new threads/messages only
+  });
+
+  // ---- Auth ----
+  function checkSession() {
+    apiFetch('/auth/session')
+      .then(function(data) {
+        showApp();
+        loadAgents();
+        bootstrapSession();
+      })
+      .catch(function() {
+        showLogin();
+      });
+  }
+
+  function doLogin() {
+    var email = loginEmail.value.trim();
+    var password = loginPassword.value;
+    if (!email || !password) return;
+
+    loginBtn.disabled = true;
+    loginError.style.display = 'none';
+
+    apiFetch('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email: email, password: password })
+    })
+    .then(function(data) {
+      sessionToken = data.token;
+      showApp();
+      loadAgents();
+      bootstrapSession();
+    })
+    .catch(function(err) {
+      loginError.textContent = err.message || 'Login failed';
+      loginError.style.display = '';
+      loginBtn.disabled = false;
+    });
+  }
+
+  function doLogout() {
+    apiFetch('/auth/logout', { method: 'POST' }).catch(function() {});
+    sessionToken = null;
+    sessionId = null;
+    threads = [];
+    activeThreadId = null;
+    if (eventSource) { eventSource.close(); eventSource = null; }
+    showLogin();
+  }
+
+  function showLogin() {
+    loginScreen.style.display = '';
+    appContainer.style.display = 'none';
+    loginBtn.disabled = false;
+  }
+
+  function showApp() {
+    loginScreen.style.display = 'none';
+    appContainer.style.display = 'flex';
+  }
+
+  // ---- API helper ----
+  function apiFetch(path, opts) {
+    opts = opts || {};
+    var headers = opts.headers || {};
+    if (!headers['Content-Type'] && opts.body) {
+      headers['Content-Type'] = 'application/json';
+    }
+    if (sessionToken) {
+      headers['Authorization'] = 'Bearer ' + sessionToken;
+    }
+    opts.headers = headers;
+    opts.credentials = 'include';
+
+    return fetch('/api' + path, opts)
+      .then(function(r) {
+        if (!r.ok) {
+          return r.json().then(function(errData) {
+            var msg = (errData.error && errData.error.message) ? errData.error.message : ('HTTP ' + r.status);
+            throw new Error(msg);
+          }).catch(function(e) {
+            if (e.message) throw e;
+            throw new Error('HTTP ' + r.status);
+          });
+        }
+        var ct = r.headers.get('content-type') || '';
+        if (ct.indexOf('application/json') !== -1) {
+          return r.json();
+        }
+        return r.text();
+      });
+  }
+
+  // ---- Agents ----
+  function loadAgents() {
+    apiFetch('/agents')
+      .then(function(data) {
+        agents = data.agents || [];
+        renderAgentSelect();
+      })
+      .catch(function(err) {
+        console.error('Failed to load agents:', err);
+        agentSelect.innerHTML = '<option value="">No agents</option>';
+      });
+  }
+
+  function renderAgentSelect() {
+    agentSelect.innerHTML = '';
+    if (agents.length === 0) {
+      agentSelect.innerHTML = '<option value="">No agents</option>';
+      return;
+    }
+    for (var i = 0; i < agents.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = agents[i].id;
+      opt.textContent = agents[i].display_name || agents[i].slug || agents[i].id;
+      agentSelect.appendChild(opt);
+    }
+  }
+
+  // ---- Session & Threads ----
+  function bootstrapSession() {
+    var agentId = agentSelect.value || undefined;
+
+    apiFetch('/sessions', {
+      method: 'POST',
+      body: JSON.stringify({ agent_id: agentId, title: 'Chat Session' })
+    })
+    .then(function(data) {
+      sessionId = data.id;
+      loadThreads();
+      connectEventStream();
+    })
+    .catch(function(err) {
+      console.error('Failed to create session:', err);
+    });
+  }
+
+  function loadThreads() {
+    if (!sessionId) return;
+
+    apiFetch('/threads?session_id=' + sessionId)
+      .then(function(data) {
+        threads = data.threads || [];
+        renderThreadList();
+        if (threads.length > 0 && !activeThreadId) {
+          selectThread(threads[0].id);
+        } else if (activeThreadId) {
+          var found = false;
+          for (var i = 0; i < threads.length; i++) {
+            if (threads[i].id === activeThreadId) { found = true; break; }
+          }
+          if (!found && threads.length > 0) selectThread(threads[0].id);
+          else if (!found) { activeThreadId = null; renderMessages([]); }
+        }
+      })
+      .catch(function(err) {
+        console.error('Failed to load threads:', err);
+        threadList.innerHTML = '<div class="memory-empty">Failed to load threads</div>';
+      });
+  }
+
+  function createThread() {
+    if (!sessionId) return;
+    var agentId = agentSelect.value || undefined;
+
+    apiFetch('/threads', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: sessionId,
+        agent_id: agentId,
+        title: 'Thread ' + (threads.length + 1)
+      })
+    })
+    .then(function(data) {
+      threads.push(data);
+      renderThreadList();
+      selectThread(data.id);
+    })
+    .catch(function(err) {
+      console.error('Failed to create thread:', err);
+    });
+  }
+
+  function selectThread(threadId) {
+    activeThreadId = threadId;
+    renderThreadList();
+    loadMessages(threadId);
+    if (memoryVisible) loadMemory(threadId);
+  }
+
+  function deleteThread(threadId) {
+    // The API may not support DELETE for threads, but we remove locally
+    threads = threads.filter(function(t) { return t.id !== threadId; });
+    renderThreadList();
+    if (activeThreadId === threadId) {
+      activeThreadId = null;
+      if (threads.length > 0) {
+        selectThread(threads[0].id);
+      } else {
+        renderMessages([]);
+      }
+    }
+  }
+
+  function renderThreadList() {
+    threadList.innerHTML = '';
+    if (threads.length === 0) {
+      threadList.innerHTML = '<div class="memory-empty">No threads yet</div>';
+      return;
+    }
+    for (var i = 0; i < threads.length; i++) {
+      var t = threads[i];
+      var el = document.createElement('div');
+      el.className = 'thread-item' + (t.id === activeThreadId ? ' active' : '');
+      el.setAttribute('data-id', t.id);
+
+      var titleSpan = document.createElement('span');
+      titleSpan.className = 'thread-title';
+      titleSpan.textContent = t.title || 'Untitled';
+      el.appendChild(titleSpan);
+
+      var delBtn = document.createElement('span');
+      delBtn.className = 'thread-delete';
+      delBtn.innerHTML = '&times;';
+      delBtn.setAttribute('data-id', t.id);
+      el.appendChild(delBtn);
+
+      (function(id) {
+        el.addEventListener('click', function(e) {
+          if (e.target.classList.contains('thread-delete')) return;
+          selectThread(id);
+        });
+        delBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          deleteThread(id);
+        });
+      })(t.id);
+
+      threadList.appendChild(el);
+    }
+  }
+
+  // ---- Messages ----
+  function loadMessages(threadId) {
+    apiFetch('/threads/' + threadId + '/messages')
+      .then(function(data) {
+        var msgs = data.messages || [];
+        renderMessages(msgs);
+      })
+      .catch(function(err) {
+        console.error('Failed to load messages:', err);
+      });
+  }
+
+  function renderMessages(msgs) {
+    messagesEl.innerHTML = '';
+    if (!msgs || msgs.length === 0) {
+      messagesEl.appendChild(emptyState);
+      emptyState.style.display = '';
+      return;
+    }
+    emptyState.style.display = 'none';
+    for (var i = 0; i < msgs.length; i++) {
+      addMessageToUI(msgs[i]);
+    }
+    scrollToBottom();
+  }
+
+  function addMessageToUI(msg) {
+    emptyState.style.display = 'none';
+    var el = document.createElement('div');
+    el.className = 'msg ' + (msg.role || 'assistant');
+    el.id = 'msg-' + msg.id;
+
+    var bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+
+    var textDiv = document.createElement('div');
+    textDiv.className = 'msg-text';
+    textDiv.innerHTML = renderMarkdown(msg.content || '');
+    bubble.appendChild(textDiv);
+
+    el.appendChild(bubble);
+
+    var meta = document.createElement('div');
+    meta.className = 'msg-meta';
+    if (msg.created_at) {
+      var d = new Date(msg.created_at);
+      meta.textContent = d.toLocaleTimeString();
+    }
+    el.appendChild(meta);
+
+    messagesEl.appendChild(el);
+    scrollToBottom();
+    return el;
+  }
+
+  // ---- Send Message & Stream ----
+  function sendMessage() {
+    var text = inputEl.value.trim();
+    if (!text || streaming || !activeThreadId) return;
+
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+
+    var agentId = agentSelect.value || undefined;
+
+    // Show user message immediately
+    var userMsg = { id: 'tmp_u_' + Date.now(), role: 'user', content: text };
+    addMessageToUI(userMsg);
+
+    // Create streaming assistant placeholder
+    var assistantId = 'tmp_a_' + Date.now();
+    var assistantEl = document.createElement('div');
+    assistantEl.className = 'msg assistant';
+    assistantEl.id = 'msg-' + assistantId;
+    assistantEl.innerHTML = '<div class="msg-bubble"><div class="msg-content"><div class="msg-text"><span class="streaming-indicator"></span></div></div></div>';
+    messagesEl.appendChild(assistantEl);
+    scrollToBottom();
+
+    setStreaming(true);
+
+    // Use the interact endpoint for streaming
+    var body = { message: text };
+    if (agentId) body.agent_id = agentId;
+
+    apiFetch('/threads/' + activeThreadId + '/interact', {
+      method: 'POST',
+      body: JSON.stringify(body)
+    })
+    .then(function(runData) {
+      // Run created — now execute and poll/stream for results
+      if (runData && runData.id) {
+        return executeRun(runData.id, assistantId);
+      }
+    })
+    .catch(function(err) {
+      console.error('Interact error:', err);
+      var contentEl = document.querySelector('#msg-' + assistantId + ' .msg-text');
+      if (contentEl) {
+        contentEl.innerHTML = '<span style="color:var(--red)">Error: ' + escapeHtml(err.message) + '</span>';
+      }
+      setStreaming(false);
+    });
+  }
+
+  function executeRun(runId, assistantMsgId) {
+    return apiFetch('/runs/' + runId + '/execute', { method: 'POST' })
+      .then(function(runData) {
+        // After execution, reload messages to get the final state
+        if (activeThreadId) {
+          loadMessages(activeThreadId);
+          if (memoryVisible) loadMemory(activeThreadId);
+        }
+        setStreaming(false);
+      })
+      .catch(function(err) {
+        console.error('Execute error:', err);
+        var contentEl = document.querySelector('#msg-' + assistantMsgId + ' .msg-text');
+        if (contentEl) {
+          contentEl.innerHTML = '<span style="color:var(--red)">Error: ' + escapeHtml(err.message) + '</span>';
+        }
+        setStreaming(false);
+      });
+  }
+
+  // ---- SSE Event Stream ----
+  function connectEventStream() {
+    if (eventSource) { eventSource.close(); }
+
+    var url = '/api/events/stream';
+    if (sessionToken) {
+      url += '?token=' + encodeURIComponent(sessionToken);
+    }
+
+    try {
+      eventSource = new EventSource(url);
+
+      eventSource.addEventListener('message_created', function(e) {
+        try {
+          var evt = JSON.parse(e.data);
+          handleDomainEvent(evt);
+        } catch(ex) {}
+      });
+
+      eventSource.addEventListener('run_completed', function(e) {
+        try {
+          var evt = JSON.parse(e.data);
+          handleDomainEvent(evt);
+        } catch(ex) {}
+      });
+
+      eventSource.addEventListener('memory_created', function(e) {
+        if (memoryVisible && activeThreadId) {
+          loadMemory(activeThreadId);
+        }
+      });
+
+      eventSource.onerror = function() {
+        // Reconnect handled by EventSource automatically
+      };
+    } catch(ex) {
+      console.error('EventSource error:', ex);
+    }
+  }
+
+  function handleDomainEvent(evt) {
+    // Reload messages when relevant events arrive
+    if (activeThreadId && !streaming) {
+      loadMessages(activeThreadId);
+    }
+  }
+
+  // ---- Memory ----
+  function toggleMemory() {
+    memoryVisible = !memoryVisible;
+    if (memoryVisible) {
+      memoryPanel.classList.remove('hidden');
+      if (activeThreadId) loadMemory(activeThreadId);
+    } else {
+      memoryPanel.classList.add('hidden');
+    }
+  }
+
+  function loadMemory(threadId) {
+    apiFetch('/threads/' + threadId + '/memory')
+      .then(function(data) {
+        renderMemory(data.memories || []);
+      })
+      .catch(function(err) {
+        console.error('Failed to load memory:', err);
+        memoryList.innerHTML = '<div class="memory-empty">Failed to load</div>';
+      });
+  }
+
+  function renderMemory(memories) {
+    memoryList.innerHTML = '';
+    if (memories.length === 0) {
+      memoryList.innerHTML = '<div class="memory-empty">No memories yet</div>';
+      return;
+    }
+    for (var i = 0; i < memories.length; i++) {
+      var m = memories[i];
+      var el = document.createElement('div');
+      el.className = 'memory-item' + (m.type === 'reflection' ? ' reflection' : '');
+
+      var typeDiv = document.createElement('div');
+      typeDiv.className = 'mem-type';
+      typeDiv.textContent = m.type || 'observation';
+      el.appendChild(typeDiv);
+
+      var contentDiv = document.createElement('div');
+      contentDiv.className = 'mem-content';
+      contentDiv.textContent = m.content || '';
+      el.appendChild(contentDiv);
+
+      if (m.keywords) {
+        var kwDiv = document.createElement('div');
+        kwDiv.className = 'mem-keywords';
+        kwDiv.textContent = m.keywords;
+        el.appendChild(kwDiv);
+      }
+
+      memoryList.appendChild(el);
+    }
+  }
+
+  // ---- Markdown-lite renderer ----
+  function renderMarkdown(text) {
+    if (!text) return '';
+    var html = escapeHtml(text);
+    // Code blocks
+    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, function(m, lang, code) {
+      return '<pre><code>' + code + '</code></pre>';
+    });
+    // Bold
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Inline code
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Headers
+    html = html.replace(/^### (.+)$/gm, '<strong style="font-size:14px;display:block;margin-top:8px">$1</strong>');
+    html = html.replace(/^## (.+)$/gm, '<strong style="font-size:15px;display:block;margin-top:10px">$1</strong>');
+    html = html.replace(/^# (.+)$/gm, '<strong style="font-size:16px;display:block;margin-top:12px">$1</strong>');
+    // List items
+    html = html.replace(/^- (.+)$/gm, '&nbsp;&nbsp;&#x2022; $1');
+    // Tables
+    html = renderTables(html);
+    // Line breaks (but not inside pre)
+    html = html.replace(/\n/g, '<br>');
+    return html;
+  }
+
+  function renderTables(html) {
+    var lines = html.split('\n');
+    var result = [];
+    var inTable = false;
+    var tableRows = [];
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i].trim();
+      if (line.indexOf('|') === 0 && line.lastIndexOf('|') === line.length - 1) {
+        if (line.replace(/[\|\-\s]/g, '').length === 0) continue;
+        if (!inTable) { inTable = true; tableRows = []; }
+        var cells = line.split('|').filter(function(c) { return c.trim() !== ''; });
+        tableRows.push(cells.map(function(c) { return c.trim(); }));
+      } else {
+        if (inTable) { result.push(buildTable(tableRows)); inTable = false; tableRows = []; }
+        result.push(lines[i]);
+      }
+    }
+    if (inTable) result.push(buildTable(tableRows));
+    return result.join('\n');
+  }
+
+  function buildTable(rows) {
+    if (rows.length === 0) return '';
+    var html = '<table>';
+    for (var r = 0; r < rows.length; r++) {
+      html += '<tr>';
+      var tag = r === 0 ? 'th' : 'td';
+      for (var c = 0; c < rows[r].length; c++) {
+        html += '<' + tag + '>' + rows[r][c] + '</' + tag + '>';
+      }
+      html += '</tr>';
+    }
+    html += '</table>';
+    return html;
+  }
+
+  // ---- Helpers ----
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function setStreaming(val) {
+    streaming = val;
+    sendBtn.disabled = val;
+    statusDot.className = 'status-dot' + (val ? ' streaming' : '');
+    statusDot.title = val ? 'Streaming...' : 'Idle';
+  }
+
+  function scrollToBottom() {
+    if (autoScroll) {
+      requestAnimationFrame(function() {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      });
+    }
+  }
+
+  function autoResize() {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+  }
+})();
+</script>
+</body>
+</html>
