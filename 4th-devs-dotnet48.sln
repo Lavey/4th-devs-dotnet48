@@ -113,6 +113,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_04_api", "src\05_04_api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_04_ui", "src\05_04_ui\05_04_ui.csproj", "{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_05_Wonderlands", "src\05_05_Wonderlands\05_05_Wonderlands.csproj", "{D734746D-B547-34F7-F856-E197B962822E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -771,6 +773,18 @@ Global
 		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x64.Build.0 = Release|Any CPU
 		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x86.ActiveCfg = Release|Any CPU
 		{2CE2BB23-65DD-4BF7-887A-ED32411D1E44}.Release|x86.Build.0 = Release|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Debug|x64.Build.0 = Debug|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Debug|x86.Build.0 = Debug|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Release|x64.ActiveCfg = Release|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Release|x64.Build.0 = Release|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Release|x86.ActiveCfg = Release|Any CPU
+		{D734746D-B547-34F7-F856-E197B962822E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
